@@ -1,0 +1,31 @@
+% !TEX root = ../phd.tex
+The initial average sound level $E_{i, t}^{25}$ is computed as
+\begin{equation}
+\label{noise-Lm25}
+E_{i, t}^{25} = 37.3 + 10 \cdot \log_{10} \left[M_{i, t} \cdot \left(1 + 0.082 \cdot p_{i, t}\right)\right] \, ,
+\end{equation}
+where $i$ denotes the road segment; $t$ is the time bin; $M_{i, t}$ is the traffic volume; and $p_{i, t}$
+is the \gls{HGV} share in \%.
+
+The additive correction term for deviations from a maximum speed of 100~\acrshort{km}/\acrshort{h} is calculated as follows.
+\begin{equation}
+D_{i,t}^{v} = E_{i}^{car} - 37.3 + 10 \cdot \log_{10}\left[\frac{100 + (10^{0.1 \cdot (E_{i}^{hgv} - E_{i}^{car})} - 1) \cdot p_{i,t}} {100 + 8.23 \cdot p_{i,t}}\right] \, ,
+\end{equation}
+where $D_{i,t}^{v}$ is the speed correction in \acrshort{dBA}; and $E_{i}^{car}$ and $E_{i}^{hgv}$ are calculated as described in \cref{noise-Lcar} and \cref{noise-Lhgv}.
+\begin{equation}
+\label{noise-Lcar}
+E_{i}^{car} = 27.7 + 10 \cdot \log_{10} \left[ 1 + \left( 0.02 \cdot v_{i}^{car} \right)^{3} \right] \, ,
+\end{equation}
+where $v_{i}^{car}$ denotes the maximum speed level in \acrshort{km}/\acrshort{h} for passenger cars.
+\begin{equation}
+\label{noise-Lhgv}
+E_{i}^{hgv} = 23.1 + 12.5 \cdot \log_{10} \left(v_{i}^{hgv}\right) \, ,
+\end{equation}
+where $v_{i}^{hgv}$ denotes the maximum speed level in \acrshort{km}/\acrshort{h} for \gls{HGV}.
+
+The decrease in noise with the distance due to air absorption is calculated as follows:
+\begin{equation}
+\label{noise-Dd}
+D_{i, j}^{d} =15.8 - 10 \cdot \log_{10} \left(d_{i,j} \right) - 0.0142 \cdot d_{i,j}^{0.9} \, ,
+\end{equation}
+where $d_{i,j}$ is the distance between road segment $i$ and receiver point $j$.

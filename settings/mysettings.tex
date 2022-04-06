@@ -1,0 +1,281 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% general
+%\usepackage{cmbright} % serifenlose computer modern fonts
+\usepackage[T1]{fontenc} % T1 fonts f\"ur gute pdf-Ausgabe
+\setkomafont{disposition}{\normalcolor\bfseries} % font for headers same as normal text
+\usekomafont{chapter}{\normalcolor\bfseries} % font for chapter headers same as normal text
+
+%\usepackage[ansinew]{inputenc} % wegen deutschen Umlauten
+\usepackage[utf8]{inputenc}
+% bei mir funktioniert das mit ansinew nicht.  Vermutl. setzt der Editor die Dateien auf utf8, sobald er Umlaute einfügt.  Ich könnte das umstellen, aber eigentlich ist utf8 besser. kai
+% hmm, bei mir hat er dann irgendwelche Probleme mit irgendwelchen bibliography Eintr\"agen...
+
+%\usepackage[automark]{scrpage2} % Koma Headers - deprecated....
+\usepackage[automark]{scrlayer-scrpage} % Koma Headers - new version
+\usepackage[ngerman, english]{babel} % prepare for german AND english, last language loaded is default
+\usepackage[autostyle=true, babel, english=american]{csquotes} % babel needs csquotes
+%\usepackage{nag} % warn user on outdated packages
+\usepackage[linktocpage,pagebackref=true]{hyperref}	% links in pdf, thumbnails
+\usepackage{xspace}
+\usepackage{diagbox}
+\usepackage{soul} % emphasizing text, underlining
+\usepackage{breakurl} % for broken urls in Bibliography when hyperref is in use
+\usepackage[onehalfspacing]{setspace} % 1.5, change line spaces by \singlespacing \doublespacing
+\RequirePackage{fix-cm} 	% error correction for standard fonts
+\usepackage[Sonny]{fncychap}	% fancy chapters
+\usepackage[titletoc]{appendix}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% tables
+\usepackage{multicol} % multiple columns in tables
+\usepackage{multirow} % multiple rows in tables
+\usepackage[margin=10pt,labelfont=bf]{caption} % table headers
+\usepackage{hhline}	% horizontal lines
+\usepackage{longtable} % pagebreak tables
+\usepackage{booktabs} % bold table lines, e.g. \toprule
+\usepackage{tabularx} % neue Tabular-Umgebung
+\usepackage{etoolbox} % adjust font size for tables
+\BeforeBeginEnvironment{tabular}{\begin{center}\footnotesize} % adjust font size for tables
+\AfterEndEnvironment{tabular}{\end{center}} % adjust font size for tables
+%--------------------------------------------------------------------
+% table settings
+%
+\newcommand{\colortableformat}{
+	\renewcommand{\arraystretch}{1.3}
+	\small
+	\sffamily
+	\rowcolors{1}{gray!15}{gray!25}% {startrow}{oddrowcolor}{evenrowcolor}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% math, symbols
+\usepackage{amsmath} % AMS Math like brackets, integrals...
+\usepackage{amssymb} % AMS-Symbols v2.0
+\usepackage{fixmath} % big greek letters italic in math mode
+\usepackage{array} % matrices
+\usepackage{units} % includes nicefrac, nicer fracs for one line, SI-Units
+\usepackage{trfsigns} % symbole fÃÂŒr transformationen
+\usepackage{textcomp} % einfache Sonderzeichen, z.B. \texteuro
+\usepackage{gensymb} % correct greek letters in units,\micro instead of \mu
+\usepackage[integrals]{wasysym} % for integrals like \oiint
+\usepackage[version=3]{mhchem} % easy typesetting of chemical formulae
+\usepackage{eurosym} %Eurosymbol
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% graphics
+%\usepackage[activate]{pdfcprot} % use margin kerning (character protruding) (Opt. Randausgleich)
+\usepackage{microtype} % character protruding, font expansion - instead of pdfcprot
+\usepackage{graphicx} % include graphics
+\usepackage{wrapfig} % graphics in text
+%\usepackage{floatflt} % graphics/tables in text
+%\usepackage{rotating} % rotating elements
+\usepackage{listings} % for programming source code
+\usepackage[svgnames]{xcolor} % colors for listings
+\usepackage{psfrag}	% Text in .eps Grafiken ersetzen
+\usepackage{subfig}
+%\usepackage{subcaption} % can't be used together with subfig
+\usepackage{paralist} % in line bullets/points
+\usepackage[shortlabels]{enumitem} % different labels for enumerator
+\usepackage{bookmark}
+\usepackage{tikz}
+
+% clever references, has to be loaded last
+\usepackage[capitalise]{cleveref}
+\crefname{part}{Part}{Parts}
+\Crefname{part}{part}{parts} % only used for ``In this part, ...'' (\nameCref{})
+\crefname{chapter}{Ch.}{Chs.}
+\Crefname{chapter}{chapter}{chapters} % only used for ``In this chapter, ...'' (\nameCref{})
+\crefname{section}{Sec.}{Secs.}
+\Crefname{section}{section}{sections} % only used for ``In this section, ...'' (\nameCref{})
+\crefname{table}{Tab.}{Tabs.}
+\crefname{figure}{Fig.}{Figs.}
+\crefname{appendix}{App.}{App.}
+\crefname{equation}{Eq.}{Eqs.}
+
+\bookmarksetup{startatroot}
+\addtocontents{toc}{\bigskip}% adds a little space in the printed table of contents to visually separate the final chapter from the preceding "part"
+
+% AbstÃ€nde fÃŒr Seitenzahlen im Inhaltsverzeichnis erhÃ¶hen
+\makeatletter
+\renewcommand*{\@pnumwidth}{2em} % Breite der Box fÃŒr Seitenzahlen im Inhaltsverzeichnis erhÃ¶hen
+\makeatother
+%**********************************************
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bibliography
+\usepackage{natbib}
+%\usepackage[backend=bibtex,
+%			natbib=true,
+%			style=authoryear-comp,
+%			maxcitenames=2,
+%			maxbibnames=99,
+%			mincitenames=1,
+%			uniquelist=minyear,
+%			hyperref=true,
+%			arxiv=abs,
+%			firstinits=true,
+%			mincrossrefs=99,
+%			sortcites=false,
+%			backref=true]{biblatex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% layout
+\usepackage[top=2.5cm,left=3.5cm,right=2.5cm,bottom=3cm]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{matsimblue}{RGB/cmyk}{50,100,175/0.714,0.429,0.000,0,314}
+
+%% to-do notes
+\usepackage[]{todonotes}
+%\usepackage[disable]{todonotes}
+
+
+\def\kmt#1{\textcolor{blue}{[[#1 -- kmt]]}}
+\def\kai#1{\textcolor{darkgreen}{[[#1 -- kai]]}}
+
+\def\rewrite#1{\textcolor{teal}{[[#1 -- Umschreiben - ist 1:1 aus Paper]]}}
+
+\newcommand{\kmtTodo}[2][]
+{\todo[inline,caption={#2}, size=\scriptsize, color=blue!30, #1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2 KMT\par}}
+
+\newcommand{\kaiTodo}[2][]
+{\todo[inline,caption={#2}, size=\scriptsize, color=darkgreen!30, #1]{\renewcommand{\baselinestretch}{0.5}\selectfont#2 KN\par}}
+
+%% mnotes
+%\def\mnote#1{\medskip\centerline{\hfill\textcolor{red}{\small #1}}}
+\def\mnote#1{\relax}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\graphicspath{{./title/graphics/}{./introduction/graphics/}{./congestion/ptDelayPricing/}{./congestion/congestionPricing/}{./congestion/vtts/}{./noisePricing/noise/}{./noisePricing/ACP/graphics/}{./noisePricing/MCP/}{./severalExternalEffects/simultaneous/}{./congestion/decongestion/}{./severalExternalEffects/cna/}{./avOpt/}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatother
+%--------------------------------------------------------------------
+% glossary
+\usepackage[toc, acronym]{glossaries}
+\input{chapters/glossary/glossary}
+\makeglossaries
+%--------------------------------------------------------------------
+%listings (code snippets)
+%\usepackage{listings}
+%\renewcommand{\lstlistlistingname}{List of Listings}
+%\lstset{numbers=left, numberstyle=\footnotesize, numbersep=5pt, basicstyle=\footnotesize\sffamily}
+%\lstset{language=Java}
+%--------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% author, title, date of thesis
+\newcommand*{\Title}{Title}
+%\newcommand*{\Title}{Simulated Dynamic Pricing for Transport System Optimization}
+
+\newcommand*{\Autor}{Kai Martins-Turner}
+\newcommand*{\Datum}{Berlin 2023}
+\title{\Title}
+\author{\Autor}
+\date{\Datum}
+
+\newcommand{\tfk}[1]{\textsl{\texttt{#1}}}
+\newcommand{\fett}[1]{\textbf{#1}}
+\newcommand{\kursiv}[1]{\textit{#1}}
+\newcommand{\pbb}{\parbox}
+\newcommand{\sst}{\scriptstyle}
+
+\def\umbruch{\clearpage}
+\definecolor{darkgreen}{RGB}{0 153 0}
+
+% fÃŒr Standardumgebungen
+%\renewcommand{\labelitemi}{*} % AufzÃ€hlungszeichen definieren
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Allgemeine Schalter - Ãnderung von Standardeinstellungen
+\frenchspacing								% keine lÃ€ngeren Leerzeichen nach Satzende/AbkÃŒrzungen mit Punkt
+%\setlength{\parindent}{0pt}						% kein Einzug bei neuem Absatz
+\setlength{\parindent}{1.5ex}						% kein Einzug bei neuem Absatz
+%\setlength{\parskip}{1.5ex plus0.5ex minus 0.5ex}	% Abstand zwischen 2 AbsÃ€tzen
+\setlength{\parskip}{0.25ex plus0.25ex minus 0.25ex}	% Abstand zwischen 2 AbsÃ€tzen
+
+
+% verwende das paket setspace statt baselinestretch, Vorteil: AbstÃ€nde in FuÃzeilen und
+% listenumgebungen etc. bleiben erhalten
+%\renewcommand{\baselinestretch}{1.2}			% Zeilenabstand
+
+% WortabstÃ€nde optimal einstellen (use instead of \sloppy) - Verhindern von rausragenden Zeilen
+\tolerance 1414
+\hbadness 1414
+\emergencystretch 1.5em %1.5em
+\hfuzz 0.3pt
+\widowpenalty=10000
+\vfuzz \hfuzz
+\raggedbottom
+\brokenpenalty=10000						% Trennung bei Seitenumbruch
+
+\setlength{\headheight}{1cm} 					% HÃ¶he der Kopfzeile
+\addtolength{\footnotesep}{2pt}					% Abstand der FuÃnote zur Trennlinie
+
+% Setze Ãberschriftentiefe
+\setcounter{secnumdepth}{3}					% Nummerierung der Kapitel
+\setcounter{figure}{4}							% Bilder
+\setcounter{tocdepth}{2}						% Gliederungsebene fÃŒr Inhaltsverzeichnis
+
+% Einstellungen fÃŒr Kopf- und FuÃzeilen
+\pagestyle{scrheadings}       					% nutze scrheader
+\clearscrheadings             						% lÃ¶sche alle vorhandenen header
+%\addtokomafont{pagehead}{\normalsize\upshape}  % nichtkursive Kopf-/FuÃzeilen
+\setheadsepline{.1pt}							% trennlinie oben
+\setfootsepline{.1pt}							% trennlinie unten
+
+\automark[section]{chapter}   					% links chapter, rechts section
+
+% variere nach ein-/zweiseitig
+\makeatletter
+\if@twoside												% bei zweiseitig
+	\lehead{\leftmark}             % setze Kapitel linke Seite oben
+	\rohead{\rightmark}           % setze Abschnitt rechte Seite oben
+	\lefoot{\pagemark}            % Seitennummer unten links
+	\rofoot{\pagemark}            % Seitennummer unten rechts
+	%\lofoot{\Autor}       		% Name des Verfassers nur linke Seite
+\else														% einseitig
+	\ihead{\leftmark}            	% setze linke kopfzeile
+	\ohead{\rightmark}           	% setze rechte kopfzeile
+	\ofoot{\pagemark}             % seitennummer unten rechts
+	%\ifoot{\Autor}       		% Name des Verfassers unten links
+\fi
+
+% Bei Kapiteln ohne Subsection wird Kapitelname eingeblendet, nutze
+% \markright{}, um den \rohead freizulassen
+
+\hypersetup{
+			pdftitle={\Title},
+			pdfsubject={Dissertation, TU Berlin},
+			pdfauthor={Kai Martins-Turner},
+			pdfkeywords={agent-based transport simulation; freight transport; emissions; logistics; decarobinazation; elektrification; internalization; agentenbasierte Verkehrssimulation; G�terverkehr; Emissionen, Logistik, Dekarbonisierung; Elektrifizierung},
+			pdfdisplaydoctitle = {true},
+			pdffitwindow = {true},
+			pdfpagelayout = {TwoPageRight},
+			pdflang={en},
+			colorlinks=true,
+			citecolor=matsimblue,
+			linkcolor=matsimblue,
+			urlcolor=matsimblue,
+			bookmarksnumbered=true,
+bookmarksdepth=4}
+
+\makeatother
+
+\newcommand{\perf}{\it perf}

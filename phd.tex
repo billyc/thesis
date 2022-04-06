@@ -1,0 +1,239 @@
+\documentclass[
+10pt,
+a4paper,
+%parskip=half*, % do not fill last line of paragraph
+parskip=half-, % also fill last line of pargaraph until the end
+bibliography=totoc,
+cleardoublepage=empty,
+final,
+numbers=noenddot]
+%enabledeprecatedfontcommands]
+{scrbook}
+
+%\documentclass[10pt, a4paper, parskip=half*, bibliography=totoc, cleardoublepage=empty, final, numbers=noenddot]{scrreprt}	% ongoing pages, no page break after chapter
+
+\renewcommand{\sc}{\scshape}
+\renewcommand{\sf}{\sffamily}
+
+\input{settings/mysettings.tex}
+
+
+% =======================================================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%  THESIS START  %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% =======================================================
+
+\ifdefined\user
+\usepackage{geometry}
+\geometry{a5paper,left=1mm,right=1mm,top=1mm,bottom=2mm}
+%\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\familydefault}{\sffamily}
+%%\usepackage[utf8]{inputenc}
+\else
+\fi
+
+\begin{document}
+
+% =======================================================
+%%%%%%%%%%%%%% TO-DOs / Questions %%%%%%%%%%%%%
+% =======================================================
+
+\pagenumbering{alph}
+\listoftodos
+\clearpage
+
+\phantomsection
+\addcontentsline{}{chapter}{Allgemeine Notizen / Fragen}
+\textbf{{\Large Allgemeine Notizen / Fragen}}
+
+\kmtTodo{A4 oder A5 Format? IK hatte A5...}
+
+
+\clearpage
+
+
+\pagenumbering{roman}
+
+% =======================================================
+%%%%%%%%%%%%%%%%% Title Page %%%%%%%%%%%%%%%
+% =======================================================
+\phantomsection
+\addcontentsline{toc}{chapter}{Title page}
+\input{chapters/title/title.tex}
+\cleardoublepage
+
+% =======================================================
+%%%%%%%%%%%%%%%%% Preface %%%%%%%%%%%%%%%
+% =======================================================
+
+% Acknowledgements
+\phantomsection
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\input{chapters/acknowledgements/acknowledgements}
+\cleardoublepage
+
+% TOC
+\phantomsection
+\addcontentsline{toc}{chapter}{Table of Contents}
+\renewcommand{\contentsname}{Table of Contents}
+\tableofcontents
+\cleardoublepage
+
+% Figures
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+\cleardoublepage
+
+% Tables
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+\cleardoublepage
+
+% Abstract
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}
+\glsresetall
+\include{chapters/abstract/abstract}
+\cleardoublepage
+
+% Zusammenfassung
+\phantomsection
+\include{chapters/zusammenfassung/zusammenfassung}
+\addcontentsline{toc}{chapter}{Zusammenfassung}
+\cleardoublepage
+
+% =======================================================
+%%%%%%%%%%%%%%%%% MAIN SECTION %%%%%%%%%%%%%%%
+% =======================================================
+\pagenumbering{arabic}
+\glsresetall
+
+% Introduction
+\chapter{Introduction}
+\label{Introduction:ch}
+\include{chapters/introduction/introduction}
+
+\addtocontents{toc}{\bigskip}
+
+\part{Grundlagen und Methodik}
+\label{part:Grundlagen}
+
+\chapter{COVID-Sim}
+\label{ch:covid-sim}
+\include{chapters/03-covid-sim/covid-sim}
+
+\chapter{SimWrapper}
+\label{ch:simwrapper}
+\include{chapters/06-simwrapper/simwrapper}
+
+\chapter{Commercial Transport}
+\label{ch:wirtschaftsverkehr:ch}
+\include{chapters/grundlagen/wirtschaftsverkehr/wirtschaftsverkehr}
+
+\chapter{Emissions}
+\label{ch:emissionen:}
+\include{chapters/grundlagen/schadstoffe/schadstoffe}
+
+\chapter{Modeling and Simulation}
+\label{ch:modellierung-simulation}
+\include{chapters/grundlagen/modSim/modSim}
+
+\chapter{Scenarios}
+\label{ch:modellierung-scenarios}
+\include{chapters/grundlagen/scenarios/scenarios}
+
+% Elektrifizierung ohne Logistiknetzwerkänderung
+%\part{Auswirkungen von Restriktionsmaßnahmen mit Anpassungsmöglichkeiten des  Logistiknetzwerkes}
+\part{Reactions on Restrictions including changes in the logistics network}
+\label{part:2echolon}
+
+\chapter{Simulative Umsetzung des 2-echolon Tourenplanungsproblems}
+\label{ch:twoEcholonGrid}
+\include{chapters/2echolon/grid/grid}	 %  %article pubilshed in ...
+
+\chapter{Auswirkungen einer Null-Emissions-Zone}
+\label{ch:zeroEmissionZone}
+\include{chapters/2echolon/zeroEmissionZone/zeroEmissionZone}	 % %article pubilshed in ...
+
+\chapter{Auswirkungen eines Einfahrverbotes großer Fahrzeuge}
+\label{ch:verbotGrosserFzg}
+\include{chapters/2echolon/verbotGrosserFzg/verbotGrosserFzg}	 % s %article pubilshed in ...
+
+
+\bookmarksetup{startatroot}
+\addtocontents{toc}{\bigskip}
+\addtocontents{toc}{\bigskip}
+
+%\addtocontents{toc}{\vskip-6pt\par\noindent\protect\hrulefill\par}
+
+\glsresetall
+\chapter{Conclusion and Outlook}
+\label{chapter:conclusion}
+\include{chapters/conclusion/conclusion}
+\cleardoublepage
+% =======================================================
+%%%%%%%%%%%%%%%%%  Anhang  %%%%%%%%%%%%%%%
+% =======================================================
+
+%\phantomsection
+%\chapter*{Appendix}
+%\addcontentsline{toc}{chapter}{Appendix}
+
+%\begin{appendices}
+%\crefalias{chapter}{appendix}
+%%\chapter{Noise Computation based on the \glsentrytext{RLS-90}}
+%%\label{noise-app:noise}
+%%\input{appendix/appendix-a}
+%\end{appendices}
+%%\cleardoublepage
+
+
+% =======================================================
+%%%%%%%%%%%%%%%% Acronyms %%%%%%%%%%%%%%%
+% =======================================================
+%\glsaddall
+\printglossary[type=\acronymtype,title=List of Units and
+Acronyms, toctitle=List of Units and Acronyms]
+\cleardoublepage
+
+
+
+% =======================================================
+%%%%%%%%%%%%%% Literaturverzeichnis %%%%%%%%%%%%%
+% =======================================================
+\phantomsection
+\raggedright
+%\bibliography{../../../../documents/inputs/bib/vsp.bib,../../../../documents/inputs/bib/ref.bib,literature/literature-ik.bib,../../../../documents/inputs/bib/kai.bib,../../../../documents/inputs/bib/amit.bib}
+%\bibliography{literature/literature-ik.bib}
+\renewcommand\bibfont{\small}
+\renewcommand{\UrlFont}{\ttfamily\scriptsize}
+%\renewcommand*\backref[1]{\ifx#1\relax \else (cited on p. #1) \fi}
+\renewcommand*{\backreflastsep}{, }
+\renewcommand*{\backreftwosep}{, }
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{%
+   \ifcase #1 %
+     No citations.% use \relax if you do not want the "No citations" message
+   \or
+     (cited on p. #2).%
+   \else
+     (cited on pp. #2).%
+   \fi%
+}
+\setstretch{1}
+\bibliography{chapters/literature/thesis}
+\bibliographystyle{chapters/literature/lastnamefirstabbrvnat}
+%\bibliographystyle{plain}
+\cleardoublepage
+\newpage
+\thispagestyle{empty}
+\mbox{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\todo[inline]{Lösche Todo-Listen}
+\todo[inline]{makeglossary command ausführen}
+\todo[inline]{Enteferne allgmeine Notizen/Fragen Bereich aus dem Dokument}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
