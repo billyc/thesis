@@ -17,7 +17,7 @@ TEX = phd
 
 BUILD_DEPS := $(SRC)/$(TEX).tex
 BUILD_DEPS += $(SRC)/settings/mysettings.tex
-BUILD_DEPS += $(SRC)/book.bib $(SRC)/ref.bib $(SRC)/vsp.bib
+BUILD_DEPS += $(shell find $(SRC)/bib/*)
 BUILD_DEPS += Makefile $(shell find $(SRC)/chapters/*)
 
 build: $(TEX).pdf
@@ -25,13 +25,12 @@ build: $(TEX).pdf
 
 $(TEX).pdf: $(BUILD_DEPS)
 > pdflatex $(TEX).tex
-> # BIBINPUTS=$(SRC):~/shared-svn/documents/inputs/bib bibtex $(TEX)
-> # BIBINPUTS=$(SRC) bibtex $(TEX)
+> BIBINPUTS=$(SRC)/bib bibtex $(TEX)
 > pdflatex $(TEX).tex
-> pdflatex $(TEX).tex
+# > pdflatex $(TEX).tex
 
 serve:
-> fswatch -o src | xargs -n1 -I{} gmake
+> fswatch -o -e "aux$$" $(TEX).tex `find chapters -type f` `find bib -type f` | xargs -n1 -I{} gmake
 > # inotifywait -qrm --event modify src/* | while read file; do make; done
 .PHONY: serve
 
