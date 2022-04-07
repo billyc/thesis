@@ -8,6 +8,7 @@
 *.fdb_latexmk
 *.fls
 *.lof
+*.png.pdf
 *.synctex.gz
 *.tdo
 phd-blx.bib

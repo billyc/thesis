@@ -1,10 +1,14 @@
 #Latest commands (for M1):
 brew install basictex
+brew install imagemagick
 
 # Update $PATH to include `/usr/local/texlive/2020basic/bin/x86_64-darwin`
 eval "$(/usr/libexec/path_helper)"
 
 # Packages from internet
+
+# I used 2021 TexLive:
+# sudo tlmgr option repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2021/tlnet-final
 sudo tlmgr update --self
 sudo tlmgr install adjustbox
 sudo tlmgr install appendix
