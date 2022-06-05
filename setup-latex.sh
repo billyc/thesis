@@ -19,6 +19,7 @@ sudo tlmgr install collectbox
 sudo tlmgr install diagbox
 sudo tlmgr install enumitem
 sudo tlmgr install environ
+sudo tlmgr install latexindent
 sudo tlmgr install mhchem
 sudo tlmgr install paralist
 sudo tlmgr install pict2e

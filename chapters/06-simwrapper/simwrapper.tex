@@ -1,3 +1,7 @@
+% ------------------------------------------------------------------------------------
+% # Chapter: SimWrapper
+% ------------------------------------------------------------------------------------
+
 Having confirmed the utility and capabilities of a fully browser-based
 data visualization approach for three individual project portals, we
 then set out to generalize the method. An entirely generic data
@@ -22,6 +26,10 @@ This chapter describes \textbf{SimWrapper}, an open-source web-based
 data visualization platform we developed with the goal that it be useful
 for anyone working with MATSim outputs or even outputs from other
 data-intensive microsimulation models.
+
+% ------------------------------------------------------------------------------------
+% ## SimWrapper in a Nutshell
+% ------------------------------------------------------------------------------------
 
 \hypertarget{overview-simwrapper-in-a-nutshell}{%
 \section{Overview: SimWrapper, in a
@@ -101,6 +109,10 @@ The following sections explore the design of SimWrapper in more detail.
 
 \textbf{YY diagram of design}
 
+% ------------------------------------------------------------------------------------
+% ## Reusing existing components from previous projects
+% ------------------------------------------------------------------------------------
+
 \hypertarget{reuse-of-existing-framework-and-components}{%
 \section{Reuse of existing framework and
 components}\label{reuse-of-existing-framework-and-components}}
@@ -139,6 +151,10 @@ for the following:
 
 All of these libraries share compatible open-source licenses, and are
 included in SimWrapper under the terms of those licenses.
+
+% ------------------------------------------------------------------------------------
+% ## Modifications needed for a generic tool
+% ------------------------------------------------------------------------------------
 
 \hypertarget{modifications-necessary}{%
 \section{Modifications necessary}\label{modifications-necessary}}
@@ -192,6 +208,10 @@ agencies.
 
 YY
 
+% ------------------------------------------------------------------------------------
+% ## Accessing files via a Web Browser
+% ------------------------------------------------------------------------------------
+
 \hypertarget{accessing-files-through-a-web-browser}{%
 \section{Accessing files through a web
 browser}\label{accessing-files-through-a-web-browser}}
@@ -220,6 +240,10 @@ immediately publicized.
 Thus we explore several avenues for enabling users to view their
 outputs, described here.
 
+% ------------------------------------------------------------------------------------
+% ### How SimWrapper access files via HTTP
+% ------------------------------------------------------------------------------------
+
 \hypertarget{how-simwrapper-access-files-via-http}{%
 \subsection{How SimWrapper access files via
 HTTP}\label{how-simwrapper-access-files-via-http}}
@@ -245,6 +269,10 @@ is expected to provide HTTP directory access to this storage: SimWrapper
 needs to be able to \emph{view directory listings} and \emph{retrieve
 file contents}. SimWrapper never writes any files anywhere; it is
 read-only.
+
+% ------------------------------------------------------------------------------------
+% ### Local files
+% ------------------------------------------------------------------------------------
 
 \hypertarget{local-files-on-a-personal-laptopdesktop}{%
 \subsection{Local files on a personal
@@ -330,6 +358,10 @@ browser. If there are privacy or confidentiality issues with model
 outputs, SimWrapper can still be used for analysis in this ``localhost''
 mode.
 
+% ------------------------------------------------------------------------------------
+% ### Files on Compute Cluster servers
+% ------------------------------------------------------------------------------------
+
 \hypertarget{files-residing-on-the-university-compute-cluster-accessed-via-ssh}{%
 \subsection{Files residing on the university compute cluster, accessed
 via
@@ -368,6 +400,10 @@ slowly, depending on network throughput conditions).
   YY Windows users have many options for FUSE-based sshfs support, this
   repo is nice one \url{https://github.com/billziss-gh/sshfs-win}
 \end{itemize}
+
+% ------------------------------------------------------------------------------------
+% ### Files on other machines: simwrapper here
+% ------------------------------------------------------------------------------------
 
 \hypertarget{files-residing-on-another-machine-on-the-local-lan-network}{%
 \subsection{Files residing on another machine on the local LAN
@@ -412,6 +448,10 @@ local files stored on that server are made available, together.
 This also implies that SimWrapper can be used completely offline once it
 is installed.
 
+% ------------------------------------------------------------------------------------
+% ### Special case: Google Chrome
+% ------------------------------------------------------------------------------------
+
 \hypertarget{special-case-chrome-and-the-file-system-access-api}{%
 \subsection{Special case: Chrome and the ``File System Access
 API''}\label{special-case-chrome-and-the-file-system-access-api}}
@@ -441,6 +481,10 @@ re-requested every time the browser restarts.
 
 YY show browser grant access dialog
 
+% ------------------------------------------------------------------------------------
+% ## Converting purpose-built vizes into Generic Data Viewers
+% ------------------------------------------------------------------------------------
+
 \hypertarget{converting-purpose-built-visualizations-into-generic-data-viewers}{%
 \section{Converting purpose-built visualizations into generic data
 viewers}\label{converting-purpose-built-visualizations-into-generic-data-viewers}}
@@ -454,8 +498,12 @@ make them useful in a generic manner.
 This section describes some of the most challenging aspects of this
 process of genericizing SimWrapper.
 
+% ------------------------------------------------------------------------------------
+% ### Link Viewer
+% ------------------------------------------------------------------------------------
+
 \hypertarget{link-viewer}{%
-\subsubsection{Link viewer}\label{link-viewer}}
+\subsection{Link viewer}\label{link-viewer}}
 
 The link viewer was originally scoped to display link volumes only, such
 as a typical ``bandwidth plot'' commonly used in travel modeling. Even
@@ -477,29 +525,107 @@ most-requested enhancements.
 
 YY user testing
 
+% ------------------------------------------------------------------------------------
+% ### XY Data Plots
+% ------------------------------------------------------------------------------------
+
 \hypertarget{xy-hexagon-plots}{%
-\subsubsection{XY Hexagon plots}\label{xy-hexagon-plots}}
+\subsection{XY Hexagon plots}\label{xy-hexagon-plots}}
 
-Much data is not link-based, even for transport simulations. Activity
-locations, home locations, pickups and dropoffs for transit and taxi
-modes, all have coordinates associated with them but are not necessarily
-attached to specific links.
+Much data is not link-based, even for transport simulations. Activity locations, home locations, pickups and dropoffs for transit and taxi modes, all have geographic coordinates associated with them but are not necessarily attached to specific links.
 
-A new visualization type, the ``XY Hexagons'' plot, depicts these types
-of data by aggregating them into user-definable hexagonal buckets. The
-number of points inside the hexagons corresponds to a color or height;
-this is user-configurable.
+A new visualization type, the ``XY Hexagons'' plot, depicts these types of data by aggregating them into user-definable hexagonal buckets. The number of points inside the hexagons corresponds to a color or height; this is user-configurable.
 
 YY show XY Hexagon plot
 
-The default MATSim output \texttt{output\_trips.csv} includes this type
-of data, and is automatically viewable without any configuration at all
-if it is present in a SimWrapper data folder.
+The default MATSim output \texttt{output\_trips.csv} includes this type of data, and is automatically viewable without any configuration at all if it is present in a SimWrapper data folder.
+
+% ------------------------------------------------------------------------------------
+% ## Calculation Tables
+% ------------------------------------------------------------------------------------
 
 \hypertarget{calculation-tables}{%
-\subsubsection{Calculation tables}\label{calculation-tables}}
+\section{Calculation tables: providing top-line summary metrics}\label{calculation-tables}}
+
+Early in the development of SimWrapper, user feedback identified the need for reporting basic summary statistics and generating common aggregate values from model runs. These top-level summaries provide the first indication of useful results, such as overall mode share, average travel times, total emissions, and so forth. In addition, these measures are an excellent way to "sanity-check" a model run; in other words, to identify any obvious glaring errors in those topline numbers when compared to previously-established norms.
+
+The first element needed is a straightforward way for users to specify the inputs, outputs, and formatting of calculation tables, compatible with the file-based configuration approaches already in use for the graphical visualizations. A second challenge is to formulate a clear and accurate scheme for specifying the needed calculations, including statistical transformations of the inputs such as counts, sums, and so on. Finally, the tool must perform those calculations in memory and produce the display the results.
+
+These three elements are explored in order.
+
+% ------------------------------------------------------------------------------------
+% ### Calculation Table Config: Inputs, Files, Outputs
+% ------------------------------------------------------------------------------------
+
+\hypertarget{calculation-tables-definition}{%
+\subsection{Specifying calculation table files, inputs, and outputs }\label{calculation-tables-definition}}
+
+The most robust way to generate and display a table of numbers is by having the user develop their own post-processing scripts which output a simple CSV with the summary values and labels that they need. For this approach, nothing special is needed; whatever data analysis pipelines the analyst is already using are sufficient. Especially for more complex post-processing needs, using a high-quality platform such as Python or R is the recommended path.
+
+For more simple summaries, we develop a way to extract and minimally process typical MATSim data files including CSV and XML formats. This is based on experience with the hesitancy of some analysts in our department to write Python and R scripts (since they are far more familiar with Java programming). If all one needs is the sum of a column of values or the count of some event types, learning Python and debugging a Python script is perhaps overkill.
+
+As the file-based YAML configuration paradigm for SimWrapper is at this point well-established, a new YAML configuration schema for table calculations is the most natural way to express these table definitions.
+
+A new \texttt{table-*.yml} YAML schema containing four sections emerged from extensive iteration with users. The four required sections are:
+
+\begin{itemize}
+
+  \item \textbf{files}: The set of input file or files required for the table. These can be raw MATSim outputs or the results of any pre- or post-processing that has already occurred in the analyst data pipeline.
+
+  \item \textbf{interactive input entries}: This is a list of end-user-editable entries that are visible on interactive web form. Some calculations benefit from having a variable input which the user can specify; imagine fuel cost per liter, or number of vehicles in a taxi fleet. Each of these entries can have a default value.
+
+  \item \textbf{calculations}: An ordered list of mathematical calculations to be performed. Variables, data columns, and interactive elements specified above are combined in equations as needed. This is described in more detail below.
+
+  \item \textbf{outputs}: The final table entries are specified with formatting and labels.
+
+\end{itemize}
+
+Three of the four sections --- \emph{files}, \emph{interactive entries}, and \emph{outputs} --- are trivially specified and do not require extensive exposition here: they are straightforward definitions of file names, titles, and formatting directives. These are well-documented in the YY documentation available on the SimWrapper Website (\cite{SimWrapperWebsite}).
+
+The calculations are explored next.
+
+% ------------------------------------------------------------------------------------
+% ### Calculation Table DSL: Specifying the Equations
+% ------------------------------------------------------------------------------------
+\hypertarget{calculation-tables-dsl}{%
+\subsection{Specifying calculations using a Domain-Specific Language}\label{calculation-tables-dsl}}
+
+The final and most important piece of specifying calculations is devising the equation format to be used in the YAML configuration, which brings together the interactive value inputs, the required input files, data columns in those files (and any data manipulations thereon), and combines them all in understandable algebraic equations that can be solved by the tool.
+
+This is more akin to a "domain-specific language" (DSL) YY ACRONYM than a configuration file.
+
+\cite{Visser2008} defines a domain-specific language as follows, "A domain-specific language (DSL) is a high-level software implementation language that supports concepts and abstractions that are related to a particular (application) domain." Visser explains further that a DSL is in essence "the encapsulation of design and implementation knowledge from a particular application or technical domain. The commonalities of the domain are implemented directly in a conventional programming language or indirectly in code generation templates, while the variability is configurable by the application developer through some configuration interface."
+
+This is precisely what the YAML calculation definitions set out to do: allow a user who is an expert in the dataset and the needed transformations for a particular metric, to define that in a manner that doesn't require them to write a data analysis script in a full-fledged programming language such as R or Python.
+
+YY continue
+
+
+
+% - Need a way to write equations
+% - How to specify pieces of data from the inputs: files, columns, elements
+% - transformations
+% - filtering: two ways
+
+
+% ------------------------------------------------------------------------------------
+% ### Calculation Tables: Map/Reduce your way to an answer
+% ------------------------------------------------------------------------------------
+\hypertarget{calculation-tables-map-reduce}{%
+\subsection{Calculating summary values via "map/reduce"}\label{calculation-tables-map-reduce}}
+
+% - solve each equation, in top-down order
+% - map/reduce columns of data using statistical functions
+% - substitute values from out data
+% - nerdamer does the math
+% - final values can be displayed according to the formatting rules in 'output'
+
 
 YY Show PAVE example run output with Sankey, numbers, etc
+
+% ------------------------------------------------------------------------------------
+% ## Dashboards
+% ------------------------------------------------------------------------------------
 
 \hypertarget{dashboards-combining-visualizations-to-support-decisionmaking}{%
 \section{Dashboards: combining visualizations to support
@@ -557,7 +683,11 @@ shown as multiple navigation tabs on the page.
 This system of defining dashboards in configuration has been used to
 great effect in many internal studies
 
-YY Show Hamburg ? Düsseldorf?
+YY Show Düsseldorf (Hamburg?) ?
+
+% ------------------------------------------------------------------------------------
+% ## Project sites: Re-using and organizing outputs
+% ------------------------------------------------------------------------------------
 
 \hypertarget{project-traversal-and-organizing-outputs}{%
 \section{Project traversal and organizing
@@ -578,6 +708,11 @@ There is much more room for improvement here, but the basic format of a
 file and directory browser, which allows the user to ``drill down'' into
 subfolders, will be part of any solution.
 
+% ------------------------------------------------------------------------------------
+% ### Calculation Table DSL: The Calculation Engline
+% ------------------------------------------------------------------------------------
+
+
 \hypertarget{project-level-configuration}{%
 \subsection{Project-level
 configuration}\label{project-level-configuration}}
@@ -593,12 +728,24 @@ configuration files, whether they be dashboard layouts, individual
 visualization parameters, or table calculation definitions. See YY for
 more details on the configuration of individual components.
 
+% ------------------------------------------------------------------------------------
+% ## User Feedback and Iteration
+% ------------------------------------------------------------------------------------
+
 \hypertarget{user-feedback-and-iteration}{%
 \section{User feedback and
 iteration}\label{simwrapper-user-feedback}}
 
+% ------------------------------------------------------------------------------------
+% ## Limitations
+% ------------------------------------------------------------------------------------
+
 \hypertarget{limitations}{%
 \section{Limitations}\label{simwrapper-limitations}}
+
+% ------------------------------------------------------------------------------------
+% ## Discussion
+% ------------------------------------------------------------------------------------
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{simwrapper-discussion}}
