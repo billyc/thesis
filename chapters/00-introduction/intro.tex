@@ -1,0 +1,64 @@
+\hypertarget{introduction-main}{%
+\section{Introduction: Web-Based Data Visualization for Large-Scale Simulations}
+\label{introduction-main}}
+
+- motivation
+- research questions
+- outline
+
+
+
+% ----------- extra formatting help
+
+The COVID-Sim website is available at \url{https://covid-sim.info}
+
+\hypertarget{how-websites-are-built-clients-and-servers}{%
+\subsection{How websites are built: clients and
+servers}\label{how-websites-are-built-clients-and-servers}}
+
+Of course, much more complex arrangements are also possible. The web
+server can run code or scripts which generate part of the page
+dynamically, can call APIs which pull data from other servers or
+databases, and so on. These are known as ``dynamic'' sites, and for
+example our MatHub project used this arrangement.
+
+\hypertarget{single-page-applications}{%
+\subsection{Single Page Applications}\label{single-page-applications}}
+
+As early as 2003 {[}YY reference SPA page on wikipeda -- better ref?{]},
+the concept of a single-page application which runs Javascript code in
+the browser was already in existence. These types of sites run
+Javascript locally in the browser to transform the page contents that
+arrive from the web server. This is often done to make a page feel more
+interactive or more like a native desktop app. Some of the most popular
+websites in existence, such as Twitter and Facebook, employ this
+architecture.
+
+With all these pieces in place, the unique overall architecture of the
+EpiSim data visualization portal emerges:
+
+\begin{itemize}
+\item
+  An ``SPA'' single page application, based on Vuejs and hosted on a
+  static website hosting provider
+\item
+  Hierarchical file storage on a university departmental file server,
+  with data for all published runs available via HTTP. Each run is
+  stored in its own folder, and contains:
+
+  \begin{itemize}
+  \item
+    Automatically-generated configuration files, produced when the
+    EpiSim simulation runs are set up, which describing the specific
+    combinations of input parameters that are to be run.
+  \item
+    A lookup table which maps each combination of input parameters to a
+    specific output dataset
+  \item
+    Zipped output files containing the summary data for each simulation
+    run identifiable in the above lookup table.
+  \end{itemize}
+\end{itemize}
+
+\ldots{} YY
+

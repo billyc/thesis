@@ -1,0 +1,64 @@
+%% ----- INTRODUCTION -----
+\hypertarget{server-experiments-introduction}{%
+\section{Introduction}\label{server-experiments-intro}}
+
+- Background: before arriving at VSP I worked on internal model workflow projects (PSRC) and data visualization portals (TNCs today, SFCTA)
+- Interest in open, web-based platforms for displaying and analyzing transport model outputs. So we started playing.
+- Discussed with users what would be useful
+
+%% ----- TRANSIT VIEWER -----
+\hypertarget{server-experiments-transit}{%
+\section{MATSim Transit Network Viewer}\label{server-experiments-transit}}
+
+The first step in building web-based tools for MATSim was reading and parsing MATSim input files. Specifically, MATSim inputs representing the transportation network and public transit supply are both well-defined XML formats YY and are of a size that does not present problems on typical computers. Based on feedback from team members, a transit service explorer was identified as a good first task.
+
+A minimally-useful tool needed the following capabilities:
+
+\begin{itemize}
+  \tightlist
+  \item
+    Load and parse a MATSim network XML file and transit supply input file, including gzip-compressed files, as gzip is typically used to compress MATSim files
+  \item
+    Display the network links on a zoomable background map
+  \item
+    Display the transit lines and routes that are on network links, using width and color to depict multiple routes or transit modes on a facility
+  \item
+    Allow the user to select a specific facility (link) and see the details of the transit routes and lines which use it
+\end{itemize}
+
+This seemingly small project presented some initial challenges. First and foremost, by design and to protect the security of a user's files, by default web browsers do not allow any access to the files on a users local computer.
+
+- Talk about the file server
+- Talk about coordinates
+- Talk about standalone tools using Electron
+
+%% ----- GEOSERVER -----
+\hypertarget{server-experiments-geoserver}{%
+\section{Accessibility maps using GeoServer}\label{server-experiments-geoserver}}
+
+- GeoServer: accessibility for Kenya
+
+%% ----- EMISSIONS  -----
+\hypertarget{server-experiments-emissions}{%
+\section{MATSim Emissions}\label{server-experiments-emissions}}
+
+%% ----- DISCUSSION AND OUTLOOK  -----
+\hypertarget{server-experiments-findings}{%
+\section{Discussion and Outlook}\label{server-experiments-findings}}
+
+%% ----- SUMMARY  -----
+\hypertarget{server-experiments-summary}{%
+\section{Summary}\label{server-experiments-summary}}
+
+
+Internal use of tools was very limited because of lack of features (could do it all in QGis or VIA); and also because the individual tools were haphazard in their installation. Each one had a separate URL, or required files to be uploaded somewhere users were unaccustomed to.
+
+Through many discussions we decided that the experiments had been useful in pointing us toward building a centralized data analysis platform.
+
+- Show progression from PHD seminar slides
+
+- This led to MatHub: a fully centralized, client/server based approach to creating standard data visualizations.
+
+Next chapter describes that platform fully.
+
+

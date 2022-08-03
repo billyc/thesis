@@ -114,63 +114,51 @@ numbers=noenddot]
 % Introduction
 \chapter{Introduction}
 \label{Introduction:ch}
-\include{chapters/introduction/introduction}
+\include{chapters/00-introduction/intro}
 
 \addtocontents{toc}{\bigskip}
 
-\part{Grundlagen und Methodik}
-\label{part:Grundlagen}
+% ===========================================================================
+\part{EXPERIMENTS WITH WEB-BASED DATA VISUALIZATION FOR MATSIM}
+\label{part:1servers}
 
-\chapter{Client/Server Visualization for MATSim}
+\chapter{Experiments with web-based data visualization of MATSim outputs}
+\label{ch:server-experiments}
+\include{chapters/01-server-experiments/server-experiments}
+
+\chapter{MatHub: a client/server-based data visualization research platform for MATSim}
 \label{ch:mathub}
-\include{chapters/02-research/mathub}
+\include{chapters/02-mathub/mathub}
+
+% ===========================================================================
+\part{PROJECT SITES USING CLIENT-SIDE DATA VISUALIZATION TECHNIQUES}
+\label{part:2projectsites}
 
 \chapter{COVID-Sim}
 \label{ch:covid-sim}
 \include{chapters/03-covid-sim/covid-sim}
 
-\chapter{AVÖV and PAVE}
-\label{ch:pave}
-\include{chapters/04-avov-pave/pave}
+\chapter{AVÖV}
+\label{ch:avov}
+\include{chapters/04-avov/avov}
 
-\chapter{SimWrapper}
+\chapter{PAVE}
+\label{ch:pave}
+\include{chapters/05-pave/pave}
+
+% ===========================================================================
+\part{A GENERALIZED BROWSER-BASED DATA VISUALIZATION PLATFORM}
+\label{part:3simwrapper}
+
+\chapter{SimWrapper: a fully browser-based data visualization platform}
 \label{ch:simwrapper}
 \include{chapters/06-simwrapper/simwrapper}
 
-% \chapter{Commercial Transport}
-% \label{ch:wirtschaftsverkehr:ch}
-% \include{chapters/grundlagen/wirtschaftsverkehr/wirtschaftsverkehr}
+\chapter{SimWrapper in practice: project sites built using SimWrapper}
+\label{ch:simwrapper-in-practice}
+\include{chapters/07-hamburg-duesseldorf-dashboards/simwrapper-sites}
 
-% \chapter{Emissions}
-% \label{ch:emissionen:}
-% \include{chapters/grundlagen/schadstoffe/schadstoffe}
-
-% \chapter{Modeling and Simulation}
-% \label{ch:modellierung-simulation}
-% \include{chapters/grundlagen/modSim/modSim}
-
-% \chapter{Scenarios}
-% \label{ch:modellierung-scenarios}
-% \include{chapters/grundlagen/scenarios/scenarios}
-
-% Elektrifizierung ohne Logistiknetzwerkänderung
-%\part{Auswirkungen von Restriktionsmaßnahmen mit Anpassungsmöglichkeiten des  Logistiknetzwerkes}
-
-\part{Reactions on Restrictions including changes in the logistics network}
-\label{part:2echolon}
-
-% \chapter{Simulative Umsetzung des 2-echolon Tourenplanungsproblems}
-% \label{ch:twoEcholonGrid}
-% \include{chapters/2echolon/grid/grid}	 %  %article pubilshed in ...
-
-% \chapter{Auswirkungen einer Null-Emissions-Zone}
-% \label{ch:zeroEmissionZone}
-% \include{chapters/2echolon/zeroEmissionZone/zeroEmissionZone}	 % %article pubilshed in ...
-
-% \chapter{Auswirkungen eines Einfahrverbotes großer Fahrzeuge}
-% \label{ch:verbotGrosserFzg}
-% \include{chapters/2echolon/verbotGrosserFzg/verbotGrosserFzg}	 % s %article pubilshed in ...
-
+% ===========================================================================
 
 \bookmarksetup{startatroot}
 \addtocontents{toc}{\bigskip}
@@ -181,7 +169,7 @@ numbers=noenddot]
 \glsresetall
 \chapter{Conclusion and Outlook}
 \label{chapter:conclusion}
-\include{chapters/conclusion/conclusion}
+\include{chapters/08-conclusions/conclusions}
 \cleardoublepage
 % =======================================================
 %%%%%%%%%%%%%%%%%  Anhang  %%%%%%%%%%%%%%%

@@ -1,53 +1,73 @@
-# OUTLINE
+Abstract
+
+Zusammenfassung
 
 Acknowledgements
+
 Table of Contents
+
 Lists of Figures / Tables
 
-## Abstract
-
-## 1 Introduction
+## 0. Introduction
 
 - motivation
 - research questions
 - outline
 
-**— PART I: methodology —**
+# PART I: CLIENT-SERVER DATA VISUALIZATION FOR MICROSIMULATION RESULTS
 
-## 2 Server-based experiments
+## 1. Explorations of data visualization techniques in support of the MATSim microsimulation
 
-- fully browser-based
+Server-based experiments:
+
 - user interface research
 - Accessibility (Kenya)
 - SNF Switzerland model (flows)
-- **Paper:** Web-based Data Visualization Platform for MATSim (2020)
-- findings & user feedback
+- Emissions: level-of-detail
 
-**— PART II: Project-based web-based visualizations —**
+## 2. MatHub: A server-based data visualization platform for MATSim
+
+- import MatHub paper in its entirety
+  - **Paper:** Web-based Data Visualization Platform for MATSim (2020)
+
+# PART II: PROJECT SITES USING CLIENT-SIDE DATA VISUALIZATION TECHNIQUES
 
 ## 3 COVID-SIM: Direct browser-based data visualition
 
+Then COVID happened.
+
+- What was wrong with the server-based system?
 - throwing out the server to accelerate everything
+- Covid site chapter.
 
-## 4 AVÖV and PAVE
+## 4 AVÖV
 
-- **Paper:** Open-Source Web-Based Visualizer for Dynamic-Response Shared Taxi Simulations (2021)
+- AVÖV Paper in its entirety
+  - - **Paper:** Open-Source Web-Based Visualizer for Dynamic-Response Shared Taxi Simulations (2021)
 
-**— PART III: A generalized browser-based transport data visualization platform —**
+## 5 PAVE
 
-## 5 User feedback and further user experience research
+- More on PAVE
 
-- Repeated efforts in building project-specific sites -> user feedback, let's make it generic
+# PART III: A GENERALIZED BROWSER-BASED DATA VISUALIZATION PLATFORM
 
 ## 6 SimWrapper
 
-## 7 HH Hamburg
+- Three repeated efforts in building project-specific sites
+- After doing it three times
+- Based on user feedback, time to make it generic
+
+## 7 Project sites built using SimWrapper
+
+- HH Hamburg
+- KoMo:Dnext
+- MATSim Generic dashboard
 
 ## 8 Conclusion and Outlook
 
     - Conclusion
     - Further Challenges
 
-Glossary
+## Glossary
 
-Bibliography
+## Bibliography
