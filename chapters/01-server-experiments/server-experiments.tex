@@ -68,22 +68,69 @@ Recent versions of MATSim since 2019 embed the coordinate reference system in th
 
 \autoref{fig:transit-viewer} shows an example usage of the transit network viewer tool. The public transport network of Cottbus, a small city in eastern Germany, is depicted. All streets with local transit are drawn in red, while all transit services using a user-selected link are shown in yellow and green. The specific transit routes on the selected link are also listed in a detailed view in the upper left, describing the first and last departures for the route and the number of runs per day for that route.
 
+Testing confirms that transit networks as large as the entire Berlin region, including all bus and rail passenger transport, are also viewable and performant using the tool.
+
 \begin{figure}[!ht]
   \includegraphics[width=\textwidth]{chapters/01-server-experiments/images/transit-viewer.png.pdf}
   \caption{Web-based transit network viewer. This depicts the public transit network of Cottbus, Germany, a small city in eastern Germany. One central link is selected, with the various transit routes using that line highlighted in yellow and green.}
   \label{fig:transit-viewer}
-  \end{figure}
+\end{figure}
 
 As the user highlights routes in the detail view, or selects different road facilities on the map, the colors and details update immediately, allowing the user to explore the network in an interactive way.
 
 Users provided positive feedback on the tool, saying that it helped them debug network errors in complex networks. Constructive/negative feedback highlighted initial confusion around file management and coordinate systems.
 
-
 %% ----- GEOSERVER -----
 \hypertarget{server-experiments-geoserver}{%
-\section{Accessibility maps using GeoServer}\label{server-experiments-geoserver}}
+\section{Accessibility calculations using GeoServer and MATSim}\label{server-experiments-geoserver}}
 
-- GeoServer: accessibility for Kenya
+MATSim can be used to calculate general accessibility measures, as described in \cite{ziemke2018accessibility}. For a project in Nairobi, Kenya, MATSim was used to generate accessibility measures for several different metrics such as access to drinking water, public school locations, and commercial opportunities. For each measure there were multiple scenarios such as current conditions, system breakdowns (such as a contaminated water source) and so on. The proliferation of combinations of measures and scenarios led to the idea of using the a server back-end to store results, along with a web-based front end to review results.
+
+GeoServer, as described in \cite{giannecchini2013geoserver}, is
+
+\begin{displayquote}
+\emph{"an Open Source application for the handling and dissemination of geospatial data. GeoServer provides the basic functionalities to create interoperable Spatial Data Infrastructure according to standards edited by the Open Geospatial Consortium (OGC)... GeoServer [can] ingest, manage, and serve both vector and raster geospatial data."}
+\end{displayquote}
+
+VSP has an internal GeoServer installation, and the outputs of the accessibility calculations can be uploaded to it easily. Thus for this experiment, instead of a client-side only JavaScript web application, we built a website front end that accessed the data on GeoServer using the GeoServer API.
+
+\hypertarget{server-experiments-geoserver-2}{%
+\subsection{Specifying the available accessibility measures using YAML}
+\label{server-experiments-geoserver-2}}
+
+GeoServer uses a long "string-id" to identify datasets, e.g. the Kibera, Kenya OSM Live scenario, for drinking water within 50 meters, with a specific color scale for relative differences of 0.5-3.5 units compared to the base case, has a string ID of
+
+\emph{accessibilities:ke\_kibera\_osm\_live\_50\_drinking\_water\_walk\_0.5\_3.5}.
+
+Obviously this is quite unreadable for website text, so the client website reads a YAML-based configuration file which maps the many run configurations to the appropriate GeoServer IDs. The various options are then exposed in the website user interface as drop-down selections, buttons, and so forth.
+
+YAML is a simple text format which uses indentation and punctuation to define and group pairs of key:value configuration data. For example, \autoref{fig:geoserver-yaml} shows a snippet of a YAML configuration for drinking water in Kibera, Kenya.
+
+\begin{figure}[!ht]
+  \includegraphics[width=\textwidth]{chapters/01-server-experiments/images/geoserver-yaml.png.pdf}
+  \caption{Snippet of YAML configuration which maps user-intelligible information to GeoServer dataset IDs.}
+  \label{fig:geoserver-yaml}
+\end{figure}
+
+This configuration information when the site is loaded. All of the runs defined in YAML can then be found in the user interface by selecting the metric from a dropdown and choosing the scenario for that metric with a set of buttons. The accessibility data is then pulled from the GeoServer API and displayed on top of the background map.
+
+\hypertarget{server-experiments-geoserver-3}{%
+\subsection{The Nairobi, Kenya accessibility data website}
+\label{server-experiments-geoserver-3}}
+
+\autoref{fig:nairobi} shows a typical accessibility measure displayed in the website built for the Nairobi, Kenya project. In this image, the selected metric (access to drinking water) and the scenario (normal conditions) are visible, and the grid-based accessibility values calculated by MATSim are plotted on top of the basemap. Hovering over a colored area shows the exact values for the cell in a popup hover window.
+
+\begin{figure}[!ht]
+  \includegraphics[width=\textwidth]{chapters/01-server-experiments/images/nairobi.png.pdf}
+  \caption{Drinking water accessibility calculations, generated by MATSim. This interactive tool allowed users to compare accessibility calculations for drinking water, school locations, and commercial opportunities across several alternatives.}
+  \label{fig:nairobi}
+\end{figure}
+
+Feedback from internal users was quite positive, as they were able to upload new runs to the server in their usual workflow, and updating the website only required the editing of one configuration file.
+
+This approach required manual updates from the web development team every time new data was available, however. For larger teams or more rapid analysis, a more streamlined and automated approach would be beneficial.
+
+The accessibility website was not developed further after this initial project. Indeed, the GeoServer implementation has not been used for any other purposes since this accessibility research concluded. Interviews revealed that department staff were unclear on the benefits of uploading their datasets to the GeoServer, when they could make non-interactive maps in traditional GIS desktop software, suitable for inclusion in publishable research papers.
 
 %% ----- EMISSIONS  -----
 \hypertarget{server-experiments-emissions}{%
