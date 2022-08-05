@@ -78,7 +78,7 @@ Testing confirms that transit networks as large as the entire Berlin region, inc
 
 As the user highlights routes in the detail view, or selects different road facilities on the map, the colors and details update immediately, allowing the user to explore the network in an interactive way.
 
-Users provided positive feedback on the tool, saying that it helped them debug network errors in complex networks. Constructive/negative feedback highlighted initial confusion around file management and coordinate systems.
+Users provided positive feedback on the tool, saying that it helped them debug network errors in complex networks, and was fast and responsive. Constructive/negative feedback highlighted initial confusion around file management and coordinate systems.
 
 %% ----- GEOSERVER -----
 \hypertarget{server-experiments-geoserver}{%
@@ -130,29 +130,77 @@ Feedback from internal users was quite positive, as they were able to upload new
 
 This approach required manual updates from the web development team every time new data was available, however. For larger teams or more rapid analysis, a more streamlined and automated approach would be beneficial.
 
-The accessibility website was not developed further after this initial project. Indeed, the GeoServer implementation has not been used for any other purposes since this accessibility research concluded. Interviews revealed that department staff were unclear on the benefits of uploading their datasets to the GeoServer, when they could make non-interactive maps in traditional GIS desktop software, suitable for inclusion in publishable research papers.
+The accessibility website was not developed further after this initial project. Indeed, the GeoServer implementation at VSP has not been used for any other purposes since this accessibility research concluded. Interviews revealed that department staff were unclear on the benefits of uploading their datasets to the GeoServer, when they could instead make non-interactive maps in traditional GIS desktop software, suitable for inclusion in publishable research papers.
 
 %% ----- EMISSIONS  -----
 \hypertarget{server-experiments-emissions}{%
-\section{MATSim Emissions}\label{server-experiments-emissions}}
+\section{Visualizing MATSim emission outputs}
+\label{server-experiments-emissions}}
+
+MATSim emissions outputs can be derived from simulations using standard MATSim modules, as documented in \cite{Kickhoefer2015EmissionModeling}. In brief, the amount of several emission types produced on a geographic grid basis are created from the standard modules and post-processing scripts output these values for each specific emission type.
+
+As an experiment in how large a dataset can be ingested by the web client and the MapBox GL visualization library, we attempted to load this data into a new interactive website custom-built for displaying MATSim emissions.
+
+As with the earlier experiments, the user can either store their simulation outputs on the departmental file server or access them via a local HTTP server running on localhost.
+
+The size of the emission output files depends on the size of the grid cells, the number of time bins, and the geographic extent of the overall area being modeled. For the Berlin experiment, one-hour time bins and 100 meter cells resulted in individual pollutant files of approximately 150 megabytes each. Being text files, they compress by around 60-75\% -- even so, these are rather large files to try to load into a local web client.
+
+It does work, however: after loading the data, which can take about a minute on a fast, recent laptop, the map is viewable. See \autoref{fig:emissions-grid} for an example view of emissions at the grid cell level in an area near a major freeway in Berlin.
+
+\begin{figure}[!ht]
+  \includegraphics[width=\textwidth]{chapters/01-server-experiments/images/emissions-grid.png.pdf}
+  \caption{Example grid-based emission values output by MATSim for a Berlin scenario.}
+  \label{fig:emissions-grid}
+\end{figure}
+
+\hypertarget{server-experiments-emissions-lod}{%
+\subsection{Level of detail}
+\label{server-experiments-emissions-lod}}
+
+A problem arises when the map is zoomed out. The MapBox GL mapping library slows down to unusable speeds when there are too many cells in the view at once. "Too many" depends on the speed of the users laptop and graphics card, but the problem occurs for even the fastest laptops we have available for testing.
+
+Thus, a way to trim or reduce the amount of data being displayed is necessary. Limiting the "level of detail" by selecting a subset of grid cells as the map is zoomed out successfully results in the map being viewable again. As soon as the map is zoomed, this triggers a background task of selecting the subset of coordinates and the values thereof.
+
+For each of these elements, a Voronai cell is calculated which surrounds the area around the selected points. Voronai is "one of the most fundamental data structures in computational geometry" as described decades ago in \cite{aurenhammer1991voronoi} and is well-suited to this visualization type. The Voronai diagram replaces the hard, square grid of cells with variably-sized convex polygons surrounding each selected data point, so that every point on the map is inside the cell along with the closest selected point.
+
+This approach makes for some interesting looking plots, an example of which is shown in \autoref{fig:emissions-lod}, but it also clearly warps the values being displayed. Jagged edges around the Voronai cells are especially pronounced in areas where the emissions are dropping off rapidly, such as the areas immediately adjacent to high-emission freeway links.
+
+\begin{figure}[!ht]
+  \includegraphics[width=\textwidth]{chapters/01-server-experiments/images/emissions-lod.png.pdf}
+  \caption{Example Voronai areas depicting emission values for the same Berlin scenario. This zoom level required using a level-of-detail optimization to reduce and simplify the large number of data points being drawn at the same time.}
+  \label{fig:emissions-lod}
+\end{figure}
+
+The background task of calculating Voronai cells at a specified zoom level is sluggish, and the results have display artifacts that may not be helpful to analysts. Between the slowness of loading the data, the sluggishness of the resulting visualization, and the compromises involved in viewing a limited level of detail at some zoom levels, this visualization experiment was not very useful for analysts at VSP.
+
+The research on roadway emissions is published in \cite{kaddoura2022exhaust}, without reference to these visualization experiments.
+
+For comparision, this work is complemented by and superceded by a very different approach taken in YY [cite JANEK'S WORK HERE].
 
 %% ----- DISCUSSION AND OUTLOOK  -----
 \hypertarget{server-experiments-findings}{%
 \section{Discussion and Outlook}\label{server-experiments-findings}}
 
+This set of initial experiments in using web-based technologies to visualize MATSim simulation data resulted in some useful findings.
+
+First, the management of simulation output files is complex and subject to the pre-existing habits and preferences of analysts. Constant feedback from analysts made it clear that MATSim outputs are very large, and moving these files around between the machine they were produced on to servers for analysis or even store creates friction for analysts. That friction was high enough that very few researchers in the department were willing to try some of these features being developed for them. The alternative, running a local HTTP server to view files on a local computer, was itself also very foreign to analysts, and created another barrier to usage. Future developments need to streamline the workflow and file management.
+
+Second, there is a limit to how much data can be reasonably ingested by a local web browser. Even on the most recent and fastest laptops, some datasets were simply too large to load natively and required post-processing for aggregation or pruning datasets using "level of detail" techniques. This is a central reason why most commercially-built data analysis products rely on a back-end server which stores datasets, usually in some sort of database format, and a client front-end which displays subsets of that data as it is received. The GeoServer example above used this approach successfully. The emissions example showed the limits of the client-side approach, as the load times were unacceptable and the MapBox GL libraries could not handle the size of the datasets once loaded. (But see \autoref{ch:simwrapper} for techniques for handling much larger datasets client-side).
+
+Based on the results of these experiments, a client-server approach for centralizing MATSim simulation outputs and visualizations was agreed upon as a logical next step. Creating a server-backed system has some risks as are noted above, but it is the approach taken by most data-heavy websites. That system is described fully in \autoref{ch:mathub}.
+
 %% ----- SUMMARY  -----
 \hypertarget{server-experiments-summary}{%
 \section{Summary}\label{server-experiments-summary}}
 
+This chapter describes a set of web-based data visualization experiments that explore different approaches to visualizing MATSim simulation outputs in various contexts.
 
-Internal use of tools was very limited because of lack of features (could do it all in QGis or VIA); and also because the individual tools were haphazard in their installation. Each one had a separate URL, or required files to be uploaded somewhere users were unaccustomed to.
+The public transit supply viewer allows the end user to load and explore the public transit network schedule directly from the MATSim input network and transit schedule XML files. These files are small enough to be loaded directly in the browser, and users found the tool useful in debugging the transit networks for their projects.
 
-Through many discussions we decided that the experiments had been useful in pointing us toward building a centralized data analysis platform.
+The accessibility tool provided an interactive, outward-facing website that explored accessibility datasets uploaded to a central server. The tool was feature rich and well-liked, but was limited in scope to small datasets that were uploaded manually to this specific departmental server.
 
-- Show progression from PHD seminar slides
+The emissions experiments tested the limits of data sizes that can be ingested client-side. Files of 150 megabytes were successfully loaded, but users found the load times unacceptably slow and the operation of the website too sluggish to be useful. Smaller datasets might be more manageable, but the reality is that MATSim is used for large-scale microsimulation studies, and the size of these datasets proved too large for a fully client-side approach.
 
-- This led to MatHub: a fully centralized, client/server based approach to creating standard data visualizations.
+User feedback from all of these experiments highlighted the need for streamlined workflow and minimal copying of files between machines, as this creates friction for adoption.
 
-Next chapter describes that platform fully.
-
-
+The next chapter describes an attempt at addressing these findings in an integrated platform.
