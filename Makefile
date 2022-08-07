@@ -30,9 +30,12 @@ build: images $(TEX).pdf
 $(TEX).pdf: $(BUILD_DEPS)
 > rm -f *.log
 > pdflatex -interaction batchmode -draftmode $(TEX).tex
+> makeglossaries phd
 > BIBINPUTS=$(SRC)/bib bibtex $(TEX)
-# > pdflatex -interaction batchmode -draftmode $(TEX).tex #--third try needed?
+> pdflatex -interaction batchmode $(TEX).tex #--third try needed?
 > pdflatex -interaction batchmode $(TEX).tex
+# > pdflatex -interaction batchmode $(TEX).tex
+# > pdflatex -interaction batchmode $(TEX).tex
 
 images: $(PDF_IMAGES)
 .PHONY: images

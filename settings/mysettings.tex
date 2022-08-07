@@ -12,7 +12,7 @@
 
 %\usepackage[automark]{scrpage2} % Koma Headers - deprecated....
 \usepackage[automark]{scrlayer-scrpage} % Koma Headers - new version
-\usepackage[ngerman, english]{babel} % prepare for german AND english, last language loaded is default
+\usepackage[english]{babel} % prepare for german AND english, last language loaded is default
 \usepackage[autostyle=true, babel, english=american]{csquotes} % babel needs csquotes
 %\usepackage{nag} % warn user on outdated packages
 \usepackage[linktocpage,pagebackref=true]{hyperref}	% links in pdf, thumbnails
@@ -159,11 +159,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \makeatother
+
 %--------------------------------------------------------------------
 % glossary
 \usepackage[toc, acronym]{glossaries}
-\input{chapters/glossary/glossary}
 \makeglossaries
+\input{chapters/glossary/glossary}
+
 %--------------------------------------------------------------------
 %listings (code snippets)
 %\usepackage{listings}
@@ -177,7 +179,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % author, title, date of thesis
-\newcommand*{\Title}{YY HELLO}
+\newcommand*{\Title}{YY MY DISSERTATION}
 
 \newcommand*{\Autor}{William A. Charlton}
 \newcommand*{\Datum}{Berlin 2022}
@@ -267,8 +269,8 @@
 \hypersetup{
 			pdftitle={\Title},
 			pdfsubject={Dissertation, TU Berlin},
-			pdfauthor={Kai Martins-Turner},
-			pdfkeywords={agent-based transport simulation; freight transport; emissions; logistics; decarobinazation; elektrification; internalization; agentenbasierte Verkehrssimulation; G�terverkehr; Emissionen, Logistik, Dekarbonisierung; Elektrifizierung},
+			pdfauthor={William Charlton},
+			pdfkeywords={data visualization; transport; agent-based transport simulation},
 			pdfdisplaydoctitle = {true},
 			pdffitwindow = {true},
 			pdfpagelayout = {TwoPageRight},
