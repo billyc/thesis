@@ -11,6 +11,7 @@
 *.png.pdf
 *.synctex.gz
 *.tdo
+.sentinel*
 phd-blx.bib
 phd.acn
 phd.acr

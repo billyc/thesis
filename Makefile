@@ -24,18 +24,19 @@ BUILD_DEPS += $(SRC)/settings/mysettings.tex
 BUILD_DEPS += $(shell find $(SRC)/bib/*)
 BUILD_DEPS += $(PDF_IMAGES)
 
-build: images $(TEX).pdf
-.PHONY: build
-
 $(TEX).pdf: $(BUILD_DEPS)
 > rm -f *.log
-> pdflatex -interaction batchmode -draftmode $(TEX).tex
-> makeglossaries phd
-> BIBINPUTS=$(SRC)/bib bibtex $(TEX)
-> pdflatex -interaction batchmode $(TEX).tex #--third try needed?
 > pdflatex -interaction batchmode $(TEX).tex
-# > pdflatex -interaction batchmode $(TEX).tex
-# > pdflatex -interaction batchmode $(TEX).tex
+
+.sentinel-final: $(TEX).pdf
+> BIBINPUTS=$(SRC)/bib bibtex $(TEX)
+> makeglossaries phd
+> pdflatex -interaction batchmode $(TEX).tex
+> pdflatex -interaction batchmode $(TEX).tex
+> pdflatex -interaction batchmode $(TEX).tex
+> touch $@  # only creates .sentinel-final when the entire build process completes successfully
+
+final: .sentinel-final
 
 images: $(PDF_IMAGES)
 .PHONY: images

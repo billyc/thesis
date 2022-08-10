@@ -1,5 +1,10 @@
+%\RequirePackage{expl3}    % \usepackage cannot be used before \documentclass
+%\ExplSyntaxOn             % Switch on expl3 syntax
+%\pdf_version_gset:n{1.7}  % Use provided expl3 function
+%\ExplSyntaxOff            % Switch off expl3 syntax
+%
 \documentclass[
-10pt,
+11pt,
 a4paper,
 %parskip=half*, % do not fill last line of paragraph
 parskip=half-, % also fill last line of pargaraph until the end
@@ -29,7 +34,6 @@ numbers=noenddot]
 \geometry{a5paper,left=1mm,right=1mm,top=1mm,bottom=2mm}
 %\renewcommand{\familydefault}{\sfdefault}
 \renewcommand{\familydefault}{\sffamily}
-%%\usepackage[utf8]{inputenc}
 \else
 \fi
 
@@ -118,6 +122,10 @@ numbers=noenddot]
 \addtocontents{toc}{\bigskip}
 
 % ===========================================================================
+% PART I: MATSim DATA VIZ USING WEB-BASED TECHNOLOGIES:
+%         Experiments and initial tools for analysts
+% ===========================================================================
+
 \part{MATSim Data Visualization Using Web-Based Technologies}
 \label{part:1servers}
 
@@ -129,24 +137,32 @@ numbers=noenddot]
 \label{ch:mathub}
 \include{chapters/02-mathub/mathub}
 
-% ===========================================================================
-\part{PROJECT SITES USING CLIENT-SIDE DATA VISUALIZATION TECHNIQUES}
+% =============================================================================
+% PART II: DATA VISUALIZATION FOR PROJECT WEBSITES:
+%          Developing project portals for three large-scale simulation projects
+% =============================================================================
+
+\part{Project Sites Using Client-Side Data Visualization Techniques}
 \label{part:2projectsites}
 
 \chapter{COVID-Sim}
 \label{ch:covid-sim}
 \include{chapters/03-covid-sim/covid-sim}
 
-\chapter{AVÖV}
+\chapter{AVÖV Project: Automated and Networked Public Transport in Rural Germany}
 \label{ch:avov}
 \include{chapters/04-avov/avov}
 
-\chapter{PAVE}
+\chapter{PAVE Project: The Potential of Automated Transport Systems}
 \label{ch:pave}
 \include{chapters/05-pave/pave}
 
-% ===========================================================================
-\part{A GENERALIZED BROWSER-BASED DATA VISUALIZATION PLATFORM}
+% =============================================================================
+% PART III: A GENERALIZED BROWSER-BASED DATA VISUALIZATION PLATFORM:
+%           Supporting analysts and decisionmakers with a configurable platform
+% =============================================================================
+
+\part{A Generalized Browser-Based Data Visualization Platform}
 \label{part:3simwrapper}
 
 \chapter{SimWrapper: a fully browser-based data visualization platform}
@@ -154,8 +170,8 @@ numbers=noenddot]
 \include{chapters/06-simwrapper/simwrapper}
 
 \chapter{SimWrapper in practice: project sites built using SimWrapper}
-\label{ch:simwrapper-in-practice}
-\include{chapters/07-hamburg-duesseldorf-dashboards/simwrapper-sites}
+\label{ch:simwrapper-sites}
+\include{chapters/07-simwrapper-sites/simwrapper-sites}
 
 % ===========================================================================
 
@@ -170,22 +186,29 @@ numbers=noenddot]
 \label{chapter:conclusion}
 \include{chapters/08-conclusions/conclusions}
 \cleardoublepage
+
 % =======================================================
-%%%%%%%%%%%%%%%%%  Anhang  %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%  APPENDIX  %%%%%%%%%%%%%%%
 % =======================================================
 
-%\phantomsection
-%\chapter*{Appendix}
-%\addcontentsline{toc}{chapter}{Appendix}
+\phantomsection
+\chapter*{Appendix}
+\addcontentsline{toc}{chapter}{Appendix}
 
-%\begin{appendices}
-%\crefalias{chapter}{appendix}
-%%\chapter{Noise Computation based on the \glsentrytext{RLS-90}}
-%%\label{noise-app:noise}
-%%\input{appendix/appendix-a}
-%\end{appendices}
-%%\cleardoublepage
+\begin{appendices}
 
+\crefalias{chapter}{appendix}
+
+\chapter{Python and R support libraries}
+\label{appendix:python-r}
+\input{chapters/appendix/appendix-a-python-r}
+
+\chapter{SimWrapper platform documentation}
+\label{appendix:simwrapper}
+\input{chapters/appendix/appendix-b-simwrapper}
+
+\end{appendices}
+%\cleardoublepage
 
 % =======================================================
 %%%%%%%%%%%%%%%% Acronyms %%%%%%%%%%%%%%%
@@ -224,8 +247,8 @@ Acronyms, toctitle=List of Units and Acronyms]
 \thispagestyle{empty}
 \mbox{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\todo[inline]{Lösche Todo-Listen}
-\todo[inline]{makeglossary command ausführen}
-\todo[inline]{Enteferne allgmeine Notizen/Fragen Bereich aus dem Dokument}
+%\todo[inline]{Lösche Todo-Listen}
+%\todo[inline]{makeglossary command ausführen}
+%\todo[inline]{Enteferne allgmeine Notizen/Fragen Bereich aus dem Dokument}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
