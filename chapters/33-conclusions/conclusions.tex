@@ -10,7 +10,30 @@
 \section{Conclusion}
 \label{08-conclusions-conclusion}
 
-- It worked
-- Browsers have a hard limit to the size of datasets they can ingest, which is one advantage of using a client/server approach.
-- The client-side approach has proven useful and successful in many situations
+The goal of this research was straightforward: determine how far an online, web-browser based data visualization platform could go for supporting analysis of large-scale transport microsimulation datasets. The research journey that was followed through the three parts of this dissertation encompassed initial technology experiments to assess the web platform's capabilities, followed by three projects that built on the findings of those experiments, and finally a generalization of the technology into a generically useful portal for building web-based visualizations and data dashboards.
+
+The answer is a clear "yes": the platform has already proven to be useful both to technical analysts in their research, and as a tool for publishing results online for decisionmakers and the public.
+
+Through the application of the SimWrapper tool, the current limits of the web platform are also in view: browsers are simply not designed to ingest very large files all at once, especially not remotely. For this reason, this research showed that post-processing of the microsimulation results is often warranted, to bridge the gap between microsimulations and browsers regarding the data formats and the sizes of the datasets. The ability to stream data inputs into the browser instead of loading them in their entirety is also examined and found to work, but is not particularly performant compared to desktop software.
+
+Given these findings, some overall conclusions are in order:
+
+The web-browser based, client "app" approach proves adequate and successful in many contexts. Using servers for file storage is a natural extension to this approach and does not require extensive refactoring. Thus designed, both local files and networked storage of microsimulation outputs are easily accessible.
+
+Building multi-panel data dashboards to display and interpret large-scale transport microsimulation results is possible and users found the tool beneficial for reviewing simulation outputs and for publishing their work online for public meetings.
+
+Web browsers have a hard limit on memory usage and file sizes. This leads to a recommendation that many types of simulation outputs should be transformed in form and reduced in size; the exception is in cases where a data streaming approach can be used. Note that this "hard limit" keeps growing as time passes so should likely be considered a moving target.
+
+Despite all of the successes noted in this research, there are some ways that desktop based software (non-browser-based) continues to be a good approach. Desktop software is not limited by arbitrary memory or file size limits, nor in multi-threading capabilities; the hardware limits themselves dictate what is possible. For this reason, there will likely always be a place for desktop software.
+
+In the future, additional research and development could extend the approach investigated here to address some of these shortcomings.
+
+Multiple approaches exist to turn JavaScript-based website code into standalone desktop apps, such as YYY Electron. A desktop-based version of SimWrapper could conceivably use more memory, read larger files, and be generally more performant than a website; at the cost of being chained to an analyst or user's desk instead of being a publicly accessible portal.
+
+Another avenue for improving performance in the future could include experimenting with alternate file formats on disk.
+
+Commercial software and popular open-source data science efforts both benefit from development resources that simply did not exist for this dissertation: it is reasonable to wonder whether the SimWrapper platform itself has any long-term prospects for wide usage in a crowded field of existing data science applications and workflows. Nonetheless, the findings of the research can be embedded in those other platforms, as this dissertation's focus is primarily on the technologies themselves as applied to large-scale transport microsimulation output.
+
+In closing, I would like to thank Professor Kai Nagel for his continuing confidence and support in this line of research, without which none of this would have been possible. We now have a platform for producing advanced, useful, nice-looking dashboards that is open, shareable, and extensible. It is my sincere hope that the findings of this dissertation are useful for my colleagues in the wide field of transport planning and decisionmaking.
+
 
