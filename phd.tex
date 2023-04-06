@@ -88,6 +88,7 @@ numbers=noenddot]
 \addcontentsline{toc}{chapter}{List of Figures}
 \listoffigures
 \cleardoublepage
+% \renewcommand{\includegraphics}[2][]{}
 
 % Tables
 \phantomsection
@@ -177,19 +178,18 @@ numbers=noenddot]
 \label{ch:simwrapper-sites}
 \include{chapters/32-simwrapper-sites/simwrapper-sites}
 
-% ===========================================================================
-
-\bookmarksetup{startatroot}
-\addtocontents{toc}{\bigskip}
-\addtocontents{toc}{\bigskip}
-
-%\addtocontents{toc}{\vskip-6pt\par\noindent\protect\hrulefill\par}
-
 \glsresetall
 \chapter{Conclusion and Outlook}
 \label{chapter:conclusion}
 \include{chapters/33-conclusions/conclusions}
 \cleardoublepage
+
+% ===========================================================================
+
+\bookmarksetup{startatroot}
+\addtocontents{toc}{\bigskip}
+
+%\addtocontents{toc}{\vskip-6pt\par\noindent\protect\hrulefill\par}
 
 % =======================================================
 %%%%%%%%%%%%%%%%%  APPENDIX  %%%%%%%%%%%%%%%
