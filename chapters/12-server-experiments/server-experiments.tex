@@ -185,7 +185,7 @@ First, the management of simulation output files is complex and subject to the p
 
 Second, there is a limit to how much data can be reasonably ingested by a local web browser. Even on the most recent and performant laptops, some datasets were simply too large to load natively and required post-processing for aggregation or pruning and filtering of datasets using "level of detail" techniques. This is a central reason why most commercially-built data analysis products rely on a back-end server which stores datasets, usually in some sort of database format, and a client front-end which displays subsets of that data as it is received. The GeoServer example above used this approach successfully. The emissions example showed the limits of the client-side approach, as the load times were unacceptable and the MapBox GL libraries could not handle the size of the datasets once loaded. (But see \autoref{ch:simwrapper} for techniques developed for successfully handling much larger datasets client-side).
 
-Based on the results of these experiments, a client-server approach for centralizing MATSim simulation outputs and visualizations was agreed upon as a logical next step. Creating a server-backed system has some risks as are noted above, but it is the approach taken by most data-heavy websites. That system is described fully in \autoref{ch:mathub}.
+Based on the results of these experiments, a client-server approach for centralizing MATSim simulation outputs and visualizations was agreed upon as a logical next step. Creating a server-backed system has some risks as noted above, but it is the approach taken by most data-heavy websites. That system is described fully in \autoref{ch:mathub}.
 
 %% ----- SUMMARY  -----
 \hypertarget{server-experiments-summary}{%
