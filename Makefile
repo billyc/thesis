@@ -30,7 +30,7 @@ $(TEX).pdf: $(BUILD_DEPS)
 
 .sentinel-final: $(TEX).pdf
 > BIBINPUTS=$(SRC)/bib bibtex $(TEX)
-> makeglossaries phd
+> makeglossaries $(TEX)
 > pdflatex -interaction batchmode $(TEX).tex
 > pdflatex -interaction batchmode $(TEX).tex
 > pdflatex -interaction batchmode $(TEX).tex
