@@ -234,6 +234,8 @@ Various levels of aggregation make MATsim data much easier to visualize, as is r
 
 \textbf{Map layer limitations.} The Mapbox GL mapping library allows lines, points, and polygons to be displayed on top of (or interleaved with) a base map. There seems to be a number of map elements beyond which performance becomes very slow; various techniques can be used such as aggregating elements at further-out zoom levels to get around this. Another option is to only use Mapbox GL for the base map, and to use the WebGL graphics libraries to draw large numbers of elements directly on top of the map. This is the technique used for the traffic animation, which can easily support tens of thousands of elements (all in motion) simultaneously. For additional visualizations which have large numbers of grahical elements, more research will need to be done to layer WebGL elements on top of a base map.
 
+\textbf{Challenging development.} As part of ``performance'' there was also a noticeable lag time for delivery of bug fixes and new features. Essentially, the client-server system turned out to be quite difficult to maintain. Multiple separate back end servers (production, staging, and development) needed to stay in sync with database schemas and front-end code features; for a small team, this proved quite onerous. The back end servers expected a very strict schema for data storage, which hamstrung the rapid prototyping and iteration of client side features. Basically, the team was found to be too small to keep things moving forward at a regular pace. This didn't seem to be a problem in either the design of the server code or the features planned for the clients; but rather, an inability to keep the two in sync.
+
 % ------------------------------------------------------
 \hypertarget{mathub-mobile-device-support}{%
 \subsection{Mobile device support}\label{mobile-device-support}}
@@ -256,8 +258,8 @@ However, none of the above-listed visualizations are particularly groundbreaking
 
 Another use case that has emerged from these visualization experiments is a more regimented data management tool for MATSim. Currently there is no straightforward way to share MATSim datasets online. The combination of the new file storage and management capabilities along with the GitHub-like user interface provides a natural place for users to store and disseminate results.
 
-Finally, the world has not stood still while this platform was under development. Just in the past two years, major data visualization efforts from well-funded companies such as Uber and others have been released. There are legitimate questions about how much of this work could be superseded by large, well-funded, professional coding teams.
+Finally, the world has not stood still while this platform was under development. Just in the past two years, major data visualization efforts from well-funded companies such as Uber and others have been released. There are legitimate questions about how much of this work could be superseded by large, well-funded, professional coding teams. The slow pace of development of this client/server system foreshadowed some necessary changes to the roadmap for future work.
 
-Despite these concerns, the MATSim visualization framework is operational and is now just beginning to be useful for researchers at the department of its creation. This bodes well for further development in the near future.
+Despite these concerns, the MATSim visualization framework is operational and is now just beginning to be useful for researchers at the department of its creation. This bodes well for further development of many of the ideas embedded within MatHub.
 
 All code is available on the MATSim Github site.\footnote{MATSim visualization code is available at \url{https://github.com/matsim-org/viz}}

@@ -31,7 +31,7 @@ data-intensive microsimulation models.
 % ## SimWrapper in a Nutshell
 % ------------------------------------------------------------------------------------
 
-\hypertarget{overview-simwrapper-in-a-nutshell}{%
+\hypertarget{simwrapper-overview-simwrapper-in-a-nutshell}{%
 \section{Overview: SimWrapper, in a
 nutshell}\label{overview-simwrapper-in-a-nutshell}}
 
@@ -112,7 +112,7 @@ The following sections explore the design of SimWrapper in more detail.
 % ## Reusing existing components from previous projects
 % ------------------------------------------------------------------------------------
 
-\hypertarget{reuse-of-existing-framework-and-components}{%
+\hypertarget{simwrapper-reuse-of-existing-framework-and-components}{%
 \section{Reuse of existing framework and
 components}\label{reuse-of-existing-framework-and-components}}
 
@@ -155,7 +155,7 @@ included in SimWrapper under the terms of those licenses.
 % ## Modifications needed for a generic tool
 % ------------------------------------------------------------------------------------
 
-\hypertarget{modifications-necessary}{%
+\hypertarget{simwrapper-modifications-necessary}{%
 \section{Modifications necessary}\label{modifications-necessary}}
 
 Direct user feedback, described in detail in section YY, allowed us to
@@ -193,7 +193,7 @@ summary, changes were needed in the following categories:
   appropriate.
 \end{itemize}
 
-\hypertarget{audience}{%
+\hypertarget{simwrapper-audience}{%
 \subsubsection{Audience}\label{audience}}
 
 The PAVE website was intended to be public-facing: both agency staff and
@@ -211,7 +211,7 @@ YY
 % ## Accessing files via a Web Browser
 % ------------------------------------------------------------------------------------
 
-\hypertarget{accessing-files-through-a-web-browser}{%
+\hypertarget{simwrapper-accessing-files-through-a-web-browser}{%
 \section{Accessing files through a web
 browser}\label{accessing-files-through-a-web-browser}}
 
@@ -243,7 +243,7 @@ outputs, described here.
 % ### How SimWrapper access files via HTTP
 % ------------------------------------------------------------------------------------
 
-\hypertarget{how-simwrapper-access-files-via-http}{%
+\hypertarget{simwrapper-how-simwrapper-access-files-via-http}{%
 \subsection{How SimWrapper access files via
 HTTP}\label{how-simwrapper-access-files-via-http}}
 
@@ -273,7 +273,7 @@ read-only.
 % ### Local files
 % ------------------------------------------------------------------------------------
 
-\hypertarget{local-files-on-a-personal-laptopdesktop}{%
+\hypertarget{simwrapper-local-files-on-a-personal-laptopdesktop}{%
 \subsection{Local files on a personal
 laptop/desktop}\label{local-files-on-a-personal-laptopdesktop}}
 
@@ -344,7 +344,7 @@ available at \url{https://pypi.org/project/simwrapper/}.
 The Java tool is currently available at
 \url{https://github.com/simwrapper/mini-file-server}
 
-\hypertarget{data-security-and-privacy}{%
+\hypertarget{simwrapper-data-security-and-privacy}{%
 \subsubsection{Data security and
 privacy}\label{data-security-and-privacy}}
 
@@ -361,7 +361,7 @@ mode.
 % ### Files on Compute Cluster servers
 % ------------------------------------------------------------------------------------
 
-\hypertarget{files-residing-on-the-university-compute-cluster-accessed-via-ssh}{%
+\hypertarget{simwrapper-files-residing-on-the-university-compute-cluster-accessed-via-ssh}{%
 \subsection{Files residing on the university compute cluster, accessed
 via
 SSH}\label{files-residing-on-the-university-compute-cluster-accessed-via-ssh}}
@@ -404,7 +404,7 @@ slowly, depending on network throughput conditions).
 % ### Files on other machines: simwrapper here
 % ------------------------------------------------------------------------------------
 
-\hypertarget{files-residing-on-another-machine-on-the-local-lan-network}{%
+\hypertarget{simwrapper-files-residing-on-another-machine-on-the-local-lan-network}{%
 \subsection{Files residing on another machine on the local LAN
 network}\label{files-residing-on-another-machine-on-the-local-lan-network}}
 
@@ -451,7 +451,7 @@ is installed.
 % ### Special case: Google Chrome
 % ------------------------------------------------------------------------------------
 
-\hypertarget{special-case-chrome-and-the-file-system-access-api}{%
+\hypertarget{simwrapper-special-case-chrome-and-the-file-system-access-api}{%
 \subsection{Special case: Chrome and the ``File System Access
 API''}\label{special-case-chrome-and-the-file-system-access-api}}
 
@@ -484,7 +484,7 @@ YY show browser grant access dialog
 % ## Converting purpose-built vizes into Generic Data Viewers
 % ------------------------------------------------------------------------------------
 
-\hypertarget{converting-purpose-built-visualizations-into-generic-data-viewers}{%
+\hypertarget{simwrapper-converting-purpose-built-visualizations-into-generic-data-viewers}{%
 \section{Converting purpose-built visualizations into generic data
 viewers}\label{converting-purpose-built-visualizations-into-generic-data-viewers}}
 
@@ -501,7 +501,7 @@ process of genericizing SimWrapper.
 % ### Link Viewer
 % ------------------------------------------------------------------------------------
 
-\hypertarget{link-viewer}{%
+\hypertarget{simwrapper-link-viewer}{%
 \subsection{Link viewer}\label{link-viewer}}
 
 The link viewer was originally scoped to display link volumes only, such
@@ -528,7 +528,7 @@ YY user testing
 % ### XY Data Plots
 % ------------------------------------------------------------------------------------
 
-\hypertarget{xy-hexagon-plots}{%
+\hypertarget{simwrapper-xy-hexagon-plots}{%
 \subsection{XY Hexagon plots}\label{xy-hexagon-plots}}
 
 Much data is not link-based, even for transport simulations. Activity locations, home locations, pickups and dropoffs for transit and taxi modes, all have geographic coordinates associated with them but are not necessarily attached to specific links.
@@ -556,7 +556,7 @@ These three elements are explored in order.
 % ### Calculation Table Config: Inputs, Files, Outputs
 % ------------------------------------------------------------------------------------
 
-\hypertarget{calculation-tables-definition}{%
+\hypertarget{simwrapper-calculation-tables-definition}{%
 \subsection{Specifying calculation table files, inputs, and outputs }\label{calculation-tables-definition}}
 
 The most robust way to generate and display a table of numbers is by having the user develop their own post-processing scripts which output a simple CSV with the summary values and labels that they need. For this approach, nothing special is needed; whatever data analysis pipelines the analyst is already using are sufficient. Especially for more complex post-processing needs, using a high-quality platform such as Python or R is the recommended path.
@@ -610,7 +610,7 @@ YY continue
 % ------------------------------------------------------------------------------------
 % ### Calculation Tables: Map/Reduce your way to an answer
 % ------------------------------------------------------------------------------------
-\hypertarget{calculation-tables-map-reduce}{%
+\hypertarget{simwrapper-calculation-tables-map-reduce}{%
 \subsection{Calculating summary values via "map/reduce"}\label{calculation-tables-map-reduce}}
 
 % - solve each equation, in top-down order
@@ -626,7 +626,7 @@ YY Show PAVE example run output with Sankey, numbers, etc
 % ## Dashboards
 % ------------------------------------------------------------------------------------
 
-\hypertarget{dashboards-combining-visualizations-to-support-decisionmaking}{%
+\hypertarget{simwrapper-dashboards-combining-visualizations-to-support-decisionmaking}{%
 \section{Dashboards: combining visualizations to support
 decisionmaking}\label{dashboards-combining-visualizations-to-support-decisionmaking}}
 
@@ -688,7 +688,7 @@ YY Show Düsseldorf (Hamburg?) ?
 % ## Project sites: Re-using and organizing outputs
 % ------------------------------------------------------------------------------------
 
-\hypertarget{project-traversal-and-organizing-outputs}{%
+\hypertarget{simwrapper-project-traversal-and-organizing-outputs}{%
 \section{Project traversal and organizing
 outputs}\label{project-traversal-and-organizing-outputs}}
 
@@ -711,7 +711,7 @@ subfolders, will be part of any solution.
 % ### Calculation Table DSL: The Calculation Engline
 % ------------------------------------------------------------------------------------
 
-\hypertarget{project-level-configuration}{%
+\hypertarget{simwrapper-project-level-configuration}{%
 \subsection{Project-level
 configuration}\label{project-level-configuration}}
 
@@ -730,7 +730,7 @@ more details on the configuration of individual components.
 % ## User Feedback and Iteration
 % ------------------------------------------------------------------------------------
 
-\hypertarget{user-feedback-and-iteration}{%
+\hypertarget{simwrapper-user-feedback-and-iteration}{%
 \section{User feedback and
 iteration}\label{simwrapper-user-feedback}}
 
@@ -738,12 +738,12 @@ iteration}\label{simwrapper-user-feedback}}
 % ## Limitations
 % ------------------------------------------------------------------------------------
 
-\hypertarget{limitations}{%
+\hypertarget{simwrapper-limitations}{%
 \section{Limitations}\label{simwrapper-limitations}}
 
 % ------------------------------------------------------------------------------------
 % ## Discussion
 % ------------------------------------------------------------------------------------
 
-\hypertarget{discussion}{%
+\hypertarget{simwrapper-discussion}{%
 \section{Discussion}\label{simwrapper-discussion}}
