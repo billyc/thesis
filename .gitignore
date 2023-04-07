@@ -3,6 +3,7 @@
 *.aux
 *.out
 *.lot
+*.log
 *.bbl
 *.blg
 *.brf
