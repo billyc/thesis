@@ -38,6 +38,8 @@ Contrast this with the more traditional client/server architecture that framewor
 
 This single-page application approach seems ideal for our needs. All of the server functionality is eliminated, except for simple file storage. There is no need for backend server databases, which removes any synchronization problems with the front end code. And the client JavaScript code simply downloads the model output files from the webserver as easily as it loads an image file or any other resource. There is no longer any need to modifying server code every time a new version of the EpiSim model adds new parameters.
 
+The JavaScript libraries described in Chapter \ref{ch:server-experiments} such as Vue and Plotly allow the client-side code to behave similarly to a rich desktop application -- the code connects user interactions (button clicks, mouseovers, etc.) with logic actions such as loading scenario files and drawing the relevant charts.
+
 Thus was created the first simple single page application for EpiSim which loads a basic HTML template, a zipfile with all summary model run outputs, and the view logic to display interactive line charts of pandemic progression over time, along with a set of slider bars that select pandemic intervention approaches. A screenshot of the initial version of the website application, now called COVID-Sim.info, is shown in Figure \ref{fig:covid-v1}.
 
 \begin{figure}
@@ -227,6 +229,6 @@ Possible future work could include a user interface overhaul to reign in the pro
 \hypertarget{covid-informing-decisionmaking-with-comparison-dashboards}{%
 \section{Conclusion: Informing decisionmaking with comparison dashboards}\label{covid-informing-decisionmaking}}
 
-The ability to rapidly visualize and assess the results of thousands of simulations runs was crucial to the team's ability to support decisionmaking on this project. Advanced simulations like MATSim, ActivitySim, and EpiSim produce so much data, visualization and assessment are essential for making sense of the outputs.
+The ability to rapidly visualize and assess the results of thousands of simulations runs is crucial to the team's ability to support ongoing decisionmaking on this project. Advanced simulations like MATSim, ActivitySim, and EpiSim produce so much data, visualization and assessment are absolutely essential for deep understanding of the outputs.
 
 By all measures, the COVID-Sim simulation portal is a resounding success story. Very few times in my professional career have I been so close to the decisionmaking apparatus, helping in a small way to answer urgent questions that tangibly affect society. The fact that the lessons learned in the simple experiments of Chapters \ref{ch:server-experiments} and \ref{ch:mathub} proved so useful so soon, is a breathtaking and satisfying outcome.

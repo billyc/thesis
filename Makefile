@@ -19,6 +19,7 @@ BUILD_DEPS := $(SRC)/$(TEX).tex
 BUILD_DEPS += Makefile $(shell find $(SRC) -name "*.tex")
 BUILD_DEPS += $(SRC)/settings/mysettings.tex
 BUILD_DEPS += $(shell find $(SRC)/bib/*)
+BUILD_DEPS += $(shell find $(SRC) -name "*.png")
 
 $(TEX).pdf: $(BUILD_DEPS)
 > rm -f *.log
