@@ -7,8 +7,8 @@ eval "$(/usr/libexec/path_helper)"
 
 # Packages from internet
 
-# I used 2021 TexLive:
-# sudo tlmgr option repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2021/tlnet-final
+# I used **2022** TexLive:
+# sudo tlmgr option repository https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2022/tlnet-final
 sudo tlmgr update --self
 sudo tlmgr install adjustbox
 sudo tlmgr install appendix

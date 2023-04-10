@@ -2,38 +2,44 @@
 \section{Outlook}
 \label{08-conclusions-outlook}
 
-- To truly handle unlimited datasets, two directions could be pursued:
-  - setting up a backend server, most likely some sort of database with an API
-  - Refactoring the front-end code to embed the server and client code together as a cross-platform desktop app e.g. Electron.
-  - Choosing something javascript-based like electron capitalizes on the investment in Javascript code for the front-end
+At the beginning of the research described in this dissertation, it was inconceivable that one of the outcomes would be a software platform used across the globe for building data visualization dashboards supporting microsimulation models across multiple disciplines. The rapid adoption and success of the SimWrapper platform implies that there was a need for such a solution amongst the analysts building microsimulation models.
+
+The platform is not a commercially supported product; there is no paid support or development team beyond its primary author, myself. This leads to a question about viability: should SimWrapper be further developed as its own product, or could the technology and lessons learned through this research be merged with other, more established, tools?
+
+Only time will tell, but in the meanwhile there are some issues that were not directly addressed in this research that would require consideration.
+
+\textbf{Unlimited datasets.} The size of datasets continues to be a challenge, as the platform is currently limited to either in-memory data storage or streaming of datasets in some limited cases. While local compute resources continually grow more or less in accordance with Moore's Law per \cite{Schaller1997MooresLaw}, the cloud computing revolution of the past decade has shown that essentially infinite resources can be applied at the server-level. Refactoring SimWrapper to support cloud computing would be straightforward technically, but would fundamentally change the basic assumptions embedded in the approach. Future work would have to weigh and balance this change versus starting from a different code and platform baseline.
+
+\textbf{User experience improvements.} User feedback from analysts was continually positive, but the platform is very obviously not a commercially, professionally designed product with best practices in user interface (UI) or user experience (UX). The YAML-based layout and parameter configuration is ingenious from the perspective of analysts who want a code-free site construction experience. But it is not how "normal" websites work. Much more attention could be given toward interactive ease-of-use, for example supporting drag and drop of files into the viewer, guessing good defaults for the user, and so on. This type of work is never truly "finished", as anyone with experience on the web knows that sites are constantly being updated to improve features and usability.
+
+%% YYY more deep outlook thoughts here....
+
 
 \section{Conclusion}
 \label{08-conclusions-conclusion}
 
-The goal of this research was straightforward: determine how far an online, web-browser based data visualization platform could go for supporting analysis of large-scale transport microsimulation datasets. The research journey that was followed through the three parts of this dissertation encompassed initial technology experiments to assess the web platform's capabilities, followed by three projects that built on the findings of those experiments, and finally a generalization of the technology into a generically useful portal for building web-based visualizations and data dashboards.
+The goal of this research was straightforward: determine whether an online, browser-based data visualization platform could successfully support the analysis of large-scale transport microsimulation datasets. The research journey described in the three parts of this dissertation encompassed initial technology experiments to assess the web platform's capabilities; followed by three individual projects that built on the findings of those experiments, confirming the viability of the technological solution; and finally a generalization of the technology into SimWrapper, a broadly useful platform for building web-based visualizations and data dashboards.
 
-The answer is a clear "yes": the platform has already proven to be useful both to technical analysts in their research, and as a tool for publishing results online for decisionmakers and the public.
+The platform has already proven useful both to technical analysts in their research, and as a tool for publishing results online for decisionmakers and the public.
 
-Through the application of the SimWrapper tool, the current limits of the web platform are also in view: browsers are simply not designed to ingest very large files all at once, especially not remotely. For this reason, this research showed that post-processing of the microsimulation results is often warranted, to bridge the gap between microsimulations and browsers regarding the data formats and the sizes of the datasets. The ability to stream data inputs into the browser instead of loading them in their entirety is also examined and found to work, but is not particularly performant compared to desktop software.
+Through the application of the SimWrapper tool, the current limits of the web platform are also in view: browsers are simply not designed to ingest very large files all at once, especially not remotely. For this reason, this research showed that post-processing of the microsimulation results is often warranted to bridge the gap between microsimulations and browsers regarding the data formats and the sizes of the datasets. The ability to stream data inputs into the browser instead of loading them in their entirety is also examined and found to work satisfactorily, but is not particularly performant compared to desktop software.
 
 Given these findings, some overall conclusions are in order:
 
-The web-browser based, client "app" approach proves adequate and successful in many contexts. Using servers for file storage is a natural extension to this approach and does not require extensive refactoring. Thus designed, both local files and networked storage of microsimulation outputs are easily accessible.
+The web-browser based, "client app" approach proves adequate and successful in many contexts. Using servers for file storage is a natural extension to this approach and does not require extensive refactoring. Thus designed, both local files and network storage of microsimulation outputs are easily accessible.
 
-Building multi-panel data dashboards to display and interpret large-scale transport microsimulation results is possible and users found the tool beneficial for reviewing simulation outputs and for publishing their work online for public meetings.
+Building multi-panel data dashboards to display and interpret large-scale transport microsimulation results is possible and users found the tool beneficial for reviewing simulation outputs and for publishing their work online for knowledge transfer and public meetings.
 
-Web browsers have a hard limit on memory usage and file sizes. This leads to a recommendation that many types of simulation outputs should be transformed in form and reduced in size; the exception is in cases where a data streaming approach can be used. Note that this "hard limit" keeps growing as time passes so should likely be considered a moving target.
+Web browsers have a hard limit on memory usage and file sizes. This leads to a recommendation that many types of simulation outputs should be transformed in form and reduced in size; an exception is for cases where a data streaming approach can be used. Note that this "hard limit" is not particularly hard: it keeps growing as time passes; thus should be considered a moving target.
 
-Despite all of the successes noted in this research, there are some ways that desktop based software (non-browser-based) continues to be a good approach. Desktop software is not limited by arbitrary memory or file size limits, nor in multi-threading capabilities; the hardware limits themselves dictate what is possible. For this reason, there will likely always be a place for desktop software.
+Despite all of the successes noted in this research, there are some ways that desktop based software (non-browser-based) continues to be a good approach. Desktop software is not limited by arbitrary memory or file size limits, nor in multi-threading capabilities; the hardware limits themselves dictate what is possible. For this reason, there will likely always be a place for desktop software or server-backed database solutions when dealing with large datasets.
 
 In the future, additional research and development could extend the approach investigated here to address some of these shortcomings.
 
-Multiple approaches exist to turn JavaScript-based website code into standalone desktop apps, such as YYY Electron. A desktop-based version of SimWrapper could conceivably use more memory, read larger files, and be generally more performant than a website; at the cost of being chained to an analyst or user's desk instead of being a publicly accessible portal.
+Multiple approaches exist to turn JavaScript-based website code into standalone desktop apps. A desktop-based version of SimWrapper could conceivably use more memory, read larger files, and be generally more performant than a website; at the cost of being chained to an analyst or user's desk instead of being a publicly accessible portal.
 
-Another avenue for improving performance in the future could include experimenting with alternate file formats on disk.
+Another avenue for improving performance in the future could include experimenting with alternate file formats on disk. A server database approach is also a natural fit for very large datasets but increases complexity of the solution; one of the primary benefits of the SimWrapper browser-based solution is the elimination of back-end server complexity.
 
-Commercial software and popular open-source data science efforts both benefit from development resources that simply did not exist for this dissertation: it is reasonable to wonder whether the SimWrapper platform itself has any long-term prospects for wide usage in a crowded field of existing data science applications and workflows. Nonetheless, the findings of the research can be embedded in those other platforms, as this dissertation's focus is primarily on the technologies themselves as applied to large-scale transport microsimulation output.
+Commercial software and popular open-source data science efforts both benefit from development resources that simply did not exist for this dissertation: it is reasonable to wonder whether the SimWrapper platform itself has long-term prospects for wide usage in a crowded field of existing data science applications and workflows. Nonetheless, the findings of the research can be embedded in those other platforms, as this dissertation's focus is primarily on the technologies themselves as applied to large-scale transport microsimulation output.
 
 In closing, I would like to thank Professor Kai Nagel for his continuing confidence and support in this line of research, without which none of this would have been possible. We now have a platform for producing advanced, useful, nice-looking dashboards that is open, shareable, and extensible. It is my sincere hope that the findings of this dissertation are useful for my colleagues in the wide field of transport planning and decisionmaking.
-
-
