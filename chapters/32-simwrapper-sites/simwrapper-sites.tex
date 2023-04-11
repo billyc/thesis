@@ -1,37 +1,109 @@
 %% ----- INTRODUCTION -----
 \section{Introduction}
-\label{07-simwrapper-sites-intro}
+\label{sites-intro}
 
-In this chapter three implementation sites using the SimWrapper platform are described in detail.
+The first internal release of SimWrapper (at the time called ``afterSim'') was in August, 2020, for the annual VSP Ph.D. student seminar. That initial release was based on a fork of the COVID-Sim.info website (see Chapter \ref{ch:covid-sim}) and included the first set of proof-of-concept visualization plugins: a Sankey diagram plugin (for display mode shifts between scenarios), image and video viewers, the transit schedule explorer from MatHub (Chapter \ref{ch:mathub}), the aggregate origin/destination trip viewer from the AVOEV project (Chapter \ref{ch:avov}) and the \gls{DRT} animation viewer from PAVE (Chapter \ref{ch:pave}). It also included the first implementation of a basic file system explorer so users could navigate through their simulation outputs. Thus SimWrapper truly is the amalgamation and synthesis of all of the research components that preceded it, all of which are described in previous chapters in this document.
 
-\section{HH Hamburg}
-\label{07-simwrapper-sites-hamburg}
+Since then, SimWrapper has been under continuous development: adding the remaining visualizations from the research tools described above, creating new plugins for the analyst team at VSP, building multi-view dashboard functionality, and improving the overall usability and featureset based on user feedback.
 
-The first project using SimWrapper in an external manner.
+SimWrapper is now used for a wide variety of projects both at VSP and worldwide. In this chapter, three ``real world'' implementations of the SimWrapper platform are described in detail, in order to showcase and assess the applicability of the research results to real-world problems.
 
-\section{KOMOD-Next}
-\label{07-simwrapper-sites-komodnext}
+% ------------------------------------------------------------------
+\section{Hamburg: the Reallab 2030 project}
+\label{sites-hamburg}
 
-New functionality for site branding: custom headers, footers, and section navigation
+YYY add description of Reallab Hamburg project. The project team at VSP wanted to build a curated website that summarized the results of five scenarios exploring various \gls{DRT} implementation plans, across several different types of metrics: modal split, modal shift, road volumes, accident costs, and emissions.
 
-\section{ActivitySim}
-\label{07-simwrapper-sites-activitysim}
+This was the first project to use the SimWrapper multi-view dashboard functionality within SimWrapper. For each of the above metrics, analysts created a separate tab. Then on each tab, they included charts and maps exploring the five scenarios from top to bottom down the page.
 
-Consortium of multiple regions of the U.S. are evaluating use of SimWrapper for development of standard dashboards for their common activity-based model.
+The project team did not have to write any HTML or JavaScript code to build the project portal: they uploaded their processed simulation outputs to the departmental file server, and wrote the YAML configuration text files for the dashboard panels according to the SimWrapper documentation. As the first project using SimWrapper to build an external website, there were many rounds of iteration on features and bugs to get the site operational.
+
+The final site employed several plugins for depicting the different metrics: pie charts, alluvial ``Sankey'' diagrams, network link volumes, and summary calculation tables are implemented on the various metric tabs, per the analysts' design.
+
+Figure \ref{fig:sites-hamburg} shows several tabs of the completed website. Each tab collates interactive outputs for a separate metric, with the outputs from the five alternatives shown in order down the page. Only a subset of the outputs are shown in the figure for space considerations.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.73\linewidth]{chapters/32-simwrapper-sites/images/sites-hamburg.jpg}
+  \caption{Three panes of the SimWrapper-based Hamburg dashboard website, depicting mode shares, modal shifts, and link-level emissions.}
+  \label{fig:sites-hamburg}
+\end{figure}
+
+The project website is available on the public VSP SimWrapper site.\footnote{Hamburg website is at \href{https://vsp.berlin/simwrapper/public/de/hamburg/hamburg-v2/hamburg-v2.2/viz/}{vsp.berlin/simwrapper/public/de/hamburg/hamburg-v2/hamburg-v2.2/viz/}}
+
+% ------------------------------------------------------------------
+\section{Düsseldorf: the KoMo:Dnext Project}
+\label{sites-komodnext}
+
+YYY describe KOMODNext. Building upon the Hamburg project described above, the team at VSP built another curated project website for the KoMo:Dnext project in Düsseldorf, Germany. This project also explored several \gls{DRT} scenarios and used many of the same plugin components as the Hamburg project.
+
+New plugins were designed for video file playback and for more statistical chart types, based on the Vega-Lite library\footnote{Vega-Lite is a very comprehensive charting library based on the ``Grammar of Graphics'' described in section \ref{visualizing-non-geographic-data}. Vega-Lite is available at \url{https://vega.github.io/vega-lite/}}.
+
+In addition, new functionality was built to support project-level site branding: custom logos, headers, footers, and section navigation could replace the generic SimWrapper look and feel. This allowed the project site to fit in better with the pre-existing project site branding.
+
+The project portal with simulation results is available on the public VSP homepage.\footnote{KoMo:Dnext website is online at \href{https://vsp.berlin/simwrapper/komodnext/}{vsp.berlin/simwrapper/komodnext/}}
+
+Figure \ref{fig:sites-komodnext} shows one tab of the completed website. Note the project logo, tab design, video player and and cleaner statistical charts. The other tabs show similar types of data outputs, along with text descriptions that describe the project and findings.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{chapters/32-simwrapper-sites/images/sites-komodnext.jpg}
+  \caption{The KoMo:Dnext website, featuring project branding and improved statistical charts.}
+  \label{fig:sites-komodnext}
+\end{figure}
+
+% ------------------------------------------------------------------
+\section{ActivitySim: San Francisco and the ActivitySim consortium}
+\label{sites-activitysim}
+
+The ActivitySim Consortium is a collection of twelve metropolitan regions and states of the United States that are collaborating on building the open source ActivitySim activity-based travel demand forecasting model.\footnote{Learn more about ActivitySim at \url{https://activitysim.github.io}}.
+
+The consortium chose SimWrapper as the common dashboard development platform for their combined efforts, due to its open source license, features, and "code-free" dashboard development model. Some of the members, especially the San Francisco County Transportation Authority, took a leading role in guiding the implementation and development of SimWrapper to meet their needs.
+
+ActivitySim is not a MATSim-based model, and as such, the MATSim plugins were of no interest to the consortium. More relevant were a more feature-rich thematic map (shapefile) viewer as well as better scenario comparison tools. The consortium contributed financial resources to ensure SimWrapper worked with ActivitySim inputs and outputs, and to support further refinement of the thematic map plugin.
+
+The shapefile viewer now supports polygons and line shapes, a difference mode, data filters, configurable tooltips, an automatically-generated legend, and better symbology for colors, widths, and 3D heights. This additional functionality was presented (but not published) at the Transportation Research Board 2023 Annual Meeting, in Washington, D.C..
+
+Figure \ref{fig:sites-activitysim-maps} shows an example tab of an ActivitySim dashboard with several thematic maps. Figure \ref{fig:sites-activitysim-charts} shows an initial attempt at a standard dashboard displaying basic statistical summaries for an example ActivitySim model run in the San Francisco Bay Area.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.95\linewidth]{chapters/32-simwrapper-sites/images/sites-activitysim-maps.jpg}
+  \caption{Thematic maps as part of an ActivitySim dashboard.}
+  \label{fig:sites-activitysim-maps}
+\end{figure}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.95\linewidth]{chapters/32-simwrapper-sites/images/sites-activitysim-charts.jpg}
+  \caption{Statistical charts as part of a standard dashboard for ActivitySim model runs.}
+  \label{fig:sites-activitysi-charts}
+\end{figure}
 
 \section{Discussion and Outlook}
-\label{07-simwrapper-sites-discussion}
+\label{sites-discussion}
 
-- The flexibility of SimWrapper allowed development of nice interactive sites
-- Branding and "hiding" of SimWrapper itself such as the logo, navigation, helped agencies use the tool in public settings
-- Better documentation and examples critical to adoption
-- Initial ramp-up and publishing are not without friction. Need improvement
+The flexibility of SimWrapper allowed development of several useful and generally pleasing interactive websites. Feedback from the analysts that build the Hamburg and KoMo:Dnext sites was very positive; they explained that they did not have access to such tools on previous projects and that they were eager to use SimWrapper to build similar sites for future project work. They also mentioned that it was very helpful to have the primary SimWrapper developer on the team with them; it took several rounds of iteration before either site was satisfactory.
+
+As these were the first users of the site, there were many hidden ``gotchas'' in the workflow, and documentation was sparse. Improving the documentation has been an ongoing effort after this ``first contact'' experience with real users. They also expressed frustration that there were no examples from which to base their work; this is also now an ongoing effort.
+
+The ActivitySim implementation went differently. The consortium was expecting a professional "consultant" experience, where the tool would be delivered with a checklist of completed functionalities. While this checklist was indeed completed, many of the consortium agencies did not uptake the platform right away, while others (notably the San Diego and San Francisco members) did so. As with any large group, there was a range of skills and range of interests within it, and the SimWrapper implementation matched the skills and needs of some agencies more than others.
+
+Based on this feedback, new easier site deployment options are being considered along with general feature improvement.
+
+As with the VSP projects, improved documentation and examples were requested and those are ongoing. The SimWrapper featureset continues to evolve, and perhaps as the features become more comprehensive, the remaining ActivitySim partners will find SimWrapper meets their needs. It is also possible that that will not be the case; time will tell.
+
 
 \section{Summary}
-\label{07-simwrapper-sites-summary}
+\label{sites-summary}
 
-- This chapter describes three different implementations of SimWrapper, two at VSP and one external.
-- Sites successfully used in public settings
-- Feedback was that learning curve was steep, and rollout (non-VSP) was difficult
-- New production options such as Docker and SPA/static developed in response.
-- Documentation is always a challenge
+This chapter describes three different implementations of SimWrapper, two for VSP projects and one external to the primary development team. The project has been successfully been used to build these and other curated project websites, and is also being used for internal exploratory model run debugging by several agency members of the ActivitySim modeling consortium.
+
+The implementation examples in this chapter cover two ``curated'' project websites which include hand-picked simulation outputs and carefully constructed topical collections of data visualizations. The third example, ActivitySim, shows SimWrapper in a more exploratory context, where standard dashboards are being configured by agency staff to help them understand and compare the outputs of many simulations and model runs.
+
+In this manner, SimWrapper has developed two rather different general use cases: the ability to build nice-looking, outward facing ``curated'' websites, and an entirely separate role as a way to rapidly produce standard simulation output dashboards for internal use by analysts.
+
+Feedback from these initial users revealed that the learning curve for using SimWrapper is steep, and that better examples and documentation are required if the platform is to survive amongst the many other data visualization and dashboarding options available. Despite this, there is already enthusiasm among the small group of users that SimWrapper due to its existing featureset, open source license, and rapid feature development.
+
+
+
