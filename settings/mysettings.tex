@@ -148,6 +148,23 @@
 %\def\mnote#1{\medskip\centerline{\hfill\textcolor{red}{\small #1}}}
 \def\mnote#1{\relax}
 
+\usepackage[draft,markup=underlined
+,addedmarkup=colored
+%%,deletedmarkup=xout
+%%,commandnameprefix=ifneeded
+]{changes}
+\let\delete=\deleted
+\let\remove=\deleted
+\let\removed=\deleted
+\let\add=\added
+\let\replace=\replaced
+\let\change=\replaced
+\let\changed=\change
+\makeatletter
+\@namedef{Changes@AuthorColor}{magenta}
+\colorlet{Changes@Color}{magenta}
+\makeatother
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

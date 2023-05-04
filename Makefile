@@ -23,7 +23,7 @@ BUILD_DEPS += $(shell find $(SRC) -name "*.png")
 
 $(TEX).pdf: $(BUILD_DEPS)
 > rm -f *.log
-> pdflatex -interaction batchmode $(TEX).tex
+> pdflatex -synctex=1 -interaction nonstopmode $(TEX).tex
 
 .sentinel-final: $(TEX).pdf
 > BIBINPUTS=$(SRC)/bib bibtex $(TEX)
