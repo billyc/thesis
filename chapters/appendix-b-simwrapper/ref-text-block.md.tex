@@ -1,0 +1,25 @@
+Use text blocks in a dashboard to include Markdown or unformatted text
+as a block, useful for README content and other exposition.
+
+\hypertarget{usage}{%
+\subsection{Usage}\label{usage}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{layout}\KeywordTok{:}
+\AttributeTok{  }\FunctionTok{row}\KeywordTok{:}
+\AttributeTok{    }\FunctionTok{type}\KeywordTok{:}\AttributeTok{ text}
+\AttributeTok{    }\FunctionTok{title}\KeywordTok{:}\AttributeTok{ }\StringTok{\textquotesingle{}Introduction\textquotesingle{}}
+\AttributeTok{    }\FunctionTok{description}\KeywordTok{:}\AttributeTok{ }\StringTok{\textquotesingle{}Each box can have a title and description\textquotesingle{}}
+\AttributeTok{    }\FunctionTok{file}\KeywordTok{:}\AttributeTok{ }\StringTok{\textquotesingle{}README.md\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  The file content will be parsed as Markdown and displayed in the box.
+\item
+  Row height will auto-fit to match the length of the text for long text
+  blocks.
+\end{itemize}

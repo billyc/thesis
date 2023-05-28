@@ -1,0 +1,337 @@
+OK so you've curated your model runs, post-processed all your results,
+and built your pretty dashboards! Now you want to show them to people.
+
+We are experimenting with several different ways of publishing results
+to the open web. Please send us feedback on which of these methods works
+best for you, or if some other way of getting things online would be
+better.
+
+\hypertarget{speedrun-host-your-site-on-fly.io}{%
+\subsection{Speedrun: Host your site on
+fly.io}\label{speedrun-host-your-site-on-fly.io}}
+
+There are many, many hosting options on the web but we have found that
+https://fly.io is the most developer-friendly and has an extremely
+generous free tier, so it's a great place to start. They seem to have
+taken what Heroku used to be good at, and made it better.
+
+Fly.io free tier currently (May 2022) includes:
+
+\begin{itemize}
+\tightlist
+\item
+  5 Gb storage
+\item
+  3 (or 10?) site URLs
+\item
+  100 GB data transfer per month free, then \$0.02/Gb over
+\end{itemize}
+
+Thus, you only need to watch the outbound data transfer to keep your
+site free. This service doesn't have any redundancy or fault-tolerance,
+so keep local copies of all your files in case their data center
+explodes or catches on fire.
+
+\hypertarget{first-time-setup}{%
+\subsubsection{First time setup}\label{first-time-setup}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Install the \texttt{flyctl} utility with
+  \href{https://fly.io/docs/getting-started/installing-flyctl/}{these
+  instructions} but it is really this simple:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Mac: \texttt{brew\ install\ flyctl}
+  \item
+    Linux: \texttt{curl\ -L\ https://fly.io/install.sh\ \textbar{}\ sh}
+  \item
+    Windows:
+    \texttt{iwr\ https://fly.io/install.ps1\ -useb\ \textbar{}\ iex}
+  \end{itemize}
+\item
+  Then run \textbf{\texttt{flyctl\ auth\ signup}} to open a browser and
+  set up your account. Yes, you need a credit card but it's free if you
+  stay within the limits above.
+\item
+  No step 3!
+\end{enumerate}
+
+\hypertarget{push-your-site}{%
+\subsubsection{Push your site}\label{push-your-site}}
+
+Now that \texttt{flyctl} is set up on your machine you can launch your
+first site!
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Clone the git repo at
+  \texttt{https://github.com/simwrapper/simwrapper-example-project}
+  which has the Dockerfile for SimWrapper ready to go
+\item
+  Copy your project folder -- everything you want published -- into the
+  local \texttt{data} folder inside that repo
+\item
+  Run \texttt{flyctl\ launch} and answer the questions:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Give your site a useful name or it will give you something random
+  \item
+    Choose the datacenter; Frankfurt is a nice choice for Germany
+  \item
+    You do NOT need a database
+  \item
+    Yes, launch it now!
+  \end{itemize}
+\end{enumerate}
+
+That's it. It will take a few minutes to upload all your files and
+provision the site, and then\ldots{} that's it; it's live at
+\textbf{your-site-name.fly.dev}
+
+There are ways to give it your own domain name, etc. See the
+\href{https://fly.io/docs}{fly.io/docs} for all the details.
+
+\hypertarget{password-protect-your-site}{%
+\subsubsection{Password-protect your
+site}\label{password-protect-your-site}}
+
+To password-protect a SimWrapper site using standard HTTP Basic
+authentication, use the program \texttt{htpasswd} to generate a
+username/password file named \texttt{.htpasswd} and copy that file into
+the root of the built site using Docker. Github Pages does not support
+this; you need to use a real web host such as Fly.io etc. that honors
+basic authentication.
+
+\texttt{htpasswd} is installed by default on Mac OS and is part of
+\texttt{openssh} for other platforms.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Use the program \texttt{htpasswd} to create username/password pairs
+  you need:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{htpasswd\ -c\ .htpasswd\ {[}username{]}} and then enter the
+  desired password. This will create/overwrite the file
+  \texttt{.htpasswd}
+\item
+  If you need more than one user, drop the \texttt{-c} from the command
+  and run again for each user:
+  \texttt{htpasswd\ .htpasswd\ {[}anotheruser{]}}
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Add one line to the end of the Dockerfile, to copy the file into the
+  root folder of the site:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{COPY\ .htpasswd\ \ /}
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Now run \texttt{flyctl\ launch} as above.
+\end{enumerate}
+
+\hypertarget{docker-based-sites}{%
+\subsection{Docker-based sites}\label{docker-based-sites}}
+
+SimWrapper has been packed up into a Docker image at
+\texttt{simwrapper/site}, which is nothing more than the NGINX proxy
+server with the latest SimWrapper code embedded, all carefully
+configured to have the correct settings for serving the site and data
+you provide.
+
+On Docker Hub, we created the \texttt{simwrapper/site} docker image
+which can be used anywhere that supports Docker. If you have Docker
+installed on your local machine, or if you have a cloud provider that
+lets you run Docker images, then you don't need anything other than:
+
+\texttt{docker\ run\ -p\ 8080:8080\ -v\ \textasciitilde{}/my/data/folder:/data\ simwrapper/site}
+
+That's it! Note that in the command above we mount a local volume to the
+image at \texttt{/data} which is where SimWrapper expects your files to
+be. For a cloud site, you would need to put that in accessible storage
+somewhere. If you already know Docker, you already know how to do this.
+
+\hypertarget{github-pages}{%
+\subsection{GitHub Pages}\label{github-pages}}
+
+Github is not a great place to store large files; it has a hard limit of
+100Mb on file sizes, and generally doesn't work well for files over 20Mb
+either. So, yes the SimWrapper website code and assets themselves can be
+served from any static site provider at all, such as Github Pages. But
+your model outputs might need to go somewhere else.
+
+\hypertarget{instructions-for-using-github-pages-by-itself}{%
+\subsubsection{Instructions for using GitHub Pages by
+itself}\label{instructions-for-using-github-pages-by-itself}}
+
+You can make your own clone of the SimWrapper website and host it
+yourself on GitHub Pages, including all of your data files (if they are
+each \textless{} 100Mb in size).
+
+It will be hosted at yourusername.github.io/simwrapper, or you can
+rename your clone to use a different endpoint slug other than
+``/simwrapper''.
+
+\begin{itemize}
+\tightlist
+\item
+  Clone the SimWrapper Repo at
+  \url{https://github.com/simwrapper/simwrapper.git}
+\item
+  Run \texttt{npm\ ci} to install all javascript dependencies
+\item
+  Copy all of your data files and configuration YAMLs into the
+  \texttt{public/data} subfolder
+\item
+  You must edit two files, to tell GitHub what the endpoint of the URL
+  is:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{vite.config.js}: change the \texttt{base} to be whatever
+    your repo name is. For example to host things at
+    ``username.github.io/simwrapper'', change this to
+    \texttt{base:\ \textquotesingle{}/simwrapper/\textquotesingle{}}.
+  \item
+    \texttt{public/404.html}: change the \texttt{meta} refresh content
+    value to show
+    \texttt{"0;URL=\textquotesingle{}/simwrapper/\textquotesingle{}"}
+  \end{itemize}
+\item
+  Run \texttt{npm\ run\ build}
+\item
+  Your site is now built in the local \texttt{dist} subfolder.
+\item
+  Push the content of that \texttt{dist} folder to a new
+  \texttt{gh-pages} branch in your repo:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{cd}\NormalTok{ dist}
+\FunctionTok{git}\NormalTok{ init .}
+\FunctionTok{git}\NormalTok{ add . }\KeywordTok{\&\&} \FunctionTok{git}\NormalTok{ commit }\AttributeTok{{-}m} \StringTok{"gh{-}pages"}
+\FunctionTok{git}\NormalTok{ remote add origin git@github.com:username/reponame.git }\CommentTok{\# Put your username/reponame here}
+\FunctionTok{git}\NormalTok{ push }\AttributeTok{{-}{-}force}\NormalTok{ origin master:gh{-}pages}
+\end{Highlighting}
+\end{Shaded}
+
+Be sure to enable GitHub pages for your repo, and point it to the
+\texttt{gh-pages} branch.
+
+This worked as of fall 2021, if you have problems or things are broken
+let us know!
+
+\hypertarget{instructions-for-using-github-pages-your-own-file-server}{%
+\subsubsection{Instructions for using GitHub Pages ( + Your own file
+server)}\label{instructions-for-using-github-pages-your-own-file-server}}
+
+\begin{itemize}
+\item
+  At VSP, we have a departmental Subversion server that is set up and
+  maintained for us. The only settings we needed to tweak were to add
+  ``CORS Headers'' which allow unfettered access to the site from other
+  websites (e.g.~SimWrapper)
+\item
+  An NGINX proxy server is probably a more common choice if you don't
+  already have Subversion lying around for some reason.
+\item
+  \textbf{For this to work,} you need to create your own build of
+  SimWrapper and edit the \texttt{src/fileSystems.ts} file to point to
+  your file server URL. Push that build to Github Pages.
+\end{itemize}
+
+\hypertarget{file-server-settings}{%
+\subsection{File server settings}\label{file-server-settings}}
+
+\hypertarget{cors-headers}{%
+\subsubsection{CORS Headers}\label{cors-headers}}
+
+These are the CORS headers needed for Apache or NGINX web servers. These
+allow external websites to access the files on your server over HTTP.
+
+\textbf{Your files will be visible on the Internet, so don't put things
+there that should not be public.}
+
+\begin{verbatim}
+add_header Access-Control-Allow-Origin "*";
+add_header Access-Control-Allow-Headers "Accept-Ranges,Range,*";
+add_header Accept-Ranges "bytes";
+\end{verbatim}
+
+\hypertarget{nginx-settings}{%
+\subsubsection{NGINX Settings}\label{nginx-settings}}
+
+Here is an example configuration for NGINX, which includes the correct
+CORS headers as well as the needed index.html redirection for
+single-page-app URLs to work properly.
+
+\begin{itemize}
+\tightlist
+\item
+  The commented out section kills all caching; this was helpful for
+  SFCTA which had their files on internal Windows servers.
+\end{itemize}
+
+\begin{verbatim}
+server {
+  # ...
+  # you already have a server section
+  # ...
+
+  location / {
+   try_files $uri $uri/ =404;
+  }
+
+  location /champ_runs/ {
+    # Enable CORS and range requests for partial file downloads
+    add_header Access-Control-Allow-Origin "*";
+    add_header Access-Control-Allow-Headers "Accept-Ranges,Range,*";
+    add_header Accept-Ranges "bytes";
+    autoindex on;
+
+    # optional: kill cache for the champ_runs windows share
+    # add-header Last-Modified $date_gmt;
+    # add-header Cache-Control 'private no-store, no-cache, must-revalidate,
+    # proxy-revalidate, max-age=0';
+    # add-header Pragma 'no-cache';
+    # if_modified_since_off;
+    # expires 0;
+    # etag off;
+  }
+
+  location /simwrapper/ {
+    # Redirect long URLs to the app index file which will handle them correctly
+    try_files $uri $uri/ /simwrapper/index.html;
+  }
+
+# end server section
+}
+\end{verbatim}

@@ -1,0 +1,112 @@
+\emph{For getting MATSim outputs into SimWrapper}
+
+In general, most MATSim outputs are too big and use unwieldy formats.
+The scripts below can help convert some MATSim outputs into smaller,
+more internet-friendly formats.
+
+If you develop your own scripts, please let us know and we can add them
+here!
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{create-json-network.py}{%
+\subsection{create-json-network.py}\label{create-json-network.py}}
+
+Create a JSON network appropriate for loading into SimWrapper
+visualizations
+
+\begin{itemize}
+\tightlist
+\item
+  Download script here:
+  \textbf{\href{https://raw.githubusercontent.com/simwrapper/simwrapper/master/scripts/create-geojson-network.py}{create-json-network.py}}
+\end{itemize}
+
+\textbf{Command:}
+
+\texttt{python\ create-json-network.py\ {[}network{]}\ {[}coord-system{]}}
+
+\textbf{Inputs:} MATSim network.xml.gz file; coordinate system
+
+\textbf{Outputs:} \texttt{network.json.gz} which loads into SimWrapper
+much faster than an \texttt{.xml.gz} file
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{create-csv-network.py}{%
+\subsection{create-csv-network.py}\label{create-csv-network.py}}
+
+\begin{itemize}
+\tightlist
+\item
+  Download script here:
+  \textbf{\href{https://raw.githubusercontent.com/simwrapper/simwrapper/master/scripts/create-csv-network.py}{create-csv-network.py}}
+\end{itemize}
+
+\emph{Create a CSV network appropriate for loading into R with the
+\texttt{sfnetworks} package}
+
+\textbf{Command:}
+
+\texttt{python3\ create-csv-network.py\ {[}my-network.xml.gz{]}}
+
+\textbf{Inputs:} MATSim network.xml.gz file
+
+\textbf{Outputs:} network.csv file with one row per link. Includes a
+\texttt{wkt} column with the WKT LINESTRING field, from which an R
+sfnetwork can be created.
+
+Sample code to read the output CSV into R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(sfnetworks)}
+\FunctionTok{library}\NormalTok{(sf)}
+
+\NormalTok{sf }\OtherTok{\textless{}{-}} \FunctionTok{st\_as\_sf}\NormalTok{(}\FunctionTok{read\_csv}\NormalTok{(}\StringTok{"my{-}network.csv"}\NormalTok{), }\AttributeTok{wkt=}\StringTok{"wkt"}\NormalTok{, }\AttributeTok{crs=}\DecValTok{25832}\NormalTok{)}
+\NormalTok{network }\OtherTok{\textless{}{-}} \FunctionTok{as\_sfnetwork}\NormalTok{(sf)}
+
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\FunctionTok{st\_as\_sf}\NormalTok{(filtered, }\StringTok{"edges"}\NormalTok{), }\AttributeTok{col=}\StringTok{"grey50"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_sf}\NormalTok{(}\AttributeTok{data=}\FunctionTok{st\_as\_sf}\NormalTok{(filtered, }\StringTok{"nodes"}\NormalTok{), }\FunctionTok{aes}\NormalTok{(}\AttributeTok{size=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{parse-drt-link-events.py}{%
+\subsection{parse-drt-link-events.py}\label{parse-drt-link-events.py}}
+
+Parse the event file containing DRT events.
+
+\begin{itemize}
+\tightlist
+\item
+  Download script here:
+  \textbf{\href{https://raw.githubusercontent.com/simwrapper/simwrapper/master/scripts/parse-drt-link-events.py}{parse-drt-link-events.py}}
+\end{itemize}
+
+\textbf{Command:}
+\texttt{python\ parse-drt-link-events.py\ {[}network{]}\ {[}events{]}\ {[}coord-system{]}}
+
+\textbf{Inputs:} network.xml.gz file; events.xml.gz file; a valid
+coordinate system
+
+The command will run much faster if you filter the events file to only
+contain drt events first. You can use \texttt{grep} or a similar tool,
+with a command like:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{zcat\ events.xml.gz\ \textbar{}\ grep\ "drt"\ \textgreater{}\ drt-events.xml}
+\item
+  But that strips the xml header and footer so actually doesn't work.
+  You need the \texttt{\textless{}events\textgreater{}} and
+  \texttt{\textless{}/events\textgreater{}} tags. I'll fix this soon..?
+\end{itemize}
+
+\textbf{Outputs:} \texttt{drt-vehicles.json}
+
+Use gzip to compress that output so things load faster.

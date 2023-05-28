@@ -1,0 +1,74 @@
+You can hide all of the SimWrapper ``chrome'' such as the folder
+browser, and provide custom header/footer for each page using CSS. This
+is useful for building special-purpose tools that might be
+outward-facing, for example.
+
+\hypertarget{setting-up-a-project-site}{%
+\subsection{Setting up a project site}\label{setting-up-a-project-site}}
+
+\begin{itemize}
+\tightlist
+\item
+  Create \texttt{simwrapper-config.yaml} in your project folder
+\item
+  Define the custom footer and header in markdown files
+\item
+  Use css in a custom CSS file to present as you wish
+\end{itemize}
+
+There are two general configuration options:
+
+\textbf{hideLeftBar:} True/false, hides the left-side folder browser
+panel
+
+\textbf{fullWidth:} True/false, true removes the fixed-width centered
+panel if you want a full-screen experience
+
+\hypertarget{sample-simwrapper-config.yaml-file}{%
+\paragraph{Sample simwrapper-config.yaml
+file}\label{sample-simwrapper-config.yaml-file}}
+
+\begin{lstlisting}
+  hideLeftBar: true
+  fullWidth: true
+  header: header.md
+  footer_en: footer.md
+  footer_de: footer.md
+  css: custom.css
+\end{lstlisting}
+
+\paragraph{Sample header.md}
+Sample header.
+
+\begin{lstlisting}
+  !-- header image logo -->
+  <img class="project-logo"
+       src="https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/de/kelheim/projects/KelRide/logos/KelRide-text.png"
+  />
+\end{lstlisting}
+
+\paragraph{Sample footer.md}
+Sample footer.
+
+\begin{lstlisting}
+  <footer>
+  <div class="container">
+    <div class="logos">
+        <img src="https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/de/kelheim/projects/KelRide/logos/KelRide-text.png"/>
+        <img src="https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/de/kelheim/projects/KelRide/logos/LK_Kelheim.png"/>
+        <img src="https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries//de/duesseldorf/projects/komodnext/website/logos/TU.svg"/>
+    </div>
+
+    <div class="menu">
+      VSP / TU Berlin
+      (c) 2023 TU Berlin. <a href="https://vsp.berlin/impressum">Impressum</a>
+    </div>
+  </div>
+  </footer>
+
+\end{lstlisting}
+
+\paragraph{Sample custom.css}
+
+Custom CSS can be quite extensive, refer to the online documentation for examples.
+

@@ -1,0 +1,25 @@
+This viz allows playing of MP4 and MOV video files to be streamed.
+
+\hypertarget{usage}{%
+\subsection{Usage}\label{usage}}
+
+Currently, only MP4 files with suffix \texttt{.mp4} will be playable.
+
+\hypertarget{to-stream-videos-instead-of-loading-entire-video-first}{%
+\subsection{To STREAM videos instead of loading entire video
+first}\label{to-stream-videos-instead-of-loading-entire-video-first}}
+
+You need to make sure metadata is at the FRONT of the video file, not
+the back. This is stupid, but is also why YouTube transcodes every file
+you upload no matter what.
+https://stackoverflow.com/questions/13705409/mp4-in-video-js-not-playing-until-fully-loaded
+
+\begin{itemize}
+\tightlist
+\item
+  install \texttt{gpac}
+\item
+  run \texttt{MP4Box\ -add\ origfile.mp4\ fixedfile.mp4}
+\item
+  or perhaps \texttt{MP4Box\ -isma\ myfile.mp4}
+\end{itemize}
