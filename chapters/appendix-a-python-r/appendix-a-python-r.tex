@@ -1,0 +1,291 @@
+Helper libraries for accessing local files, for processing large outputs from MATSim and other microsimulations, and to prepare datasets for display in the tools described here.
+
+\section{SimWrapper command-line tool}
+\label{appendix-simwrapper}
+
+As part of this research, a tool for accessing local files from a web browser environment was developed.
+
+Web browsers all block access to your local filesystem from external websites, for obvious security reasons. The SimWrapper website needs access to model run outputs on your filesystem. This program bridges that gap: it is a command-line tool that starts a local file server in a specific folder, so that you can access the files in that folder using SimWrapper.
+
+This Python-based command line tool allows browsing of local files on your PC/laptop using the SimWrapper website.
+
+Installation requires the pip package manager.
+
+\begin{itemize}
+  \tightlist
+  \item Install using \emph{pip install simwrapper}
+  \item To upgrade to the latest version, run \emph{pip install --upgrade simwrapper}
+\end{itemize}
+
+The package includes an embedded copy of the JavasSript code from the SimWrapper project, available separately at https://github.com/simwrapper/simwrapper. That code is under the identical GNU GPL V3 and is embedded with explicit permission of the author.
+
+\subsection{Usage}
+
+\emph{simwrapper} knows three commands.
+
+\noindent\textbf{simwrapper serve}
+
+starts a local file server in the current directory. Run this command, then browse to either https://vsp.berlin/simwrapper or https://activitysim.github.io/dashboard to view your local folder outputs.
+
+\noindent\textbf{simwrapper here}
+
+starts a local copy of the SimWrapper website usually listening on port 8050. Run this command instead of simwrapper serve if you have a machine on your local network which contains outputs you'd like to view (such as a modeling server), and that machine has not been set up with any other file sharing software such as NGINX or Apache.
+
+    This command is designed to support the use case where an agency has (1) a local network with files stored on a central "modeling server" or file server, and also (2) desktop machines or laptops on the local network that wish to access those files using SimWrapper.
+    Note, it's not a battle-tested multi-threaded web proxy server such as Apache, NGINX, or Gunicorn. Ultimately you may decide that you want to put simwrapper behind a proxy server such as those listed, for improved performance, features, and security.
+
+\noindent\textbf{simwrapper open [vsp|asim]}
+
+opens a new web browser tab AND a local file server in the current directory. The site will only operate as long as you keep that local server running, so don't close the command window.
+
+\begin{itemize}
+  \tightlist
+  \item
+    To open on the VSP MATSim site on the web, use simwrapper open vsp
+  \item
+    To open on the ActivitySim website, use simwrapper open asim
+  \item
+    You can also run simwrapper open without specifying an external site. In this case, it will will serve everything from the localhost, including file contents and SimWrapper code itself. This is the same as simwrapper here except it also opens a browser tab.
+\end{itemize}
+
+All three simwrapper commands start a small local file server, listening on a local port number. The site will only operate as long as you keep that local server running: quitting the command with CTRL-C or closing the command window will shut down the server.
+
+\subsection{Security}
+
+When the \emph{simwrapper} command line tool is running, it listens for connections on your network interface. Your computer's firewall rules and router settings determine whether other machines on the network can access the folder, or not.
+
+By default, almost all computers now run firewalls which block external access. If you want the files in your simwrapper folder to be available on your network, you will need to grant firewall permissions, generally meaning you need to authorize incoming network connections for the Python executable, and on the specific port used by SimWrapper.
+
+SimWrapper usually runs on ports 8000 and 8050. Starting multiple copies will increment the port numbers by one each time.
+
+\subsection{Running using HTTPS/SSL: required for Safari}
+
+Safari blocks HTTPS websites (such as SimWrapper VSP and ASIM) which access localhost resources such as this local simwrapper file server. \emph{We recommend Chromium-based browsers} such as Google Chrome, Brave, and Microsoft Edge, because they are much faster and have more features than Safari. But you can run \emph{simwrapper} in HTTPS mode by following these extra instructions.
+
+Simwrapper commands accept \emph{--key} and \emph{--cert} options to specify the two pieces of a PEM certicate. You can create a PEM certificate for "localhost" and install it in your browser's certificate database with the following commands.
+
+This requires Homebrew, which supplies the \emph{brew} command.
+
+\begin{lstlisting}
+brew install mkcert nss   # installs mkcert command
+mkcert localhost          # Create PEM key/cert files for "localhost"
+mkcert -install           # Installs certificates in browser
+\end{lstlisting}
+
+This creates two files: \emph{localhost.pem} and \emph{localhost-key.pem}. Move them somewhere where you can find them.
+
+Now you can run simwrapper as follows:
+
+\begin{itemize}
+  \tightlist
+  \item
+    \emph{simwrapper serve --cert localhost.pem --key localhost-key.pem}
+  \item
+    \emph{simwrapper open asim --cert localhost.pem --key localhost-key.pem}
+  \item
+    The \emph{simwrapper here} command does not use or support certificates.
+\end{itemize}
+
+
+% ---------------------------------------------------------------------------
+
+\section{MATSim Python support library}
+\label{appendix-python}
+
+As part of this research, a tool for processing MATSim files from the Python programming language was developed.
+
+This Python library is available in the online package repositories PyPi and Conda Forge, at \url{https://pypi.org/project/matsim-tools/}.
+
+Use the command \emph{pip install matsim-tools} to install from PyPi.
+
+This library is in early development stage. The API will change, things will break, and there are certainly bugs. Some development notes:
+
+\begin{itemize}
+  \tightlist
+    \item The primary goal is to make MATSim interoperate with the \emph{pandas} and \emph{geopandas} libraries for typical data analysis workflows.
+    \item Only Python 3.x is supported, and the library is tested using Anaconda Python.
+    \item Currently MATSim network, event, and plans files are supported. Hopefully more will be coming soon.
+    \item For Geopandas network support, you also need to install \emph{geopandas} and \emph{shapely}.
+    \item Supports JSON and Protobuf event file formats
+    \item Can write MATSim files too, experimentally
+  \end{itemize}
+
+\subsection{Read a MATSim network}
+
+The following code snippet reads a MATSim network and builds pandas dataframes containing node and link data:
+
+\begin{lstlisting}
+  import matsim
+  import pandas as pd
+  from collections import defaultdict
+  %matplotlib inline
+
+  # -------------------------------------------------------------------
+  # 1. NETWORK: Read a MATSim network:
+  net = matsim.read_network('output_network.xml.gz')
+
+  net.nodes
+  # Dataframe output:
+  #           x        y node_id
+  # 0  -20000.0      0.0       1
+  # 1  -15000.0      0.0       2
+  # 2    -865.0   5925.0       3
+  # ...
+
+  net.links
+  # Dataframe output:
+  #      length  capacity  freespeed  ...  link_id from_node to_node
+  # 0   10000.0   36000.0      27.78  ...        1         1       2
+  # 1   10000.0    3600.0      27.78  ...        2         2       3
+  # 2   10000.0    3600.0      27.78  ...        3         2       4
+  # ...
+\end{lstlisting}
+
+\subsection{MATSim event processing}
+
+MATSim event files do not convert easily to Pandas dataframes, because every event type has a different set of properties, while dataframes expect a well-defined set of columns.
+
+Depending on your use case, your options are to either (1) filter specific event types into separate dataframes (one for each type), or (2) collect the data you need into python dictionaries and/or lists which can be converted to dataframes at the end (or just analyzed using regular Python).
+
+Be warned that the event ORDER in MATSim event files is important, so separating event types into separate dataframes is often a bad idea. Option (2) above is a bit more work but very likely what you need to do.
+
+The following code snippets show some examples of each.
+
+\begin{lstlisting}
+# -------------------------------------------------------------------
+# 2. EVENTS: Stream through a MATSim event file.
+
+# The event_reader returns a python generator function, which you can then
+# loop over without loading the entire events file in memory.
+#
+# ---------
+# Example 1: Sum up all 'entered link' events to get link volumes.
+# Supports both .xml.gz and protobuf .pb.gz event file formats!
+# Only returns events of type 'entered link' and 'left link':
+from collections import defaultdict
+events = matsim.event_reader('output_events.xml.gz', types='entered link,left link')
+
+# defaultdict creates a blank dict entry on first reference; similar to {} but more friendly
+link_counts = defaultdict(int)
+
+for event in events:
+    if event['type'] == 'entered link':
+        link_counts[event['link']] += 1
+
+# convert our link_counts dict to a pandas dataframe,
+# with 'link_id' column as the index and 'count' column with value:
+link_counts = pd.DataFrame.from_dict(link_counts, orient='index', columns=['count']).rename_axis('link_id')
+
+# attach counts to our Geopandas network from above
+volumes = geo.merge(link_counts, on='link_id')
+volumes.plot(column='count', figsize=(10,10), cmap='Wistia') #cmap is colormap
+\end{lstlisting}
+
+\noindent\textbf{Events example: Convert an event type to a dataframe}
+
+\begin{lstlisting}
+# ---------
+# Example 2: Convert one event type to a dataframe
+
+# Only return actstart and actend events
+events = matsim.event_reader('output_events.xml.gz', types='actstart,actend')
+
+event_lists = { 'actstart': [], 'actend': [] }
+
+for event in events:
+    # Use event type as lookup string
+    eventType = event['type']
+    # Append the entire event to the list of events of this type
+    event_lists[eventType].append(event)
+
+# Convert lists to Pandas DataFrames - one for each type
+df_actstart = pd.DataFrame(event_lists['actstart'])
+df_actend = pd.DataFrame(event_lists['actend'])
+\end{lstlisting}
+
+
+\subsection{MATSim plan files}
+
+Each plan is returned as a tuple with its owning person
+
+\begin{itemize}
+  \tightlist
+    \item
+        Use selectedPlansOnly = True to only return selected plans
+    \item
+        The name of the element is in its .tag (e.g. 'plan', 'leg', 'route', 'attributes')
+    \item
+        An element's attributes are accessed using .attrib['attrib-name']
+    \item
+        Use the element's .text field to get data outside of attributes (e.g. a route's list of links)
+    \item
+        Every element can be iterated on to get its children (e.g. the plan's activities and legs)
+    \item
+        Always emits person, even if that person has no plans
+
+  \end{itemize}
+
+\begin{lstlisting}
+# -------------------------------------------------------------------
+# 3. PLANS: Stream through a MATSim plans file.
+
+plans = matsim.plan_reader('output_plans.xml.gz', selectedPlansOnly = True)
+
+# Each plan is returned as a tuple with its owning person (for now, is this ok?)
+# - The name of the element is in its .tag (e.g. 'plan', 'leg', 'route', 'attributes')
+# - An element's attributes are accessed using .attrib['attrib-name']
+# - Use the element's .text field to get data outside of attributes (e.g. a route's list of links)
+# - Every element can be iterated on to get its children (e.g. the plan's activities and legs)
+# - Emits person even if that person has no plans
+
+for person, plan in plans:
+
+    # do stuff with this plan, e.g.
+    work_activities = filter(
+        lambda e: e.tag == 'activity' and e.attrib['type'] == 'w',
+        plan)
+
+    print('person', person.attrib['id'], 'selected plan w/', len(list(work_activities)), 'work-act')
+    activities.append(num_activities)
+
+# person 1 selected plan w/ 2 work-act
+# person 10 selected plan w/ 1 work-act
+# person 100 selected plan w/ 1 work-act
+# ...
+\end{lstlisting}
+
+% =====================================================================
+
+\section{MATSim R support library}
+\label{appendix-r}
+
+The MATSim R support package mimics the functionality of the Python matsim-tools package, and supports building dashboards from standard MATSim networks, plans, events, and output trip summaries.
+
+Currently network files can be loaded as R dataframes, and many summarization plots can be generated based on the MATSim standard \emph{output\_trips }file.
+
+One very useful command builds a SimWrapper dashboard from the standard MATSim output\_trips.xml.gz file:
+
+\emph{R -e "matsim::prepareSimwrapperDashboardFromFolder()"}
+
+\subsection{Installation}
+
+The package is under heavy development as of this writing, so it is not yet formally published on the CRAN package library.
+
+You can install the package from source instead:
+
+\begin{itemize}
+  \tightlist
+    \item
+      If you don’t already have devtools installed, first run this:
+      \emph{install.packages("devtools")}
+    \item
+      Then run: \emph{devtools::install\_github("matsim-vsp/matsim-r")}
+
+\end{itemize}
+
+\subsection{Package documentation}
+
+As the package is currently undergoing significant rewrites, the best place to learn its current usage and capabilities is in the R integrated online help system.
+
+After installation, run \emph{??matsim} from within an R session to access the online help.
+
