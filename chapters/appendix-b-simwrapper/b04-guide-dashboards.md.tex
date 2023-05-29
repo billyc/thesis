@@ -42,7 +42,7 @@ which defines a set of named \textbf{rows}. The row name themselves are
 not displayed anywhere; they are just there to help you organize the
 file.
 
-\textbf{row}: Each \texttt{row} can contain either (1) the properties of
+\noindent\textbf{row}: Each \texttt{row} can contain either (1) the properties of
 a full-width panel, or (2) a YAML \textbf{list} of properties for panels
 that will be laid out horizontally in the row. YAML lists have a strange
 syntax with \texttt{-} hyphens marking the beginning of a list item.
@@ -52,28 +52,28 @@ By default, multiple panels are laid out from left to right, in equal widths. (B
 
 \begin{lstlisting}
   layout:
-  myRow1: # this row has one full-width chart
-    type: bar
-    title: 'My Bar Chart'
-    dataset: mycsvdata.csv
-    # ...
-
-  # next row has two charts, using the '-' YAML list syntax
-  myMultiRow:
-    - type: bar
+    myRow1: # this row has one full-width chart
+      type: bar
       title: 'My Bar Chart'
       dataset: mycsvdata.csv
       # ...
 
-    - type: table
-      title: 'My Summary Table'
-      config: summary-table.yaml
+    # next row has two charts, using the '-' YAML list syntax
+    myMultiRow:
+      - type: bar
+        title: 'My Bar Chart'
+        dataset: mycsvdata.csv
+        # ...
+
+      - type: table
+        title: 'My Summary Table'
+        config: summary-table.yaml
 \end{lstlisting}
 
 That indentation in the example above is extremely important!
 Indentation is how YAML interprets the grouping of elements.
 
-\textbf{Chart/plot details:} Each element in a row has the following
+\noindent\textbf{Chart/plot details:} Each element in a row has the following
 properties. This defines the actual chart that will be displayed.
 
 \begin{itemize}

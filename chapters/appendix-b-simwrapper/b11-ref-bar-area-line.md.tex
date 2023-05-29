@@ -63,33 +63,30 @@ snippet}\label{sample-dashboard.yaml-config-snippet}}
 
 \end{lstlisting}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
 \hypertarget{bar-area-line-chart-properties}{%
-\subsubsection{Bar, area, line chart
-properties}\label{bar-area-line-chart-properties}}
+\subsubsection{Bar, area, line chart properties}\label{bar-area-line-chart-properties}}
 
 Each chart can have the following properties:
 
-\textbf{dataset:} (Required) String. The filepath containing the data.
+\noindent\textbf{dataset:} (Required) String. The filepath containing the data.
 May include wildcards * and ?.
 
-\textbf{x:} (Required) String. The column containing x-values.
+\noindent\textbf{x:} (Required) String. The column containing x-values.
 
-\textbf{columns:} (Required) Array of strings. List the column names of
+\noindent\textbf{columns:} (Required) Array of strings. List the column names of
 the columns which have the values to be graphed. Each element will be
 its own line/color. Example:
 \texttt{{[}\textquotesingle{}distance\textquotesingle{},\ \textquotesingle{}duration\textquotesingle{}{]}}
 
-\textbf{useLastRow:} true/false. If set to true, only the last row of
+\noindent\textbf{useLastRow:} true/false. If set to true, only the last row of
 the datafile will be used to build the pie chart. For example, this is
 useful for MATSim outputs which list every iteration's output, and you
 are only interested in the final iteration.
 
-\textbf{stacked:} true/false for bar charts: whether to stack multiple
+\noindent\textbf{stacked:} true/false for bar charts: whether to stack multiple
 bars
 
-\textbf{legendTitles:} Array of strings. Legend titles for each data
+\noindent\textbf{legendTitles:} Array of strings. Legend titles for each data
 column. The column names will be used if this is omitted.
 
-\textbf{xAxisName/yAxisName:} Labels for the axes.
+\noindent\textbf{xAxisName/yAxisName:} Labels for the axes.

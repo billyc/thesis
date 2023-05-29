@@ -47,7 +47,6 @@ dashboard, or you can create it interactively from a raw network file.
   thumbnail: thumbnail-roads.jpg
 \end{lstlisting}
 
-\textbf{Dashboard: dashboard-example.yaml}
 \begin{lstlisting}
   header:
   title: My Dashboard
@@ -79,7 +78,7 @@ layout:
             columnName: CostsperYear[EUR]
             scaleFactor: 100
 \end{lstlisting}
-
+\textbf{Dashboard: dashboard-example.yaml}
 
 \hypertarget{attaching-csv-data-to-your-network-link-visualization}{%
 \subsection{Attaching CSV data to your network link
@@ -138,12 +137,12 @@ specified in \texttt{fileConfig.js} but no further.
 top of the map. If a title is specified both under \texttt{general} and
 under \texttt{props}, the one under \texttt{general} will be used.
 
-\textbf{description:} (optional) description of the visualization,
+\noindent\textbf{description:} (optional) description of the visualization,
 appears between title and map. If a description is specified both under
 \texttt{general} and under \texttt{props}, the one under
 \texttt{general} will be used.
 
-\textbf{csvFile:} dataset in CSV or TSV format.
+\noindent\textbf{csvFile:} dataset in CSV or TSV format.
 
 \begin{itemize}
 \tightlist
@@ -155,7 +154,7 @@ appears between title and map. If a description is specified both under
   ``1.234.567,00'' formats will not work.
 \end{itemize}
 
-\textbf{csvBase:} (optional) ``base'' dataset for difference plots. If
+\noindent\textbf{csvBase:} (optional) ``base'' dataset for difference plots. If
 \texttt{csvBase} is specified, ``diff mode'' will be enabled and
 difference plots can be automatically generated.
 
@@ -166,7 +165,7 @@ difference plots can be automatically generated.
   \texttt{\textquotesingle{}csvFile\ -\ csvBase\textquotesingle{}}
 \end{itemize}
 
-\textbf{network:} Specify either at MATSim
+\noindent\textbf{network:} Specify either at MATSim
 \texttt{output\_network.xml.gz} network file, or a geojson-format
 network file. The geojson format loads much faster, but requires that
 you create it first.
@@ -184,24 +183,24 @@ you create it first.
   and will create a file with the name \texttt{mynetwork.geo.json.gz}.
 \end{itemize}
 
-\textbf{projection:} projection must be given! Format
+\noindent\textbf{projection:} projection must be given! Format
 \texttt{EPSG:25832} etc.
 
-\textbf{geojsonFile:} (deprecated) - same as \texttt{network}.
+\noindent\textbf{geojsonFile:} (deprecated) - same as \texttt{network}.
 
-\textbf{thumbnail:} (optional) file path to a thumbnail in jpg format
+\noindent\textbf{thumbnail:} (optional) file path to a thumbnail in jpg format
 
-\textbf{center:} (optional) coordinates that the map centers on. Can be
+\noindent\textbf{center:} (optional) coordinates that the map centers on. Can be
 provided as array or string. If it is not provided, a center is
 calculated using a sampling of the data.
 
-\textbf{zoom:} (optional) zoom level of the map. If it is not provided,
+\noindent\textbf{zoom:} (optional) zoom level of the map. If it is not provided,
 the zoom level 9 is used.
 
-\textbf{showDifference:} allows difference plots to be created if a base
+\noindent\textbf{showDifference:} allows difference plots to be created if a base
 case is provided. Should be \texttt{true}.
 
-\textbf{display:} The optional display section includes details of the
+\noindent\textbf{display:} The optional display section includes details of the
 color and width data specifications.
 
 \hypertarget{defining-colors-and-widths}{%
@@ -281,10 +280,10 @@ use:}\label{deprecated-fields-do-not-use}}
 the alternative, slower network file in shapefile format. Don't use this
 if you have created the geojson network file above.
 
-\textbf{widthFactor:} (deprecated) Width values used to be uniformly
-scaled by this value. See \textbf{Colors and Widths} on this page.
+\noindent\textbf{widthFactor:} (deprecated) Width values used to be uniformly
+scaled by this value.
 
-\textbf{sampleRate:} (deprecated) This option used to specify the MATSim
+\noindent\textbf{sampleRate:} (deprecated) This option used to specify the MATSim
 simulation sample rate; i.e.~a 1\% sample would use \texttt{0.01} here
 so that volumes were scaled properly. This is NOW IGNORED; you must
 scale your CSV data appropriately.

@@ -10,6 +10,8 @@
 
 Either the MATSim carriers output file \texttt{output\_carriers.xml}, or a file named \texttt{viz-carrier*.yaml} must be present in the working folder.
 
+If no YAML file is specified and a filename matching pattern "*output\_carriers.xml.gz" is found, it will be loaded with a network file matching the same file pattern.
+
 \textbf{viz-carrier-example.yml}
 
 \begin{lstlisting}
@@ -23,8 +25,10 @@ Either the MATSim carriers output file \texttt{output\_carriers.xml}, or a file 
 \hypertarget{yaml-fields-explained}{%
 \subsection{YAML fields explained}}
 
-\textbf{network:} both \texttt{.json.gz} and \texttt{xml.gz} network
+\noindent\textbf{network:} Network filename. Both \texttt{.json.gz} and \texttt{xml.gz} network
 files are supported, but JSON-based files load \emph{much} faster.
 
-\textbf{center:} Use this to force the map center point.
+\noindent\textbf{carriers:} Name of the output\_carriers xml file
+
+\noindent\textbf{center:} Use this to force the map center point.
 \texttt{{[}long,lat{]}}

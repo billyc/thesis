@@ -13,6 +13,7 @@ sudo tlmgr update --self
 sudo tlmgr install adjustbox
 sudo tlmgr install appendix
 sudo tlmgr install breakurl
+sudo tlmgr install changes
 sudo tlmgr install cleveref
 sudo tlmgr install cm-super
 sudo tlmgr install collectbox
@@ -30,11 +31,13 @@ sudo tlmgr install texliveonfly
 sudo tlmgr install titling
 sudo tlmgr install trfsigns
 sudo tlmgr install trimspaces
+sudo tlmgr install truncate
 sudo tlmgr install ucs
 sudo tlmgr install units
 sudo tlmgr install wasy
 sudo tlmgr install wasysym
 sudo tlmgr install wrapfig
+sudo tlmgr install xstring
 
 # packages from Joschka
 sudo tlmgr install algorithm23
