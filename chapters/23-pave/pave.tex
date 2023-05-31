@@ -82,7 +82,7 @@ Note that for even larger datasets, crossfilter was no longer sufficient and mor
 
 An aggregate summary of the origin and destination locations of DRT trips was also created to help show the "big picture" of how DRT was being used in the study area; individual vehicle animations described above are very visually pleasing but do not provide a comprehensive systemic depiction.
 
-Often, this type of aggregate summary data is collected into districts or analysis "zones" that are predetermined by analysts. For this visualization, we instead implement a fully interactive plot consisting of hexagonal areas equally distributed across the study area; and the size of the hexagons themselves is user-selectable with a simple slider.
+Often, this type of aggregate summary data is collected into districts or analysis "zones" that are predetermined by analysts. For this visualization, a fully interactive plot was implemented consisting of hexagonal areas equally distributed across the study area; and the size of the hexagons themselves is user-selectable with a simple slider.
 
 The hexagon plot aggregates either total DRT trips originating or destined for points inside each hexagon; the aggregation is then colored from pale to dark to emphasize areas with large numbers of DRT trips. A three-dimensional view is also possible, with the total aggregate value mapped to the height of hexagonal "cylinders" on the map.
 
@@ -103,16 +103,14 @@ The website was introduced to consortium partners and was presented to the publi
 
 Feedback from staff was generally positive: one team member stated, ``I think people liked it. But mostly they wanted to talk to us about the different scenarios and interact with us directly, instead of using the website.''
 
-% YYY get more quotes from Tilmann etc?
-
 %% ----- DISCUSSION AND OUTLOOK -----
 \section{Discussion and Outlook}
 \label{pave-discussion}
 
-As the platform grows in capability, its usefulness to analysts grows as well. However, the level of effort to produce a bespoke website for one small project was notably high: the site was built over the course of three months and many hours were spent making small modifications on an iterative basis. Some of the components that were built have obvious potential to be used in future projects, if only the components can be made in a modular fashion that isn't tied to specific project outputs.
+As the platform grows in capability, its usefulness to analysts grows as well. However, the level of effort to produce a bespoke website for one small project was notably high: the site was built over the course of three months and many hours were spent making small modifications on an iterative basis. Some of the components that were built have obvious potential to be used in future projects, if only the components can be made in a modular fashion that is not tied to specific project outputs.
 
 The built site was well-received in the public outreach sessions and was well-liked by analyst staff. To truly inform the public and the decisionmaking process requires more than pleasing maps or a nice website, but it did appear to have a positive impact on discussions, however small.
 
 The PAVE project was the third project site built on a common foundation of web-based visualization technologies and HTTP-accessible file storage for site configuration and simulation outputs. Several novel components were built for the project, including visual navigation for scenario selection, a consistent key performance indicator output panel, three-dimensional interactive display of trip origin and destination patterns, and a carousel for collating related charts in order to reduce visual clutter.
 
-Feedback from users was positive. Internal staff considered the website well-conceived, but the level of effort to produce this bespoke site was higher than desired. This led to questions and suggestions that the features might be better integrated in a more general platform instead of future project-specific websites. The development of a generic data visualization platform in this vein is the subject of the following chapters, in Part III.
+Feedback from users was positive. Internal staff considered the website well-conceived, but the level of effort to produce this bespoke site was higher than desired. This led to questions and suggestions that the features might be better integrated in a more general platform instead of creating additional project-specific websites. The development of a generic data visualization platform in this vein is the subject of the following chapters, in Part III.

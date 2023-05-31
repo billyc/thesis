@@ -2,19 +2,21 @@
 \section{Introduction}
 \label{sites-intro}
 
-The first internal release of SimWrapper (at the time called ``afterSim'') was in August, 2020, for the annual VSP Ph.D. student seminar. That initial release was based on a fork of the COVID-Sim.info website (see Chapter \ref{ch:covid-sim}) and included the first set of proof-of-concept visualization plugins: a Sankey diagram plugin (for display mode shifts between scenarios), image and video viewers, the transit schedule explorer from MatHub (Chapter \ref{ch:mathub}), the aggregate origin/destination trip viewer from the AVOEV project (Chapter \ref{ch:avov}) and the \gls{DRT} animation viewer from PAVE (Chapter \ref{ch:pave}). It also included the first implementation of a basic file system explorer so users could navigate through their simulation outputs. Thus SimWrapper truly is the amalgamation and synthesis of all of the research components that preceded it, all of which are described in previous chapters in this document.
+The first internal release of SimWrapper (at the time called ``afterSim'') was in August, 2020, for the annual VSP Ph.D. student seminar. That initial release was based on a fork of the COVID-Sim website (see Chapter \ref{ch:covid-sim}) and included the first set of proof-of-concept visualization plugins: the transit schedule explorer from MatHub (Chapter \ref{ch:mathub}), the aggregate origin/destination trip viewer from the AVOEV project (Chapter \ref{ch:avov}), the \gls{DRT} animation viewer from PAVE (Chapter \ref{ch:pave}), the Sankey diagram plugin from PAVE (for displaying mode shifts between scenarios), and image and video viewers. It also included the first implementation of a file system explorer allowing users to navigate through their simulation outputs. Thus SimWrapper truly was the amalgamation and synthesis of the many research components that preceded it, all of which are described in previous chapters in this document.
 
-Since then, SimWrapper has been under continuous development: adding the remaining visualizations from the research tools described above, creating new plugins for the analyst team at VSP, building multi-view dashboard functionality, and improving the overall usability and featureset based on user feedback.
+Since then, SimWrapper has been under continuous development: adding the remaining visualizations from the research tools described above, creating new plugins for the analyst team at VSP, building multi-view dashboard functionality, and improving overall usability and featureset based on user feedback.
 
-SimWrapper is now used for a wide variety of projects both at VSP and worldwide. In this chapter, three ``real world'' implementations of the SimWrapper platform are described in detail, in order to showcase and assess the applicability of the research results to real-world problems.
+SimWrapper is now used for a wide variety of projects both at VSP and worldwide. In this chapter, three ``real world'' implementations of the SimWrapper platform are described in order to showcase and assess the applicability of the research results to real-world problems.
 
 % ------------------------------------------------------------------
-\section{Hamburg: the Reallab 2030 project}
+\section{Hamburg, Germany: the RealLabHH 2030 project}
 \label{sites-hamburg}
 
-YYY add description of Reallab Hamburg project. The project team at VSP wanted to build a curated website that summarized the results of five scenarios exploring various \gls{DRT} implementation plans, across several different types of metrics: modal split, modal shift, road volumes, accident costs, and emissions.
+From the project website description, in the RealLabHH project, the ``mobility of tomorrow is to be tested in the here and now of a metropolis and, building on this, a blueprint for the digital mobility of the future is to be created. The social debate on digital mobility services is at the center of this in order to provide important insights into which approaches will prove themselves in practice.''\footnote{See the project website at \url{https://verkehrsforschung.dlr.de/de/projekte/reallabhh}}
 
-This was the first project to use the SimWrapper multi-view dashboard functionality within SimWrapper. For each of the above metrics, analysts created a separate tab. Then on each tab, they included charts and maps exploring the five scenarios from top to bottom down the page.
+The project team at VSP wanted a curated website that summarized the results of five scenarios exploring various \gls{DRT} implementation plans, across several different types of metrics: modal split, modal shift, road volumes, accident costs, and emissions.
+
+This was the first project to use the multi-view dashboard functionality within SimWrapper. For each of the above metrics, analysts created a separate dashboard tab. Then on each tab, they included charts and maps exploring the five scenarios from top to bottom down the page.
 
 The project team did not have to write any HTML or JavaScript code to build the project portal: they uploaded their processed simulation outputs to the departmental file server, and wrote the YAML configuration text files for the dashboard panels according to the SimWrapper documentation. As the first project using SimWrapper to build an external website, there were many rounds of iteration on features and bugs to get the site operational.
 
@@ -32,12 +34,14 @@ Figure \ref{fig:sites-hamburg} shows several tabs of the completed website. Each
 The project website is available on the public VSP SimWrapper site.\footnote{Hamburg website is at \href{https://vsp.berlin/simwrapper/public/de/hamburg/hamburg-v2/hamburg-v2.2/viz/}{vsp.berlin/simwrapper/public/de/hamburg/hamburg-v2/hamburg-v2.2/viz/}}
 
 % ------------------------------------------------------------------
-\section{Düsseldorf: the KoMo:Dnext Project}
+\section{Düsseldorf, Germany: the KoMo:Dnext Project}
 \label{sites-komodnext}
 
-YYY describe KOMODNext. Building upon the Hamburg project described above, the team at VSP built another curated project website for the KoMo:Dnext project in Düsseldorf, Germany. This project also explored several \gls{DRT} scenarios and used many of the same plugin components as the Hamburg project.
+From the KoMo:Dnext project website, ``KoMo:Dnext prepares the next generation of connected driving and creates a central basis for the introduction of automated traffic systems in urban environments. With the DMotion, UR:BAN and KoMoD projects, the state capital of Düsseldorf can draw on a long history of projects that support the consistent digitization of transport infrastructure and direct communication between vehicles and infrastructure.''\footnote{See the project website at \url{https://www.duesseldorf.de/verkehrsmanagement/projekte/abgeschlossene-projekte/komod-next}}
 
-New plugins were designed for video file playback and for more statistical chart types, based on the Vega-Lite library\footnote{Vega-Lite is a very comprehensive charting library based on the ``Grammar of Graphics'' described in section \ref{visualizing-non-geographic-data}. Vega-Lite is available at \url{https://vega.github.io/vega-lite/}}.
+Building upon the Hamburg project described above, the team at VSP built another curated project website for the KoMo:Dnext project in Düsseldorf, Germany. This project also explored several \gls{DRT} scenarios and used many of the same plugin components as the RealLabHH Hamburg project.
+
+New plugins were designed for video file playback and for additional statistical chart types, based on the Vega-Lite library\footnote{Vega-Lite is a very comprehensive charting library based on the ``Grammar of Graphics'' described in section \ref{visualizing-non-geographic-data}. Vega-Lite is available at \url{https://vega.github.io/vega-lite/}}.
 
 In addition, new functionality was built to support project-level site branding: custom logos, headers, footers, and section navigation could replace the generic SimWrapper look and feel. This allowed the project site to fit in better with the pre-existing project site branding.
 
@@ -56,7 +60,7 @@ Figure \ref{fig:sites-komodnext} shows one tab of the completed website. Note th
 \section{ActivitySim: San Francisco and the ActivitySim consortium}
 \label{sites-activitysim}
 
-The ActivitySim Consortium is a collection of twelve metropolitan regions and states of the United States that are collaborating on building the open source ActivitySim activity-based travel demand forecasting model.\footnote{Learn more about ActivitySim at \url{https://activitysim.github.io}}.
+The ActivitySim Consortium is a collection of twelve metropolitan regions and states of the United States that are collaborating on building the open source ActivitySim activity-based travel demand forecasting model.\footnote{See the ActivitySim main website at \url{https://activitysim.github.io}}.
 
 The consortium chose SimWrapper as the common dashboard development platform for their combined efforts, due to its open source license, features, and "code-free" dashboard development model. Some of the members, especially the San Francisco County Transportation Authority, took a leading role in guiding the implementation and development of SimWrapper to meet their needs.
 
@@ -92,7 +96,6 @@ The ActivitySim implementation went differently. The consortium was expecting a 
 Based on this feedback, new easier site deployment options are being considered along with general feature improvement.
 
 As with the VSP projects, improved documentation and examples were requested and those are ongoing. The SimWrapper featureset continues to evolve, and perhaps as the features become more comprehensive, the remaining ActivitySim partners will find SimWrapper meets their needs. It is also possible that that will not be the case; time will tell.
-
 
 \section{Summary}
 \label{sites-summary}

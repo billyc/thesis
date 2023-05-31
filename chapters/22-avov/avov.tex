@@ -30,7 +30,7 @@ Agent-based microsimulation is quite complex, producing reams of data and overwh
 
 Many existing tools can analyze agent-based transport simulation outputs. \textbf{OTFVis} \cite{Srippgen2015OTFVisInBook} is a venerable open-source tool designed to integrate tightly with MATSim, however it is not under active development and has neither online features nor DRT-specific capabilities.
 
-The commercial product \textbf{Senozon Via} \cite{Rieser2015SenozonViaInBook} is very feature rich, actively maintained, and is currently used by our research team for myriad internal analysis tasks. It has no online web-based component, although it is very easy to create high-quality screen recordings of simulation results. The lack of interactive options for outreach meetings, as well as Via's focus on advanced analyst tasks, make it a poor fit for outreach despite its many other advantages.
+The commercial product \textbf{Senozon Via} \cite{Rieser2015SenozonViaInBook} is very feature rich, actively maintained, and is currently used by the VSP research team for myriad internal analysis tasks. It has no online web-based component, although it is very easy to create high-quality screen recordings of simulation results. The lack of interactive options for outreach meetings, as well as Via's focus on advanced analyst tasks, make it a poor fit for outreach despite its many other advantages.
 
 General geographic information system tools, such as \textbf{ArcGis} and its open source corollary \textbf{QGis}, are again very analyst-focused. Unlike QGis, ArcGis can create high quality online dashboards and interactive maps, and the study team has used them in other settings. ArcGis does not have any MATSim-specific capabilities; the rich agent-based details would be entirely lost in the aggregations required to get DRT outputs onto an ArcGis map. ArcGis is also commercial software and was not considered due to the required financial outlay.
 
@@ -47,10 +47,13 @@ Despite two years of development of the above-mentioned client/server solution f
 It turns out that complex file and user management is unnecessary.\footnote{This invokes the programming mantra "YAGNI" -- You Aren't Gonna Need It: build the simplest possible solution that works, instead of over-engineering things.} From trial and error and ample iteration emerges a simplified system that eliminates all of the back-end server complexity by eliminating all of the back-end servers:
 
 \begin{itemize}
-  \item File storage is delegated to existing servers, instead of creating a special visualization file server. On site, we have an existing "Subversion" server \cite{Fitzpatrick2004Subversion} which is adept at large-file storage and version history. All access to the server is via a simple unified interface that can be easily extended to cloud storage, including large offerings such as Amazon S3 or Microsoft Azure
-  \item As the site is intended to be publicly accessible, we discard all user authentication capabilities. If you have a web browser, you can view the results of any runs which are stored \emph{in the public area} of the Subversion server. Naturally some parts of file storage remain off-limits to the greater Internet
-  \item Analysts define visualizations by creating small configuration text files in the same folder as model outputs. These files include all of the details of a visualization --- usually just a few lines --- pointing to the input files and configuration settings. This eliminates all the hassle of writing code for user interface input dialog boxes.
-  \item Post-processing of outputs must be performed by the analyst as part of their modeling workflow, before uploading to Subversion, since browsers cannot ingest MATSim outputs in their entirety. This tool is not an "end-to-end" GUI which lets analysts define, run, and view outputs of their simulations: it is an output viewer.
+  \item File storage is delegated to existing servers, instead of creating a special visualization file server. On site, there is an existing "Subversion" server \cite{Fitzpatrick2004Subversion} which is adept at large-file storage and version history. All access to the server is via a simple unified interface that can be easily extended to cloud storage, including large offerings such as Amazon S3 or Microsoft Azure.
+
+  \item As the site is intended to be publicly accessible, all user authentication capabilities is discarded. Anyone with a web browsercan view the results of any runs which are stored \emph{in the public area} of the Subversion server. Naturally some parts of file storage remain off limits to the greater Internet.
+
+  \item Analysts define visualizations by creating small configuration text files in the same folder as model outputs. These files include all of the details of a visualization -- usually just a few lines -- pointing to the input files and configuration settings. This eliminates all the hassle of writing code for user interface input dialog boxes.
+
+  \item Post-processing of outputs must be performed by the analyst as part of their modeling workflow, before uploading to Subversion, since browsers cannot ingest MATSim outputs in their entirety. This tool is not an ``end-to-end'' GUI which lets analysts define, run, and view outputs of their simulations: it is an output viewer.
 \end{itemize}
 
 The code is designed as a \gls{SPA} or "single page application" which is a modern way of building Javascript-based websites that behave similarly to desktop applications. Most large consumer-facing websites such as Twitter and Facebook behave in a similar manner, thus this paradigm is easy for end users to understand.
@@ -64,7 +67,7 @@ After much trial and error, the platform coalesced around a combination of many 
   \item Extensive optimization of memory usage for handling these large datasets with the brilliant \textbf{crossfilter} Javascript library\footnote{Crossfilter is available at \href{https://crossfilter.github.io/crossfilter/}{crossfilter.github.io/crossfilter}}, which manages lightning-fast filtering of millions-of-rows datasets in multiple dimensions
 \end{itemize}
 
-The entire codebase is open source and is designed with a "plug-in" architecture so that new visualizations can be developed quickly while relying on common infrastructure for common needs such as file access. To create a new visualization, the developer copies an existing template, modifies the Javascript code to take advantage of the Deck.gl or MapBox libraries as needed, and registers it with the main application. End users can then create visualizations by adding corresponding configuration files to a scenario's file server folder.
+The entire codebase is open source and is designed with an extensible architecture so that new visualizations can be developed quickly while relying on common infrastructure for common needs such as file access. To create a new visualization, the developer copies an existing template, modifies the Javascript code to take advantage of the Deck.gl or MapBox libraries as needed, and registers it with the main application. End users can then create visualizations by adding corresponding configuration files to a scenario's file server folder.
 
 %% ----- DRT VISUALIZATIONS -----
 \section{Dynamic-Response Taxi Visualizations}
@@ -72,11 +75,11 @@ The entire codebase is open source and is designed with a "plug-in" architecture
 
 Several unique visualizations depict details specific to the dynamic-response transit scenarios in this study. Standard MATSim outputs such as mode shares by time of day, simulation statistics, trip length summaries, and so on are also available in each scenario subfolder.
 
-For best understanding of an interactive website, it is better to view the site in situ than to read the description below. The project site remains online and is better demonstrated than described.\footnote{Site is viewable at \href{https://vsp.berlin/avoev/}{vsp.berlin/avoev}}
+For the best understanding of an interactive website, it is better to view the site in situ than to read a description. The project site remains online and is better demonstrated than described.\footnote{Site is viewable at \href{https://vsp.berlin/avoev/}{vsp.berlin/avoev}}
 
 \subsection{DRT Animation}
 
-A 24-hour agent-based interactive animation of DRT vehicles traversing the roadway network includes the following features: (1) DRT vehicles traversing the roadway links in real-time, sped up, or in reverse time, for analysis; (2) Vehicles color-coded by occupancy, so users can see the relative amount of ride-sharing occurring at different times of day; (3) Passenger origin/destinations depicted as "flyovers" instead of on the street network, so actual supply and demand can be viewed separately from the roads on which that demand occurs;
+A 24-hour agent-based interactive animation of DRT vehicles traversing the roadway network includes the following features: (1) DRT vehicles traversing the roadway links in real-time, sped up, or in reverse time, for analysis; (2) Vehicles color-coded by occupancy, so users can see the relative amount of ride-sharing occurring at different times of day; (3) Passenger origin/destinations depicted as "flyovers" instead of on the street network, so actual supply and demand can be viewed separately from the roads on which that demand occurs.
 
 Each of these components can be turned on or off to assist in reducing clutter in the animation. The 3D map can be zoomed or panned and its pitch angle adjusted to assist in viewing. Figures \ref{fig:avov-drt-vehicles-routes} and \ref{fig:avov-drt-od} depict snapshots of the DRT animations.
 
@@ -122,7 +125,7 @@ Difference plots compare the DRT scenarios to the "base case" depicting current 
 \subsection{Cross-Scenario Modal Shifts}
 \label{avov-mode-shifts}
 
-Users can also \emph{compare} the aggregate total mode shift from one scenario to another; in this study comparing DRT scenarios to the base case. These visualizations highlight the degree to which the new DRT mode is "stealing" trips from existing transit and bicycle modes versus from private vehicles. Figure \ref{fig:avov-modeshift} shows an example mode shift diagram.
+Users can also \emph{compare} the aggregate total mode shift from one scenario to another; in this study comparing DRT scenarios to the base case. These visualizations highlight the degree to which the new DRT mode is ``stealing'' trips from existing transit and bicycle modes versus from private vehicles. Figure \ref{fig:avov-modeshift} shows an example mode shift diagram.
 
 %% ----- RESULTS -----
 \section{Results}
@@ -147,12 +150,12 @@ Some direct feedback from analysts included:
 }\end{displayquote}
 
 \begin{displayquote}\emph{
-  The other plots like passengers/link or vehicles/link are not entirely new; some used QGis to produce those. However, the website forced us to actually produce all those plots systematically instead of 'we could do that plot, but maybe it's not necessary, let's look into something else or raw data only to avoid the hassle of setting up QGis...'
+  The other plots like passengers/link or vehicles/link are not entirely new; some used QGis to produce those. However, the website forced us to actually produce all those plots systematically instead of 'we could do that plot, but maybe it is not necessary, let's look into something else or raw data only to avoid the hassle of setting up QGis...'
 }\end{displayquote}
 
 }
 
-The feedback that some of these visualizations are not entirely "new" is expected: tools such as QGis and Via provide some very nice visualization capabilities already. They are not online tools, however, and are not accessible to non-technical staff such as at a public outreach meeting.
+The feedback that some of these visualizations are not entirely new is expected: tools such as QGis and Via provide some very nice visualization capabilities already. They are not online tools, however, and are not accessible to non-technical staff such as at a public outreach meeting.
 
 Given this feedback, the initial roll-out of the visualization platform seems to have had a positive impact, and the team expects to continue developing it for further analysis of dynamic-response transit systems.
 

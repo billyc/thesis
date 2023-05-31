@@ -1,6 +1,6 @@
 \textbf{A previous version of this chapter was published in \citet{CharltonLaudan2020WebBasedVisualization}.}
 
-Open-source and commercial tools are available for analyzing MATSim transport simulation results, but in general these tools are installable desktop software that supports professional analyst workflows. This research builds a new open-source visualization platform for MATSim outputs that is entirely web-based. After initial experiments with many different web technologies, a client/server platform design emerges which leverages the advanced user interface capabilities of modern browsers on the front-end, and relies on back-end server processing for more CPU-intensive tasks. The initial platform is now operational and includes several aggregate-level visualizations including origin/destination flows, transit supply, and emissions levels; as well as a fully disaggregate traffic animation visualization. These visualizations are general enough to be useful for various projects. Continuing work is expected to make the visualizations more compelling and the platform more useful for practitioners.
+Open-source and commercial tools are available for analyzing MATSim transport simulation results, but these tools are typically installable desktop software that supports professional analyst workflows. This research builds a new open-source visualization platform for MATSim outputs that is entirely web-based. After initial experiments with many different web technologies, a client/server platform design emerges which leverages the advanced user interface capabilities of modern browsers on the front-end, and relies on back-end server processing for more CPU-intensive tasks. The initial platform is now operational and includes several aggregate-level visualizations including origin/destination flows, transit supply, and emissions levels; as well as a fully disaggregate traffic animation visualization. These visualizations are general enough to be useful for various projects. Continuing work is expected to make the visualizations more compelling and the platform more useful for practitioners.
 
 \hypertarget{mathub-introduction}{%
 \section{Introduction}\label{introduction}}
@@ -20,12 +20,12 @@ The rapid advancement of Internet browsing technologies in the last five years h
 
 For MATSim, the research question is: could a web browser really be useful for exploring and delivering results when the datasets are so large? Answering this question is the primary motivation for this research. Essentially: has the web become powerful enough for MATSim?
 
-Currently, analysis of MATSim outputs ends up in research reports, PDFs, video screen-recordings, and presentations. An online dashboard of results which a user could explore and manipulate would not only be more interactive, but might also reveal findings that the original analysts hadn't anticipated.
+Currently, analysis of MATSim outputs ends up in research reports, PDFs, video screen-recordings, and presentations. An online dashboard of results which a user could explore and manipulate would not only be more interactive, but might also reveal findings that the original analysts had not anticipated.
 
 \hypertarget{mathub-requirements}{%
 \section{Requirements}\label{requirements}}
 
-The research team at Technische Universität Berlin had several ``blank slate'' discussions before any code was written: meaning, if we could start at the very beginning and design something completely web-based and open, what would the bare minimum requirements be for it to be truly useful? The following requirements emerged from those discussions.
+The research team at Technische Universität Berlin had several ``blank slate'' discussions before any code was written: meaning, if one could start at the very beginning and design something completely web-based and open, what would the bare minimum requirements be for it to be truly useful? The following requirements emerged from those discussions.
 
 \hypertarget{requirement-1-web-browser-based}{%
 \subsection{Requirement 1: Web browser-based}\label{requirement-1-web-browser-based}}
@@ -50,11 +50,11 @@ Several specific web technologies developed and made widely available in recent 
 \item
   \textbf{ECMAScript 6} is an updated (2015) version of the venerable
   JavaScript scripting language that has been part of the web platform
-  since the early 1990's. Recent versions of JavaScript eliminate the
+  since the mid-1990's. Recent versions of JavaScript eliminate the
   more problematic aspects of the language and make it easier for
   developers to create bug-free, efficient code.
 \item
-  \textbf{Web Workers} are a recent (2013) addition to the web platform
+  \textbf{Web Workers} are a 2013 addition to the web platform
   that allow background thread processing for long-running tasks. Before
   Web Workers, there was no way to run truly multi-threaded code inside
   a browser.
@@ -103,7 +103,7 @@ map}\label{visualizing-time-dependent-data-on-a-geographic-map}}
 
 Two popular web-based JavaScript libraries were tested for displaying geographic data; Leaflet and Mapbox GL. A simple test case comprised of MATSim simulation outputs was developed, with the goal of displaying aggregated roadway link volumes by time of day.
 
-Leaflet (leafletjs.com) is very popular and its application programming interface (API) is a bit simpler than that of Mapbox GL. Leaflet uses background map ``tiles'' at specific zoom levels, and layers data on top of those base maps. With small networks (we tested Cottbus, Germany, a small city of 100,000 inhabitants) Leaflet performed well, but medium-sized and large-sized networks with many elements visible at once suffered from noticeable performance degradation. This was problematic, as this was the simplest use-case envisioned.
+Leaflet (leafletjs.com) is very popular and its application programming interface (API) is a bit simpler than that of Mapbox GL. Leaflet uses background map ``tiles'' at specific zoom levels, and layers data on top of those base maps. With small networks (for example Cottbus, Germany, was tested; a small city of 100,000 inhabitants), Leaflet performed well, but medium-sized and large-sized networks with many elements visible at once suffered from noticeable performance degradation. This was problematic, as this was the simplest use-case envisioned.
 
 Mapbox GL (mapbox.com) fared much better, apparently better-suited to displaying large datasets with many visible features simultaneously. In addition, Mapbox GL's use of 3D vector graphic mapping instead of preset tiles made for a much more pleasing user experience, with smooth animations between zoom levels and better background processing during page loads. For these reasons, Mapbox GL was chosen as the base map for the remaining geographic visualizations.
 
@@ -119,7 +119,7 @@ After experimenting with several packages including D3, Raphael, Morris and othe
 
 MATSim network files are small enough to fit in RAM, but MATSim plan files and event files can be much larger than RAM, necessitating careful consideration about how to handle them.
 
-Modern browsers allow access via API to a data storage area that is unique per hostname, e.g. http://mysite.com is allowed some storage on the local machine. Initial experiments revealed that each browser vendor implements this storage differently, with very strict limits on the absolute amount storage available, sometimes based on how much free space remains on the user's machine. It became apparent that this local browser-based storage would not be sufficient for MATSim outputs. Running a local file-server process would allow browser access to a specific folder on the machine, which might be nice for advanced analysts but violates the research goal of being fully web-based on the client end. Thus, a client-server paradigm emerges as the only truly viable alternative, and indeed this is how most websites operate today: the browser is the front-end to the heavier processing and storage tasks that happen on someone else's server. Note that ``someone else's server'' is usually referred to as ``the cloud''.
+Modern browsers allow access via API to a data storage area that is unique per hostname, e.g. \texttt{https://mysite.com} is allowed some storage on the local machine. Initial experiments revealed that each browser vendor implements this storage differently, with very strict limits on the absolute amount storage available, sometimes based on how much free space remains on the user's machine. It became apparent that this local browser-based storage would not be sufficient for MATSim outputs. Running a local file-server process would allow browser access to a specific folder on the machine, which might be nice for advanced analysts but violates the research goal of being fully web-based on the client end. Thus, a client-server paradigm emerges as the only truly viable alternative, and indeed this is how most websites operate today: the browser is the front-end to the heavier processing and storage tasks that happen on someone else's server. Note that ``someone else's server'' is usually referred to as ``the cloud''.
 
 \hypertarget{mathub-platform-architecture}{%
 \section{Platform architecture}\label{platform-architecture}}
@@ -234,7 +234,7 @@ Various levels of aggregation make MATsim data much easier to visualize, as is r
 
 \textbf{Map layer limitations.} The Mapbox GL mapping library allows lines, points, and polygons to be displayed on top of (or interleaved with) a base map. There seems to be a number of map elements beyond which performance becomes very slow; various techniques can be used such as aggregating elements at further-out zoom levels to get around this. Another option is to only use Mapbox GL for the base map, and to use the WebGL graphics libraries to draw large numbers of elements directly on top of the map. This is the technique used for the traffic animation, which can easily support tens of thousands of elements (all in motion) simultaneously. For additional visualizations which have large numbers of grahical elements, more research will need to be done to layer WebGL elements on top of a base map.
 
-\textbf{Challenging development.} As part of ``performance'' there was also a noticeable lag time for delivery of bug fixes and new features. Essentially, the client-server system turned out to be quite difficult to maintain. Multiple separate back end servers (production, staging, and development) needed to stay in sync with database schemas and front-end code features; for a small team, this proved quite onerous. The back end servers expected a very strict schema for data storage, which hamstrung the rapid prototyping and iteration of client side features. Basically, the team was found to be too small to keep things moving forward at a regular pace. This didn't seem to be a problem in either the design of the server code or the features planned for the clients; but rather, an inability to keep the two in sync.
+\textbf{Challenging development.} As part of ``performance'' there was also a noticeable lag time for delivery of bug fixes and new features. Essentially, the client-server system turned out to be quite difficult to maintain. Multiple separate back end servers (production, staging, and development) needed to stay in sync with database schemas and front-end code features; for a small team, this proved quite onerous. The back end servers expected a very strict schema for data storage, which hamstrung the rapid prototyping and iteration of client side features. Basically, the team was found to be too small to keep things moving forward at a regular pace. This was not a problem in either the design of the server code or the features planned for the clients; but rather, an inability to keep the two in sync.
 
 % ------------------------------------------------------
 \hypertarget{mathub-mobile-device-support}{%

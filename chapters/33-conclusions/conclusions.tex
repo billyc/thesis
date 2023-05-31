@@ -1,12 +1,11 @@
-
 \section{Outlook}
 \label{08-conclusions-outlook}
 
-At the beginning of the research described in this dissertation, it was inconceivable that one of the outcomes would be a software platform used across the globe for building data visualization dashboards supporting microsimulation models across multiple disciplines. The rapid adoption and success of the SimWrapper platform implies that there was a need for such a solution amongst the analysts building microsimulation models.
+At the beginning of the research described in this dissertation, it was unimaginable that one of the outcomes would be a software platform used across the globe for building data visualization dashboards supporting microsimulation models across multiple disciplines. The adoption and success of the SimWrapper platform implies that there was a need for such a solution amongst the analysts building microsimulation models.
 
-The platform is not a commercially supported product; there is no paid support or development team beyond its primary author, myself. This leads to a question about viability: should SimWrapper be further developed as its own product, or could the technology and lessons learned through this research be merged with other, more established, tools?
+The platform is not a commercially supported product; there is no paid support or development team beyond that provided by its primary author, myself, and some contributions from VSP staff. This leads to a question about viability: should SimWrapper be further developed as its own product, or could the technology and lessons learned through this research be merged with other, more established, tools?
 
-Only time will tell, but in the meanwhile there are some issues that were not directly addressed in this research that would require consideration.
+Only time will tell, but in the meanwhile there are some issues that were not directly addressed in this research that require consideration.
 
 \textbf{Unlimited datasets.} The size of datasets continues to be a challenge, as the platform is currently limited to either in-memory data storage or streaming of datasets in some limited cases. While local compute resources continually grow more or less in accordance with Moore's Law per \cite{Schaller1997MooresLaw}, the cloud computing revolution of the past decade has shown that essentially infinite resources can be applied at the server-level. Refactoring SimWrapper to support cloud computing would be straightforward technically, but would fundamentally change the basic assumptions embedded in the approach. Future work would have to weigh and balance this change versus starting from a different code and platform baseline.
 
@@ -14,6 +13,7 @@ Only time will tell, but in the meanwhile there are some issues that were not di
 
 %% YYY more deep outlook thoughts here....
 
+As SimWrapper is now being used to develop standard dashboards for MATSim runs at VSP, and also for ActivitySim analysis by public agencies in the United States, it is clear that it has reached a level of usability and feature-richness that justifies its existence. At the time of writing there is a backlog of feature requests (and bug fixes) that will keep the developers busy for many months at least. The prospects are exciting that this tool will continue to evolve as more users are introduced to its capabilities.
 
 \section{Conclusion}
 \label{08-conclusions-conclusion}
@@ -42,4 +42,4 @@ Another avenue for improving performance in the future could include experimenti
 
 Commercial software and popular open-source data science efforts both benefit from development resources that simply did not exist for this dissertation: it is reasonable to wonder whether the SimWrapper platform itself has long-term prospects for wide usage in a crowded field of existing data science applications and workflows. Nonetheless, the findings of the research can be embedded in those other platforms, as this dissertation's focus is primarily on the technologies themselves as applied to large-scale transport microsimulation output.
 
-In closing, I would like to thank Professor Kai Nagel for his continuing confidence and support in this line of research, without which none of this would have been possible. We now have a platform for producing advanced, useful, nice-looking dashboards that is open, shareable, and extensible. It is my sincere hope that the findings of this dissertation are useful for my colleagues in the wide field of transport planning and decisionmaking.
+In closing, I would like to thank Professor Kai Nagel at VSP for his continuing confidence and support in this line of research, without which none of this would have been possible. VSP now has a platform for producing advanced, useful, nice-looking dashboards that is open, shareable, and extensible. It is my sincere hope that the findings of this dissertation are useful for my colleagues in the wide field of transport planning and decisionmaking.

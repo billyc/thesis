@@ -2,19 +2,17 @@
 % # Chapter: SimWrapper
 % ------------------------------------------------------------------------------------
 
-\textbf{A previous version of this chapter was published in YYYY -- waiting for the link}
+\textbf{A previous version of this chapter was published in \cite{CharltonSana2023SimWrapper}.}
 
 \hypertarget{simwrapper-introduction}{%
 \section{Introduction}
 \label{simwrapper-introduction}}
 
-In Part 1, the technological foundation was set for building bespoke data visualization portals. Then in Part 2, the components of that foundation were combined and reformulated to produce three bespoke project websites, each of which was built to support analysis, decisionmaking, and public knowledge transfer. The idea of building a long string of separate, purpose-built websites over and over again seemed like the wrong\kai{I find this adjective too negative.} approach: much of the infrastructure and the code itself was essentially just being copied from one site to the next.
-
-Thus, having confirmed the utility and capabilities of a fully browser-based data visualization approach for three individual project portals, it was time to generalize the method.
+In Part 1, the technological foundation was set for building data visualization portals. Then in Part 2, the components of that foundation were combined and reformulated to produce three bespoke project websites, each of which was built to support analysis, decisionmaking, and public knowledge transfer. The idea of building a long string of separate, purpose-built websites over and over again seemed like an overly duplicative approach: much of the infrastructure and the code itself was essentially just being copied from one site to the next. Having confirmed the utility and capabilities of a fully browser-based data visualization approach for three individual project portals, it was time to find a way to generalize the method in an extensible and scalable way.
 
 An entirely generic data visualization platform is inherently more challenging to create than a project portal, as every researcher investigates widely disparate questions and is focused on completely different outputs. One researcher may be using EpiSim to explore pandemic simulations, while another uses MATSim to predict future demand-responsive shared taxi vehicle flows, while a third is performing emergency-response evacuation planning, or emissions reduction through increased transit ridership efforts. The tool needs to be extremely flexible without foreknowledge of the precise questions that will be asked.
 
-This chapter describes \textbf{SimWrapper}, an open-source web-based data visualization platform that was developed with the goal that it be useful for anyone working with MATSim outputs, and ultimately for other data-intensive \kai{traffic??} microsimulation models as well.
+This chapter describes \textbf{SimWrapper}, an open-source web-based data visualization platform that was developed with the goal that it be useful for anyone working with MATSim outputs, and ultimately for other data-intensive transport microsimulation models as well.
 
 % ------------------------------------------------------------------------------------
 % ## SimWrapper in a Nutshell
@@ -57,8 +55,8 @@ SimWrapper, in a nutshell:
     small declarative configuration files. These configurations can be
     applied across multiple projects or simulation runs;
 \item
-    is GDPR (General Data Protection Requirement) compliant,
-    as the website performs no user tracking, has no centralized data storage,
+    is GDPR (General Data Protection Requirement) compliant. The website performs
+    no user tracking, has no centralized data storage,
     no advertising, nor any other privacy-compromising misfeatures.
     SimWrapper is not a product for sale; it is an open research platform.
 \end{itemize}
@@ -78,17 +76,17 @@ Figure \ref{fig:simwrapper-flowchart-1} shows a simplified depiction of the SimW
   \label{fig:simwrapper-flowchart-1}
 \end{figure}
 
-The main point of entry in the application is the URL router, which maps the URL specified in the web browser to a specific file storage location. Any installation of SimWrapper can define URL endpoints; for example, at VSP there are multiple folders on the departmental file server which are designated as SimWrapper file storage locations. One is for general MATSim outputs; others are for specific project outputs (see c.f. Chapter \ref{ch:simwrapper-sites} for further examples).
+The main point of entry in the application is the URL router, which maps the URL specified in the web browser to a specific file storage location. Any installation of SimWrapper can define URL endpoints; for example, at \gls{VSP} there are multiple folders on the departmental file server which are designated as SimWrapper file storage locations. One is for general MATSim outputs; others are for specific project outputs (see c.f. Chapter \ref{ch:simwrapper-sites} for further examples).
 
 The router passes the file location to code which can fetch the file resource. Currently two such file services are enabled, the HTTP file system that can access any publicly accessible web server, and a local file access service that uses an advanced API available on Google Chrome to enable local file access (see section \ref{simwrapper-special-case-chrome-and-the-file-system-access-api} for more detail).
 
-Files are passed to specific visualization plugins using the \emph{plugin registry}. Every SimWrapper plugin defines a set of filename patterns that it can handle, e.g. the shapefile plugin can read \texttt{.SHP} shapefiles and the MATSim network link viewer can read MATSim \texttt{network.xml.gz} files. The plugins also register which YAML configuration files they can read: currently the YAML configuration filenames must match a specific pattern, e.g. the network link viewer will open \texttt{viz-links-....yaml} files. Documentation for every SimWrapper plugin explains the types and filenames of the files that those plugins can read.
+Files are passed to specific visualization plugins using the \emph{plugin registry}. Every SimWrapper plugin defines a set of filename patterns that it can handle, e.g. the shapefile plugin can read \texttt{.SHP} shapefiles and the MATSim network link viewer can read MATSim \texttt{network.xml.gz} files. The plugins also register which YAML configuration files they can read: the YAML configuration filenames match a specific pattern, e.g. the network link viewer will open \texttt{viz-links-....yaml} files. Documentation for each SimWrapper plugin enumerates the types and filenames of the files that those plugins can read.
 
 What happens next is up to the plugin: the shapefile or network is read, the configuration details are used to set up dashboard layouts, display and data information is processed, titles are set, and so on.
 
-Figure \ref{fig:simwrapper-flowchart-2} lists some typical file types that might be found in SimWrapper storage locations. Simulation outputs are generally saved in one folder per simulation, named in such a way that analysts can easily find their outputs in a hierarchical file system.
+Figure \ref{fig:simwrapper-flowchart-2} lists some typical file types that might be found in SimWrapper storage locations. Simulation outputs are often saved in one folder per simulation, named in such a way that analysts can easily find their outputs in a hierarchical file system.
 
-One special folder name is reserved: if a folder named \texttt{.simwrapper} is present, the configuration files within that folder will be applied to all sibling and child folders adjacent to it: in this manner, project-wide configurations, dashboards, and settings can be written in one location and applied to many simulation output folders automatically.
+One special folder name is reserved: if a folder named \texttt{.simwrapper} is present, the configuration files within that folder will be applied to all sibling and child folders adjacent to it: in this manner, project-wide configurations, dashboards, and settings can be defined in one location and applied to many simulation output folders automatically.
 
 \begin{figure}[ht]
   \centering
@@ -97,9 +95,9 @@ One special folder name is reserved: if a folder named \texttt{.simwrapper} is p
   \label{fig:simwrapper-flowchart-2}
 \end{figure}
 
-With these two primary components in place, the architecture is essentially complete: the browser code translates a user-specified URL to a specific folder or file in the defined file storage area; that file is read and the contents are passed to a specific visualization plugin based on its name or contents; and the plugin then has everything it needs to create the requested visualization.
+With the URL router, file storage, and visualization plugin components in place, the architecture is essentially complete: the browser code associates a user-specified URL to a specific folder or file in the defined file storage area; that file is read and the contents are passed to a specific visualization plugin based on its name or contents; and the plugin then has everything it needs to create the requested visualization.
 
-Every visualization plugin will not be discussed in depth here, but see Appendix \ref{appendix:simwrapper} for a more exhaustive list. Some of the details are worth exploring and are described next.
+Every visualization plugin is not discussed in depth here, but see Appendix \ref{appendix:simwrapper} for a more exhaustive list. Some of the details are worth exploring, and are described next.
 
 % ------------------------------------------------------------------------------------
 
@@ -118,15 +116,14 @@ The experience with PAVE led to selection of existing JavaScript libraries for t
 \item
   Data loading: Most MATSim outputs are either tabular text files in CSV
   format, or compressed XML files with explicit schemas. The \emph{Papaparse}
-  and \emph{Fast-XML-Parser} libraries handle loading these two data formats
+  and \emph{Fast-XML-Parser} libraries handle loading these two data formats.
 \item
   Charting: the PAVE site included statistical charts such as bar, line,
-  pie, and scatter plots, and used the \emph{Plotly} javascript library. Plotly
-  is very easy to use but not as feature-rich as some other choices; see
-  below YY for updated capabilities
+  pie, and scatter plots, and used the \emph{Plotly} JavaScript library. Plotly
+  is very easy to use and covers most standard cartesian plot types (bars, areas, lines, scatterplots) and offers some advanced non-cartesian plot types as well.
 \item
   Geographic data on maps: initial efforts using the \emph{Mapbox}
-  JavaScript library were unsatisfactory and led to the more performant
+  JavaScript library were unsatisfactory and led to use of the more performant
   \emph{Deck.gl} collection of \gls{GPU}-based visualizations.
 \item
   Animation: the agent-based animations for COVID-Sim used the \emph{Three.js}
@@ -145,7 +142,7 @@ All of these libraries share compatible open-source licenses, and are embedded i
 \section{Iterative improvements to the platform during development}
 \label{simwrapper-modifications-necessary}}
 
-Direct user feedback from the previous projects (see sections \ref{avov-results} and \ref{pave-feedback}) as well as from internal staff during the course of development helped direct a set of changes and improvements for the generic tool. In summary, changes were needed in the following categories:
+User feedback from the previous projects (see sections \ref{avov-results} and \ref{pave-feedback}), as well as from internal staff during the course of development, helped direct changes and improvements for the generic tool. In summary, changes were needed in the following categories:
 
 \begin{itemize}
 \item
@@ -188,9 +185,9 @@ Direct user feedback from the previous projects (see sections \ref{avov-results}
 
 The use case of file storage via departmental file server is well-explored and very functional, as expressed in the project websites for COVID-Sim, AVOEV, and PAVE (see Part \ref{part:2projectsites}).
 
-A key difference between those earlier project websites and SimWrapper is the need to ``meet the users where they are'' -- in other words, users may not have (or wish to use) a departmental file server with a public API endpoint serving data files. One of the primary feedback elements from the initial MatHub implementation described in Chapter \ref{ch:mathub} was that it was too onerous to upload model run outputs to a second server system before being able to view or analyze anything. In addition to being wasteful of space (and MATSim outputs can be gigabytes in size!), it is time-consuming and generat\change{es}{ions} user friction, discouraging use of the tool.
+A key difference between those earlier project websites and SimWrapper is the need to ``meet the users where they are'' -- in other words, users may not have (or wish to use) a departmental file server with a public API endpoint serving data files. One of the primary feedback elements from the initial MatHub implementation described in Chapter \ref{ch:mathub} was that users found it too onerous to upload model run outputs to a second server system before being able to view or analyze anything. In addition to being wasteful of space (and MATSim outputs can be gigabytes in size!), it is time-consuming and generates user friction, discouraging use of the tool.
 
-For regular users in the middle of their research workflow, something else is needed. Most of the internal users at VSP run simulations either on their personal laptop/desktop machines, or on the university compute cluster, which has extensive attached storage but no public-facing access via the web. Furthermore, these runs often cannot be made public due to secure data considerations, or may simply be of a transitory nature that precludes them being public.
+For regular users in the middle of their research workflow, something else is needed. Most internal users at VSP run simulations either on their personal laptop/desktop machines or on the university compute cluster, which has extensive attached storage but no public-facing access via the web. Furthermore, many runs often cannot be made public due to data security considerations, or may simply be of a transitory nature that precludes them being public.
 
 Thus several alternative avenues for enabling users to view their outputs are described here.
 
@@ -206,7 +203,7 @@ SimWrapper is designed to allow browsing of files from administrator-defined HTT
 
 \href{https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/de/berlin/projects/pave/website/}{svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/de/berlin/projects/pave/website/}
 
-That URL is the defined ``root'' of the project; all of the project dashboard configurations, model outputs, and processed data files exist in various subfolders below that location. The PAVE website at \href{https://vsp.berlin/pave/}{vsp.berlin/pave/} is set up to read files from that base URL. %% (But refer to section YY for a discussion of CORS configuration, which is necessary to allow one website to read the files stored on another.
+That URL is the defined ``root'' of the project; all of the project dashboard configurations, model outputs, and processed data files exist in various subfolders subordinate to that location. The PAVE website at \href{https://vsp.berlin/pave/}{vsp.berlin/pave/} is set up to read files from that base URL.\footnote{But refer to section \ref{simwrapper-cors} for a discussion of CORS configuration, which is necessary to allow one website to read the files stored on another.}
 
 SimWrapper elevates this to allow multiple configured root filesystems: the public VSP file server is one such root, but others can also be configured and are displayed on the home page of SimWrapper. Each root is expected to provide HTTP directory access to this storage: SimWrapper must be able to \emph{view directory listings} and \emph{retrieve file contents}. SimWrapper never writes any files anywhere; it is read-only.
 
@@ -217,15 +214,15 @@ SimWrapper elevates this to allow multiple configured root filesystems: the publ
 \hypertarget{simwrapper-local-files-on-a-personal-laptopdesktop}{%
 \subsection{Accessing local files on a personal laptop/desktop}\label{local-files-on-a-personal-laptopdesktop}}
 
-The above approach presents a problem for local files: By design, all web browsers explicitly forbid file-system access from any websites by default. This default is certainly a good default; no one wants any random website to start sniffing around their home directory.
+Local files present a problem for the above approach: By design, all web browsers explicitly forbid file-system access from any websites by default. This default is certainly a good default; no one wants any random website to start sniffing around their home directory.
 
-But in our case this is not any random website: we \emph{want SimWrapper to see the files} in some of our local folders. How can this be accomplished?.
+But in this case, this is not any random website: \emph{we want SimWrapper to see the files} in some local folders. How can this be accomplished?
 
-After several explorations including raw HTML files opened directly, arcane experimental browser flags (always vendor specific!), and other less fruitful avenues, the one method that consistently works for all browsers is as follows: for browsing local files on a machine, first start up a small helper application which is itself a simple HTTP server. This tiny server responds to HTTP requests and delivers the directory contents requested. The server listens on ``localhost'', i.e. your own computer, generally on port 8000. So the full URL is \url{http://localhost:8000/}.
+After several explorations, including raw HTML files opened directly, arcane experimental browser flags (always vendor specific!), and other less fruitful avenues, the one method that consistently works for all browsers is as follows: for browsing local files on a machine, first start up a small helper application which is itself a simple HTTP server. This tiny server responds to HTTP requests and delivers the directory contents requested. The server listens on ``localhost'', i.e. the user's own computer, generally on port 8000. So the full URL is \url{http://localhost:8000/}.
 
-Once this is set up and running, this HTTP endpoint can be accessed in SimWrapper just like any other external file storage. SimWrapper knows by default to look for files at URL \url{http://localhost:8000}, and can also view files on ports 8001-8050 if multiple localhost file servers are running! In this manner, several different folders from a user's local machine call all be accessed from SimWrapper.
+Once this is set up and running, this HTTP endpoint can be accessed in SimWrapper just like any external file storage. SimWrapper knows by default to look for files at URL \url{http://localhost:8000}, and can also view files on ports 8001-8050 if multiple file servers are running! In this manner, several different folders from a user's local machine call all be accessed from SimWrapper.
 
-As part of this research we \kai{I find that ``we'' sounds odd.  ``I'' as well.  $\to$ convert to passive voice (``...library was written ...'').} wrote a very small Python library which provides this server. Any machine with Python 3.x installed can run \texttt{pip\ install\ simwrapper} to install this mini file server, and then run it by navigating to their data folder and running the command \texttt{simwrapper\ serve}. That includes all of the server components and configuration needed to serve files to directly to SimWrapper.
+As part of this research a small Python-based utility was written which provides this server. Any machine with Python 3.x installed can run \texttt{pip\ install\ simwrapper} to install this mini file server, and then run it by navigating to their data folder and running the command \texttt{simwrapper\ serve}. That includes all of the server components and configuration needed to serve files to directly to SimWrapper. See Appendix \ref{appendix-simwrapper} for more details on the file-serving tool.
 
 Key configuration notes:
 
@@ -237,64 +234,67 @@ Key configuration notes:
 \item
   The computer's operating machine has default firewall and router rules
   that will generally prohibit any outside access from other computers
-  on the LAN or the Internet. This can be modified; see YY
+  on the LAN or the Internet. An end user can change this firewall setting
+  in their operating system if desired.
 \item
   Some configuration details for the server that are important for our
   use case: we must enable access from websites at different URLs using
-  ``CORS'' configuration headers\footnote{CORS configuration is complex; for one example of full CORS configuration see \url{https://github.com/sfcta/simwrapper/wiki/NGINX-configuration}} \kai{I do not understand what this is about}
+  ``\gls{CORS}'' configuration headers, see section \ref{simwrapper-cors}
 \item
   Some browsers (Safari, and now recent builds of Chrome) sometimes
-  block access to localhost sites or http sites (vs. https secured sites).
+  block access to localhost sites or http sites (vs. https-secured sites).
   This is still being investigated at time of publication.
 \item
   Every language framework already includes some sort of ``Tiny HTTP
   Server'' library for just these types of uses: in Python it is in the
   \texttt{http.server} library, in Java there is the Jibble
-  SimpleWebServer. Our \texttt{simwrapper} python tool leverages the
+  SimpleWebServer. The \texttt{simwrapper} Python tool leverages the
   existing Python infrastructure.
 \item
-  There is also now a simple Java version, published as
+  There is also a simple Java version, published as
   \texttt{mini-file-server.jar} for users who are more comfortable
-  running Java-based software than Python.
+  running Java software than Python.
 \end{itemize}
 
 The Python tool including source and user documentation is available at \url{https://pypi.org/project/simwrapper/}.
 
 The Java tool is available at \url{https://github.com/simwrapper/mini-file-server}.
 
+% ----------------------
+
 \hypertarget{simwrapper-data-security-and-privacy}{%
 \subsubsection{A note on data security and privacy}\label{simwrapper-data-security-and-privacy}}
 
-With this setup, the SimWrapper site itself is loaded from the Internet, but once loaded, the user's data never leaves their computer. SimWrapper is an entirely client-based system with absolutely no upstream server. The JavaScript code runs in the user's browser, accessing files available on localhost only -- which are also on the user's own computer. Nothing leaves the browser. If there are privacy or confidentiality issues with model outputs, SimWrapper can still be used for analysis in this ``localhost'' mode.  \kai{Could you switch off the network interface after having loaded simwrapper?}\kai{There is an answer to this below for a different configuration, but it is possible here as well?}
+With this setup, the SimWrapper site code is loaded on startup from the Internet, but once loaded, the user's data never leaves their computer. SimWrapper is an entirely client-based system with absolutely no upstream server. The JavaScript code runs in the user's browser, accessing files available on localhost only -- which are also on the user's own computer. Nothing leaves the browser. If there are privacy or confidentiality issues with model outputs, SimWrapper can still be used for analysis in this ``localhost'' mode. See section \ref{simwrapper-files-residing-on-another-machine-on-the-local-lan-network} for a way to run SimWrapper in a completely offline manner.
 
 % ------------------------------------------------------------------------------------
 % ### Files on Compute Cluster servers
 % ------------------------------------------------------------------------------------
 
 \hypertarget{simwrapper-files-residing-on-the-university-compute-cluster-accessed-via-ssh}{%
-\subsection{Files residing on the university compute cluster, accessed via SSH}
+\subsection{Files residing on remote compute clusters, accessed via SSH}
 \label{simwrapper-files-residing-on-the-university-compute-cluster-accessed-via-ssh}}
 
-This local-http-server paradigm can be extended to access files on any remote university\kai{does not have to be ``university'', does it?} computer cluster using the SSH (``secure shell'') protocol.
+This local-http-server paradigm can be extended to access files on any remote computer environment (such as ``compute clusters'' available at TU-Berlin and many other universities), using the SSH (``secure shell'') protocol.
 
-SSH is usually the protocol (and command) used to log into remote systems. There is a parallel command which allows ``mounting'' the remote file system using the SSH protocol. The remote files are mapped to a folder on the user's system; once mounted, the user can browse the files inside that folder as if they were local files (but generally more slowly, depending on network throughput conditions).
+SSH is usually the protocol and command used to log into remote systems. There is a similar command which allows ``mounting'' the remote file system using the SSH protocol. The remote files are mapped to a folder on the user's system; once mounted, the user can browse the files inside that folder as if they were local files (but generally more slowly, depending on network throughput conditions).
 
 \textbf{Linux:} Linux users can install the command \texttt{sshfs} to add this capability.
 
 \begin{itemize}
 \item
   once installed, a command similar to
-  \texttt{sshfs\ username@cluster.math.tu-berlin.de:/net/myfiles\ cluster}
-  will mount the remote folder \texttt{/net/myfiles} to my\kai{avoid 1st person} local
-  folder \texttt{cluster}. You would change the username, URL, and
-  folder names to match your situation.
+  \texttt{sshfs\ username@cluster.math.tu-berlin.de:/net/userfiles\ cluster}
+  will mount the remote folder \texttt{/net/userfiles} to the local
+  folder \texttt{cluster}. The user would change the username, URL, and
+  folder names to match their situation.
 \item
   \texttt{sudo\ umount\ cluster} or similar to unmount.
 \end{itemize}
 
 \textbf{MacOS} is similar to Linux but requires installing the \emph{MacFuse} driver instead, available at \url{https://osxfuse.github.io/}
 
-\textbf{Windows}  users have many options for FUSE-based sshfs support, including the \emph{sshfs-win} project available at \url{https://github.com/billziss-gh/sshfs-win}
+\textbf{Windows} users have many options for FUSE-based sshfs support, including the \emph{sshfs-win} project available at \url{https://github.com/billziss-gh/sshfs-win}
 
 % ------------------------------------------------------------------------------------
 % ### Files on other machines: simwrapper here
@@ -303,17 +303,17 @@ SSH is usually the protocol (and command) used to log into remote systems. There
 \hypertarget{simwrapper-files-residing-on-another-machine-on-the-local-lan-network}{%
 \subsection{Files residing on another machine on the local LAN network}\label{simwrapper-files-residing-on-another-machine-on-the-local-lan-network}}
 
-A challenging use case presented by users is one or more central ``modeling server'' machines on the local LAN, where most runs are performed and which contain the simulation outputs.
+A challenging use case presented by users is a central ``modeling server'' machine on the local area network (LAN), where most runs are performed and which contain the simulation outputs on shared storage.
 
-The aforementioned localhost-based HTTP server does not work in this situation, because a user sitting at their computer, opening the Internet-based SimWrapper website, trying to read files served via localhost on the modeling server, will always be blocked by browser security measures. After many hours trying to find a way to sneak around these restrictions, we accepted that this security measure is working as designed, and we need a different approach.\kai{make more formal}
+The aforementioned localhost-based HTTP server does not work in this situation, because a user sitting at their computer, opening the Internet-based SimWrapper website and trying to read files served via localhost on the \emph{modeling server}, will always be blocked by browser security measures. After many hours spent trying to find a way to sneak around these restrictions, it was clear that this security measure is working as designed, and a different approach is needed.
 
-The reason this approach is blocked is because the SimWrapper website is hosted on a secure ``HTTPS'' server, while the localhost files must be served without encryption using HTTP. Setting up an encryption certificate is difficult because internal LAN machines don't typically have world-findable DNS entries. This combination of secure and insecure content is blocked by all browsers.\kai{don't $\to$ do not}
+The reason this approach is blocked is because the SimWrapper website is hosted on a secure ``HTTPS'' server, while the localhost files must be served without encryption using HTTP. Setting up an encryption certificate is difficult because internal LAN machines do not typically have world-findable DNS entries. This combination of secure and insecure content is blocked by all browsers.
 
-A workaround is to serve the files and the site from the same file server, instead of using the Internet-based SimWrapper copy that is hosted at \emph{vsp.berlin}. This approach is already asking users to run a small file server to access their local files, thus extending that file server to also serve the necessary JavaScript and HTML is a natural extension.
+A workaround is to serve the files and the site from the same file server, instead of using the Internet-based SimWrapper code that is hosted at \emph{vsp.berlin}. There is already a need to run a small file server utility to access local files, thus extending that file server utility to also serve the necessary JavaScript and HTML is a natural extension.
 
-And this is now available: a special mode now exists in the \texttt{simwrapper} Python tool named \texttt{simwrapper\ here}. Now the server will serve both the file contents of the folder in which it is started, \emph{and the SimWrapper website itself}. The user runs \texttt{simwrapper\ here} on the file server instead of \texttt{simwrapper\ serve}, \emph{noting the full URL printed in the console}, and then on their personal computer browses to that URL instead of to vsp.berlin/simwrapper. In this manner, the site and any local files stored on that server are made available, together.\kai{Does this mean that ``simwrapper here'' downloads the full code?  Where does it store it?  (i.e.\ in memory or on disk)?}
+And this is now possible: a special mode exists in the \texttt{simwrapper} Python tool named \texttt{simwrapper\ here}. In this mode the tool serves both the file contents of the folder in which it is started, \emph{and the SimWrapper website itself}. A full copy of the entire built site (the HTML, JavaScript, and CSS) is stored as a prebuilt cache inside the python library itself. (The code is only about 10 MB at time of writing, so this storage is trivial for today's computers). The user runs \texttt{simwrapper\ here} on the file server instead of \texttt{simwrapper\ serve}, \emph{noting the full URL printed in the console}, and then on their personal computer they can browse to that URL instead of to the Internet site \emph{vsp.berlin/simwrapper}. In this manner, SimWrapper and any local files stored on that server are made available, together.
 
-This also implies that SimWrapper can be used completely offline once the Python tool is installed.
+This mode also enables SimWrapper to be used completely offline once the Python tool is installed.
 
 % ------------------------------------------------------------------------------------
 % ### Special case: Google Chrome
@@ -323,15 +323,15 @@ This also implies that SimWrapper can be used completely offline once the Python
 \subsection{Special case: Chrome and the ``File System Access API''}
 \label{simwrapper-special-case-chrome-and-the-file-system-access-api}}
 
-Google Chrome and a subset of other browsers based on the Chromium codebase implement an experimental API known as ``File System Access API''.\footnote{The File System Access API documentation us available online at \url{https://wicg.github.io/file-system-access/}.} This is not part of the official Web specification, and it may never be adopted by other browser vendors.
+Google Chrome and a subset of other browsers based on the common Chromium codebase implement an experimental API known as ``File System Access API''.\footnote{The File System Access API documentation is available online at \url{https://wicg.github.io/file-system-access/}.}
 
-But for users running Google Chrome and Microsoft Edge, this experimental API provides another avenue for accessing local files, one which completely eliminates the need for any of the local file server approaches above.
+This is not part of the official World Wide Web specification, and it may never be adopted by other browser vendors. But for users running Google Chrome and Microsoft Edge, this experimental API provides another avenue for accessing local files, one which completely eliminates the need for any of the local file server approaches above.
 
-This is considered ``progressive enhancement,'' or in other words, adding additonal functionality to the website when the browser is identified as supporting them.
+This is considered ``progressive enhancement,'' or in other words, adding additional functionalities to the website when the browser is identified as supporting them.
 
-On Chrome and Edge, users will see an additional element on the main page of SimWrapper: a button allowing them to grant access to local files. The browser will open a standard folder-picking dialog, followed by a warning that granting this permission will allow SimWrapper to view the files in that folder. Et Voíla, that is exactly what is needed for this use case.
+On Chrome and Edge, users will see an additional element on the main page of SimWrapper: a button allowing them to grant access to local files. The browser will open a standard folder-picking dialog, followed by an authorization dialog that explains granting this permission allows SimWrapper to view the files in that folder.
 
-Once permission is granted, local files are immediately visible without any additional configuration. This permission can be revoked and may be re-requested every time the browser restarts. Restarting or reloading the tab also resets the permission, leading to frequent requests for access. Thus, for some users the localhost server solution may still be desirable.
+Once permission is granted, local files are immediately visible without any additional configuration and without the need for a localhost-based file server utility running in the background. This permission can be revoked and may be re-requested every time the browser restarts. Restarting or reloading the browser tab also resets the permission, leading to frequent requests for access. Thus, for some users the localhost server solution may still be desirable.
 
 Figure \ref{fig:simwrapper-chrome} shows a typical security prompt from Google Chrome when requesting access to a local file folder.
 
@@ -342,6 +342,26 @@ Figure \ref{fig:simwrapper-chrome} shows a typical security prompt from Google C
   \label{fig:simwrapper-chrome}
 \end{figure}
 
+
+\hypertarget{simwrapper-cors}{%
+\subsection{Accessing files from external websites: CORS}
+\label{simwrapper-cors}}
+
+Cross-origin resource sharing \gls{CORS} is a web technology which determines whether one website can retrive content and assets from another website. Generally this is disallowed without explicit configuration and permission.
+
+SimWrapper depends on the ability to retrieve files from external storage servers, so those servers must be configured to allow SimWrapper to access them.
+
+In many cases this amounts to the file server requiring one additional line of configuration, for example the NGINX caching file server would require the following line,
+
+\texttt{add\_header Access-Control-Allow-Origin "*";}
+
+The asterisk "*" tells NGINX that all external websites can request files and the requests will be honored. The site administrator could be more specific and just authorize a list of SimWrapper websites instead; for example,
+
+\texttt{add\_header Access-Control-Allow-Origin "simwrapper.github.io,vsp.berlin";}
+
+CORS configuration can be much more complex than this, but this one line is usually sufficient. For much more detail on the CORS mechanism, see for example \url{https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS}.
+
+
 % ------------------------------------------------------------------------------------
 % ## Converting purpose-built vizes into Generic Data Viewers
 % ------------------------------------------------------------------------------------
@@ -350,7 +370,7 @@ Figure \ref{fig:simwrapper-chrome} shows a typical security prompt from Google C
 \section{Creating SimWrapper plugins from purpose-built visualizations}
 \label{simwrapper-converting-purpose-built-visualizations-into-generic-data-viewers}}
 
-The underlying infrastructure -- the build system, the user interaction libraries, and the choice of off-the-shelf components -- was more or less complete after the PAVE, AVOEV, and COVID-Sim projects were operational. But the specific views needed a great deal of retooling to make them useful in a generic manner.
+The underlying infrastructure -- the build system, the user interaction libraries, and the choice of JavaScript component libraries -- was essentially complete after the PAVE, AVOEV, and COVID-Sim projects were operational. But the specific views imported from those project sites required a great deal of retooling to make them useful in a generic manner.
 
 This section describes some of the most challenging aspects of this process of genericizing SimWrapper.
 
@@ -363,9 +383,9 @@ This section describes some of the most challenging aspects of this process of g
 
 The link viewer was originally scoped to display link volumes only, such as a typical ``bandwidth plot'' commonly used in travel modeling. Even for PAVE this was shortsighted, as the project team quickly found other uses for the viewer such as link-based emissions.
 
-Two critical updates made for SimWrapper are (1) the removal of the assumption that the data inputs will always have time period data in the columns followed by a ``grand total'' column; and (2) link colors and widths are now separately configurable.
+Two major updates for SimWrapper are (1) the removal of the assumption that the data inputs will always have time period data in the columns followed by a ``grand total'' column; and (2) link colors and link bandwidths are now separately configurable.
 
-These changes are now part of SimWrapper, and an example can be seen in Figure \ref{fig:simwrapper-network-links}. Basic user testing shows that a great deal more could still be done to meet user expectations. Data filters and configurable hovers are two highly-requested enhancements, as well as a first-class ``difference mode''.
+An example is seen in Figure \ref{fig:simwrapper-network-links}. User testing shows that a great deal more could still be done to meet user expectations. Data filters and configurable hovers are two highly-requested enhancements, as well as a first-class ``difference mode''.
 
 \begin{figure}[ht]
   \centering
@@ -399,11 +419,11 @@ Figure \ref{fig:simwrapper-xy-hexagons} shows a typical \texttt{output\_trips.cs
 \hypertarget{simwrapper-xyt-plots}{%
 \subsection{XY point plot}\label{simwrapper-xy-point-plots}}
 
-Another X/Y data visualization type foregoes the aggregation of data rows into hexagons, and instead plots every point directly on the map, possibly by time of day. This plot was produced for point-based emission data.
+Another X/Y data visualization type foregoes the aggregation of data rows into hexagons, and instead plots every point directly on the map, possibly by time of day. This plot is intended for point-based data such as emission measurements.
 
-This is the first plugin to experiment with \emph{streaming the data file} while it is being loaded, instead of loading the entire dataset into memory, processing it in its entirety, and then producing the visualization. Instead, blocks of data are read from the CSV input file, the point data extracted, and then the memory holding those blocks is freed as new blocks are read. In this manner, datasets of up to 50 million rows have been successfully displayed. This approach requires some new Web functionality that was not available before 2022 in all major browsers (the ability to stream "blob" contents), and hints at some exciting possibilities for future enhancements for other large data file types.
+This is the first plugin to experiment with \emph{streaming the data file} while it is being loaded, instead of loading the entire dataset into memory, processing it in its entirety, and then producing the visualization. Instead, blocks of data are read from the CSV input file, the point data extracted, and then the memory holding those blocks is freed as new blocks are read. In this manner, datasets of up to 50 million rows are successfully displayed. This approach requires some new Web functionality that was not available before 2022 in all major browsers (the ability to stream so-called "blob" contents), and hints at some exciting possibilities for future enhancements for other large data file types.
 
-Figure \ref{fig:simwrapper-xy-point-data} shows one example of point-based emission data that covers an area of Berlin. The points in this example are on a regular 10 meter grid and are so closely spaced that the individual points are difficult to discern. But there is no reason that smaller datasets with fewer points, not even on a grid, could not also be visualized using this plugin.
+Figure \ref{fig:simwrapper-xy-point-data} shows one example of point-based emission data that covers an area of Berlin. The points in this example are on a regular ten-meter grid and are so closely spaced that the individual points are difficult to discern. Smaller datasets with fewer points, or point data not on a grid, can also be visualized using this plugin.
 
 \begin{figure}[ht]
   \centering
@@ -420,7 +440,7 @@ Figure \ref{fig:simwrapper-xy-point-data} shows one example of point-based emiss
 \section{Calculation tables: providing top-line summary metrics}
 \label{simwrapper-calculation-tables}}
 
-Early in the development of SimWrapper, user feedback identified the need for reporting basic summary statistics and generating common aggregate values from model runs. These top-level summaries provide the first indication of useful results, such as overall mode share, average travel times, total emissions, and so forth. In addition, these measures are an excellent way to "sanity-check" a model run; in other words, to identify any obvious glaring errors in those topline numbers when compared to previously-established norms.
+Early in the development of SimWrapper, user feedback identified the need for reporting basic summary statistics and generating common aggregate values from model runs. These top-level summaries provide the first indication of useful results, such as overall mode share, average travel times, total emissions, and so forth. In addition, these measures are an excellent way to ``sanity-check'' a model run; in other words, to identify any obvious glaring errors in those topline numbers when compared to previously-established norms.
 
 The first element needed is a straightforward way for users to specify the inputs, outputs, and formatting of calculation tables, compatible with the file-based configuration approaches already in use for the graphical visualizations. A second challenge is to formulate a clear and accurate scheme for specifying the needed calculations, including statistical transformations of the inputs such as counts, sums, and so on. Finally, the tool must perform those calculations in memory and produce the display the results.
 
@@ -445,9 +465,9 @@ A new \texttt{table-*.yml} YAML schema containing four sections emerged from ext
 
   \item \textbf{files}: The set of input file or files required for the table. These can be raw MATSim outputs or the results of any pre- or post-processing that has already occurred in the analyst data pipeline.
 
-  \item \textbf{interactive input entries}: This is a list of end-user-editable entries that are visible on interactive web form. Some calculations benefit from having a variable input which the user can specify; imagine fuel cost per liter, or number of vehicles in a taxi fleet. Each of these entries can have a default value.
+  \item \textbf{interactive input entries}: This is a list of user-editable entries that are visible on interactive web form. Some calculations benefit from having a variable input that the website user can specify; imagine fuel cost per liter, or number of vehicles in a taxi fleet. Each of these entries can have a default value.
 
-  \item \textbf{calculations}: An ordered list of mathematical calculations to be performed. Variables, data columns, and interactive elements specified above are combined in equations as needed. This is described in more detail below.
+  \item \textbf{calculations}: An ordered list of mathematical calculations to be performed. Variables, data columns, and interactive elements specified above are combined in equations as needed. This is described in detail below.
 
   \item \textbf{outputs}: The final table entries are specified with formatting and labels.
 
@@ -566,11 +586,15 @@ SimWrapper handles this use case by recognizing a \texttt{simwrapper} or \texttt
 
 SimWrapper has been live since mid-2022 and over time has acquired data visualization plugins for most of the types of data that transport planners would like to see: link data, point data, statistical charts and plots, and aggregate data views of many types. Furthermore these views can be collated into cohesive dashboards for specific runs and defined at a project-level.
 
-User feedback internally at VSP has been very positive, acknowledging that the platform is a work in progress and there are continuous updates, bugfixes, and changes happening in real time.
+User feedback internally at VSP has been positive, acknowledging that the platform is a work in progress and there are continuous updates, bugfixes, and changes happening in real time.
+
+Staff at VSP are now building a standard MATSim results dashboard based on SimWrapper. This dashboard is expected to traverse several navigation tabs which collate the summaries into topical areas, such as Overview, Trips, Emissions, Stuck Agents, and so on.
 
 Outside of VSP, SimWrapper has also now been picked up by a small handful of public agencies across the globe.
 
-The file-based nature of SimWrapper is a strength, in that it matches the file-based reality of the simulation models that it is most often paired with. But this is also a challenge, because large file sizes are a constant source of problems. Significant time has been invested in hyper-optimizing memory usage, something that might not be necessary in a server/database based system in which only portions of data are ingested at a time. Nonetheless, the featureset is useful enough for current practitioners that the user base continues to grow.
+The file-based nature of SimWrapper is a strength, in that it matches the file-based reality of the simulation models that it is most often paired with. But this is also a challenge, because large file sizes are a constant source of problems. Significant time has been invested in hyper-optimizing memory usage, something that might not be necessary in a server/database based system in which only portions of data are ingested at a time. But as a counterpoint, SimWrapper requires no database server so is very easy for end users to just start using without worrying too much about initial setup and configuration.
+
+Finally, the featureset is useful enough for practitioners and unique enough compared to other tools, that the user base continues to grow as of this writing.
 
 % ------------------------------------------------------------------------------------
 
