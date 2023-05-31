@@ -5,40 +5,40 @@ In February 2020, the team at VSP began work on an extension to MATSim which bec
 
 In the frenetic early days of the COVID-19 pandemic in Europe, new versions of the combined model were being released, tested, and run multiple times per week. This produced massive amounts of data from hundreds of model simulations -- often daily.
 
-By March 2020 the team began publishing initial papers describing the EpiSim model\footnote{These early working papers are all available at \url{https://vsp.berlin/publications/vspwp-episim/}}, and the model itself was very rapidly accruing new features and capabilities.
+By spring 2020 the team began publishing initial papers describing the EpiSim model\footnote{Many of early working papers are available at \url{https://vsp.berlin/publications/vspwp-episim/}.}, and the model itself was very rapidly accruing new features and capabilities. For an early example of the work being done on the EpiSim model, see the preprint from \cite{MuellerEtAl2020MobilityTracesAndCovid19}.
 
-It quickly became apparent that the team needed a way to compare all of these runs in a visual manner, and also to be able to convey salient results to decisionmakers and the public. A web-based solution was an obvious choice for both use cases, but the many problems encountered in modifying and enhancing MatHub made us unsure that a heavyweight client/server solution would be able to keep up with the team's rapidly changing needs.
+It quickly became apparent that the team needed a way to compare all of these runs in a visual manner, and also to be able to convey salient results to decisionmakers and the public. A web-based solution was an obvious choice for both use cases, but the many problems encountered in modifying and enhancing MatHub detailed in \autoref{ch:mathub} raised immediate concerns that a heavyweight client/server solution would not be able to keep up with the team's rapidly changing needs.
 
-The main and urgent challenge to be solved was, how to leverage the investments already made in web-based visualization technologies while increasing velocity and the ability to support the EpiSim team? This chapter describes the novel approach of jettisoning almost all of the back-end server capabilities: instead, a so-called \gls{SPA} was rapidly built that was a completely self-contained website with no back-end server processing at all. All of the website code and all of the data files would be served ``statically'' from a simple web server.
+The main and urgent challenge to be solved was: how to leverage the investments already made in web-based visualization technologies, while increasing development velocity and the ability to support the EpiSim team? This chapter describes the novel approach of jettisoning almost all of the back-end server capabilities and instead, building a so-called \gls{SPA} that was a completely self-contained website with no back-end server processing at all. All of the website code and all of the data files would be served ``statically'' from a simple web server.
 
 Eventually the size of the site expanded and the data storage for model results migrated to a dedicated file server, but otherwise the overall architecture remained constant and the site remains in operation today.
 
 This approach proved successful in meeting the team's needs, and is described fully in this chapter.
 
-The COVID-Sim website is available at \url{https://covid-sim.info}
+The COVID-Sim website is available at \url{https://covid-sim.info}.
 
 % -------------------------------------------------------
 \hypertarget{covid-throw-away-the-servers}{%
 \section{Throwing away the servers: the EpiSim single page application}\label{covid-throw-away-the-servers}}
 
-As described previously in Chapter \ref{ch:server-experiments}, web sites always consist of the content which is loaded into a browser, known as the ``client'', and the back-end servers which the client connects to in order to receive that content. In the simplest case, a user points to a URL, and the browser loads the HTML index file at that location along with any other static files referenced in the HTML. This is known as a ``static'' website, as the web server does not need to do any dynamic processing to serve the request; it simply delivers the requested files over the network.
+As described previously in \autoref{ch:server-experiments}, web sites always consist of the content which is loaded into a browser, known as the ``client'', and the back-end servers which the client connects to in order to receive that content. In the simplest case, a user points to a URL, and the browser loads the HTML index file at that location along with any other static files referenced in the HTML. This is known as a ``static'' website, as the web server does not need to do any dynamic processing to serve the request; it simply delivers the requested files over the network.
 
-Of course, much more complex arrangements are also possible. The web server can run code or scripts which generate part of the page dynamically, can call APIs which pull data from other servers or databases, and so on. These are known as ``dynamic'' sites, and for example the MatHub project described in Chapter \ref{ch:mathub} uses this arrangement.
+Of course, much more complex arrangements are also possible. The web server can run code or scripts which generate part of the page dynamically, can call an \gls{API} which pulls data from other servers or databases, and so on. These are known as ``dynamic'' sites, and for example the MatHub project described in \autoref{ch:mathub} uses this arrangement.
 
 The MatHub experience highlighted some disillusionment with the state of client/server operations for a data-heavy site such as this. And for EpiSim the problems were expected to be magnified even further: with continual (sometimes daily) modifications to the configuration of the EpiSim model, maintaining parity between the front-end code and back-end databases seemed like an \emph{utter impossibility}, and was certainly not something that could be done at the velocity that the EpiSim analysis team needed.
 
 But if the back-end server database and configuration was slowing development down, would it be possible to just... \emph{eliminate that entire class of problems by eliminating the back-end servers?}
 
-As early as 2003, pioneers in web development including luminary Douglas Crockford, who invented the ``JSON'' data transfer format, were discovering that JavaScript-based websites could actually be far more interactive than the current state of affairs, without any plugins such as Flash or Java virtual machines\footnote{A useful interview with Mr. Crockford about that era is available at the podcast \url{https://corecursive.com/json-vs-xml-douglas-crockford}}. When Google released Gmail in 2004, the floodgates opened for a new class of web-based product called a \gls{SPA}. These types of sites are now everywhere. An SPA site runs JavaScript locally in the browser to transform the page contents that arrive from the web server. This often makes a page feel more interactive or more like a native desktop app. Some of the most popular websites in existence, such as Gmail, Twitter and Facebook, employ this architecture. And by 2015, entire books on the technique were common (see \cite{Scott2015spa}).
+As early as 2003, pioneers in web development including luminary Douglas Crockford, who invented the ``JSON'' data transfer format, were discovering that JavaScript-based websites could actually be far more interactive than the current state of affairs (at the time), without needing any plugins such as Flash or Java virtual machines\footnote{A useful interview with Mr. Crockford about that era is available at the podcast \url{https://corecursive.com/json-vs-xml-douglas-crockford}}. When Google released Gmail in 2004, the floodgates opened for a new class of web-based product called a \gls{SPA}. These types of sites are now everywhere. An SPA site runs JavaScript locally in the browser to transform the page contents that arrive from the web server. This often makes a page feel more interactive and more like a native desktop app. Some of the most popular websites in existence, such as Gmail, Twitter and Facebook, employ this architecture. And by 2015, entire books on the technique were common (see \cite{Scott2015spa}).
 
-Contrast this with the more traditional client/server architecture that frameworks such as PHP or Ruby on Rails employ: a network request from a browser client results in code running on the server which then builds and returns an HTML page to the client. Crucially, the SPA approach allows for user interactions to modify the content of a page without requiring a round-trip data request to a support server. Once the page is loaded, the SPA is ready. Further API calls are allowed, of course, which means data can be queried from external sources as needed. But the essential JavaScript code which drives the website functionality is delivered to the browser first and runs there.
+Contrast this with the more traditional client/server architecture that older web frameworks such as PHP or Ruby on Rails employ: a network request from a browser client results in code running on the server which then builds and returns an HTML page to the client. Crucially, the SPA approach allows for user interactions to modify the content of a page without requiring a round-trip data request to a support server. Once the page is loaded, the SPA is ready. Further API calls are allowed, of course, which means data can be queried from external sources as needed. But the essential JavaScript code which drives the website functionality is delivered to the browser first and runs there.
 
 \hypertarget{covid-single-page-application}{%
 \subsection{The COVID-Sim single page application}\label{covid-single-page-application}}
 
-This single-page application approach seems ideal for the needs of this project. All of the server functionality is eliminated, except for simple file storage. There is no need for backend server databases, which removes any synchronization problems with the front end code. And the client JavaScript code simply downloads the model output files from the webserver as easily as it loads an image file or any other resource. There is no longer any need to modifying server code every time a new version of the EpiSim model adds new parameters.
+This single page application approach seems ideal for the needs of this project. All of the server functionality is eliminated, except for simple file storage. There is no need for backend server databases, which removes any synchronization problems with the front end code. And the client JavaScript code simply downloads the model output files from the webserver as easily as it loads an image file or any other resource. There is no longer any need to modifying server code every time a new version of the EpiSim model adds new parameters.
 
-The JavaScript libraries described in Chapter \ref{ch:server-experiments} such as Vue and Plotly allow the client-side code to behave similarly to a rich desktop application -- the code connects user interactions (button clicks, mouseovers, etc.) with logic actions such as loading scenario files and drawing the relevant charts.
+The JavaScript libraries described in \autoref{ch:server-experiments} such as Vue and Plotly allow the client-side code to behave similarly to a rich desktop application -- the code connects user interactions (button clicks, mouseovers, etc.) with logic actions such as loading scenario files and drawing the relevant charts.
 
 Thus was created the first simple single page application for EpiSim which loads a basic HTML template, a zipfile with all summary model run outputs, and the view logic to display interactive line charts of pandemic progression over time, along with a set of slider bars that select pandemic intervention approaches. A screenshot of the initial version of the website application, now called COVID-Sim.info, is shown in Figure \ref{fig:covid-v1}.
 
@@ -46,7 +46,7 @@ Thus was created the first simple single page application for EpiSim which loads
   \centering
 	\begin{minipage}{0.8\textwidth}
     \includegraphics[width=\textwidth]{chapters/21-covid-sim/images/covid-v1.png}
-  \caption{First version of COVID-Sim.info interactive simulation result explorer.}
+  \caption{First version of the COVID-Sim.info interactive simulation result explorer.}
   \label{fig:covid-v1}
 	\end{minipage}
 \end{figure}
@@ -85,18 +85,18 @@ The EpiSim parameters themselves are usually numeric or categorical; each variab
 
 Capturing all of this information in a definable, repeatable format for use in the user interface required something more structured than the simple lookup table above.
 
-For this, a well-known and common configuration file format known as \gls{YAML} is used.\footnote{The YAML standard is defined at \url{https://yaml.org/}}. YAML excels at describing sets of \emph{key:value} relationships and allows lists and grouping of keys underneath other keys. It is human-readable and computer-parseable; these traits lead to YAML being a popular format for specifying configuration information in myriad of software systems.
+For this, a well-known and common configuration file format known as \gls{YAML} is used.\footnote{The YAML standard is defined at \url{https://yaml.org/}}. YAML excels at describing sets of \emph{key:value} relationships and allows lists and grouping of keys underneath other keys. It is human-readable and computer-parseable; these traits lead to YAML being a popular format for specifying configuration information in myriad software systems.
 
 For a batch of EpiSim runs, the operator of EpiSim produces the lookup table with the specific model parameters and a YAML file containing the metadata that describes in human terms how the variables will be presented to the user in the dashboard.
 
-An example YAML file is listed in Figure \ref{fig:covid-yaml}: this is abbreviated for clarity. More complex model runs have more sections and more variables defined.
+An example YAML file is listed in \autoref{fig:covid-yaml}: this is abbreviated for clarity. More complex model runs have more sections and more variables defined.
 
 \begin{figure}
   \centering
 	\begin{minipage}{0.9\textwidth}
     \centering
     \includegraphics[width=0.7\textwidth]{chapters/21-covid-sim/images/covid-yaml.png}
-  \caption{Example YAML text-based configuration for a set of COVID-Sim simulation runs. Note groups of settings which activate on specific days in the simulation.}
+  \caption{Example YAML text-based configuration for a set of COVID-Sim simulation runs. Note groups of settings which activate on specific days in the simulation, with a title and parameter name (measure) for each.}
   \label{fig:covid-yaml}
 	\end{minipage}
 \end{figure}
@@ -168,7 +168,20 @@ With all these pieces in place, the novel and unique overall architecture of the
   the user selects a new simulation from the available options.
 \end{itemize}
 
-The types and number of charts and visualizations have grown considerably since the beginning of the project in March 2020. A considerable effort has been made to be nimble and add new visualizations as soon as the analyst team identifies a new need, or produces a new type of simulation output. These charts now run the gamut of disease progression, hospitalization rates, R-value statistics, age-related effects, vaccination rates, activity levels by activity type, and much more.
+The types and number of charts and visualizations have grown considerably since the beginning of the project in March 2020. A sizable effort has been made to be nimble and add new visualizations as soon as the analyst team identifies a new need or produces a new type of simulation output. These charts now run the gamut of disease progression, hospitalization rates, R-value statistics, age-related effects, vaccination rates, activity levels by activity type, and much more.
+
+\autoref{fig:covid-all-plots} shows a sample output of all charts and plots for a single EpiSim simulation, with the scenario selector and summary statistics in the top-left and charts filling the rest of the page. The number and types of charts has indeed proliferated with time.
+
+\begin{figure}
+  \centering
+	\begin{minipage}{\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{chapters/21-covid-sim/images/covid-all-plots.png}
+  \caption{Full display of plots for a recent (2022) version of COVID-Sim. Note that the actual website shows all plots in a vertical stack so that timelines on the \emph{x-axes} are aligned.}
+  \label{fig:covid-all-plots}
+	\end{minipage}
+\end{figure}
+
 
 \hypertarget{covid-animations-of-infection-progression-in-berlin}{%
 \section{Animations of infection progression in Berlin}\label{animations-of-infection-progression-in-berlin}}
@@ -183,9 +196,9 @@ Any specific day in the simulation can be chosen from a panel to see the infecti
 
 A second animation was added later that removed the daily back-and-forth motion of agents on individual trips, and simply showed the status of agents at their home locations, over the course of the 90-day simulation.
 
-The animation technology used for these visualizations helped to significantly inform later projects described in Chapters \ref{ch:avov}, \ref{ch:pave}, and \ref{ch:simwrapper}.
+The animation technology used for these visualizations helped to significantly inform later projects described in chapters \ref{ch:avov}, \ref{ch:pave}, and \ref{ch:simwrapper}.
 
-Figure \ref{fig:covid-animation} shows some snapshots in time of the animation progression, for a 90-day pandemic simulation for Berlin.
+Figure \ref{fig:covid-animation} shows some snapshots in time of the animation progression for a 90-day pandemic simulation for Berlin.
 
 \begin{figure}
   \centering
@@ -197,9 +210,41 @@ Figure \ref{fig:covid-animation} shows some snapshots in time of the animation p
 	\end{minipage}
 \end{figure}
 
+% ----------------------------------------------
+\hypertarget{r-calculator}{%
+\section{R-value calculator and activity risk calculator}\label{r-calculator}}
+
+One final addition to the COVID-Sim website is a set of R-value and risk calculators that allow website users to experiment with the consequences of their own actions as well as the simulated results for various interventions. This tool uses the same set of technologies described above, with configuration parameters stored in YAML text files and simulation results pre-recorded in lookup tables.
+
+The R-value calculator in particular was found to be very useful in public policy discussions with stakeholders in winter 2020/2021.
+
+\autoref{fig:covid-r-calculator} depicts one R-value calculator with various policy interventions including closure of schools and daycare, masks in the workplace, evening curfews, and contact tracing levels.
+
+A similar calculator is shown in \autoref{fig:covid-personal-risk-calculator}, in this case for the simulated risk of various personal activities such as a sick housemate or attending a dinner party.
+
+The R-value calculator is online at \url{https://covid-sim.info/r-calcs-v2/2021-01-24b}.
+
+\begin{figure}
+  \centering
+	\begin{minipage}{0.44\textwidth}
+    \includegraphics[width=\textwidth]{chapters/21-covid-sim/images/covid-r-value-calculator.png}
+  \caption{Pandemic R-value calculator for a combined set of simulated public policy interventions.}
+  \label{fig:covid-r-calculator}
+	\end{minipage} \begin{minipage}{0.515\textwidth}
+    \includegraphics[width=\textwidth]{chapters/21-covid-sim/images/covid-personal-risk-calculator.png}
+  \caption{Simulated activity risk calculator for some typical activities, in this case showing risk for attending a dinner party.}
+  \label{fig:covid-personal-risk-calculator}
+	\end{minipage}
+\end{figure}
+
+
+
+
 % ==============================================
 \hypertarget{covid-discussion}{%
 \section{Discussion}\label{covid-discussion}}
+
+VSP has built EpiSim simulations for Berlin, Cologne, and Munich in Germany, and other researchers are using EpiSim in Jakarta, Indonesia and Los Angeles, United States.
 
 At the outset of the EpiSim effort in March 2020, it was unclear how much anyone outside the research group would be interested in this work. The first results and the animations were put together in great haste, a matter of weeks, with the idea that the results might have great public interest.
 
@@ -209,9 +254,9 @@ That major public interest never quite materialized. The project lead, Professor
 \hypertarget{covid-user-feedback}{%
 \subsection{User feedback}\label{user-feedback}}
 
-No user experience surveys were performed while building this analysis portal, as its rapid development precluded any regimented and carefully designed study. Instead, constant weekly feedback from the users of the site was ad-hoc in nature.
+No user experience surveys were performed while building this analysis portal, as its rapid development precluded any regimented and carefully designed study. Instead, the constant weekly feedback from the users of the site was ad-hoc in nature.
 
-In general, the site was considered to be extremely useful, and the automated nature of the process from simulation completion to visible, comparable results online, was lauded many times over.
+In general, the site was considered to be extremely useful, and the automated nature of the process from a completed simulation to visible, comparable results online, was lauded many times over.
 
 There were several rounds of design changes in both the automation pipeline and in the website display functionality, mostly completed in the first several months of work. Ultimately the number of modifications grew so great, with commensurate bugs popping up in old versions of runs, that a ``split'' was decreed which froze the older runs onto a ``Viewer Version 1'' copy of the site, while newer runs would receive the latest updates. This alleviated much stress about user testing the hundreds and hundreds of runs on the site after every set of changes.
 
@@ -223,12 +268,14 @@ Feedback on the animations revealed that, while they look nice (according to ana
 
 The site continues to receive updates to support new model versions. No new major features are currently planned, and the infrastructure seems to be holding up very well.
 
-Possible future work could include a user interface overhaul to reign in the proliferation of charts and graphs. The ``one long vertical list'' of charts is helpful for aligning timelines on the x-axis, but it is not an excellent user experience. Some detailed design work might reveal that a more standard ``dashboard'' approach might also be valuable.
+Possible future work could include a user interface overhaul to reign in the proliferation of charts and graphs. The ``one long vertical list'' of charts is helpful for aligning timelines on the x-axis, but it is not an excellent user experience. Some detailed design work might reveal that a more standard ``dashboard'' approach might be valuable.
 
 % ----------------------------------------------
 \hypertarget{covid-informing-decisionmaking-with-comparison-dashboards}{%
-\section{Conclusion: Informing decisionmaking with comparison dashboards}\label{covid-informing-decisionmaking}}
+\section{Conclusion: Informing decisionmaking with interactive dashboards}\label{covid-informing-decisionmaking}}
 
 The ability to rapidly visualize and assess the results of thousands of simulations runs is crucial to the team's ability to support ongoing decisionmaking on this project. Advanced simulations like MATSim, ActivitySim, and EpiSim produce so much data that visualization and assessment are absolutely essential for deep understanding of the outputs.
 
-By all measures, the COVID-Sim simulation portal is a resounding success story. Transport modelers are very rarely so close to the decisionmaking apparatus, helping in a small way to answer urgent questions that tangibly affect society. The fact that the lessons learned in the simple experiments of Chapters \ref{ch:server-experiments} and \ref{ch:mathub} proved so useful so soon, is a breathtaking and satisfying outcome.
+By all measures, the COVID-Sim simulation portal is a resounding success story. Transport modelers are very rarely so close to the decisionmaking apparatus, helping in a small way to answer urgent questions that tangibly affect society. The fact that the lessons learned in the simple experiments of \autoref{ch:server-experiments} and \autoref{ch:mathub} proved so useful so soon is a breathtaking and satisfying outcome.
+
+The open source COVID-Sim website code is freely available at \url{https://github.com/matsim-vsp/covid-sim}.
