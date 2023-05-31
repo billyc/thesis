@@ -1,6 +1,19 @@
-% !TEX root = ../phd.tex
-
 \chapter*{Abstract}
-\todo[inline]{Abstract schreiben}
 
+For decades, transport modeling and transport simulation platforms have been coupled with data visualization tools to enable analysts and decisionmakers interpret the voluminous outputs that these simulations produce.
 
+This dissertation documents the evaluation of web browser based data visualization techniques that integrate with open-source transport microsimulation tools such as MATSim and ActivitySim. Then it describes a new, complete, and novel open-source web platform that enables transport researchers to produce visualizations and data dashboards to support informed decisionmaking. It is organized into three parts:
+
+\begin{itemize}
+  \item Initial experiments using servers for processing and storage, and desktop web browsers for displaying simulation outputs
+  \item A rethinking of the approach which eliminates the server-side software and moves almost all functionality into the web browser code, for a set of three project websites
+  \item The synthesis of the above techniques into a cohesive and generically useful web-based platform
+\end{itemize}
+
+The first part describes several small tools exploring transport microsimulation datasets. Limits on dataset size and processing power inherent in desktop web browser-based solutions are considered. Strengths and weaknesses of the approach are considered in detail.
+
+The second part describes a rethinking of this traditional client/server platform design toward an entirely browser-based system. Three project portals are described and address a wide range of topics from COVID-19 virus propagation to demand-responsive automated vehicle transport systems.
+
+The technologies developed in the earlier parts are synthesized into a cohesive, general web-based platform that is described in the final part. The resulting tool, named ``SimWrapper'', can be used by analysts to assess and compare simulation runs, and also produces data dashboard portals that are suitable for a wide audience.
+
+The dissertation closes with a discussion of the benefits and shortcomings of the web-based data visualization techniques developed as part of this research.
