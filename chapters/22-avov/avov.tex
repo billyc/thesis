@@ -14,7 +14,7 @@ Augmenting or replacing fixed-route transit lines with automated, connected, sha
 
 In this study, known in German as AVÖV\footnote{Automasierter vernetzter öffentlicher Verkehr: Automated, networked public transit}, a new \gls{DRT} shared taxi service is examined as an alternative approach to serving the population of rural areas and less-dense portions of urban regions. Dynamic-response transit is analyzed using the \gls{MATSim} agent-based transport microsimulation model. MATSim is an extensible, activity- and multi-agent based transport simulation, which enables the simulation of large scale scenarios. \cite{MATSimBook}. Crucially, MATSim simulates passenger transport in both private and public modes \cite{ZiemkeEtAl2019OpenBerlinScenario}.
 
-The existing methodology behind using MATSim to simulate DRT is well-described by Bischoff et al \cite{BischoffMaciejewskiNagel2017SharedTaxiIITSC} and is not the focus of this chapter. Rather, in the course of the effort to develop, analyze and compare various DRT scenarios, a need arose to create some truly unique data visualizations that could assist in improving and displaying the DRT scenarios themselves. A web-based portal is the result of this research. The portal is based on the findings of Chapter \ref{ch:mathub} and more directly Chapter \ref{ch:covid-sim}, where a web portal for comparing scenarios was developed for the EpiSim model (described in \cite{MuellerEtAl2021episim}). The scenario comparison portal includes many interactive views, such as taxi movements color-coded by number of passengers and trip request origins and destinations, changes in roadway and passenger volumes compared to a base case, and more. The agent-based simulation covers a 24 hour simulation period; analysts can hone in on specific times of day to examine, e.g. school pickup/drop-offs or commute trips connecting to rail stations.
+The existing methodology behind using MATSim to simulate DRT is well-described by Bischoff et al \cite{BischoffMaciejewskiNagel2017SharedTaxiIITSC} and is not the focus of this chapter. Rather, in the course of the effort to develop, analyze and compare various DRT scenarios, a need arose to create some truly unique data visualizations that could assist in improving and displaying the DRT scenarios themselves. A web-based portal is the result of this research. The portal is based on the findings of \autoref{ch:mathub} and more directly \autoref{ch:covid-sim}, where a web portal for comparing scenarios was developed for the EpiSim model (described in \cite{MuellerEtAl2021episim}). The scenario comparison portal includes many interactive views, such as taxi movements color-coded by number of passengers and trip request origins and destinations, changes in roadway and passenger volumes compared to a base case, and more. The agent-based simulation covers a 24 hour simulation period; analysts can hone in on specific times of day to examine, e.g. school pickup/drop-offs or commute trips connecting to rail stations.
 
 The tool is in operation for several small cities and rural regions in Germany, and was successfully used as an outreach tool in public meetings online. Project partners at transit agencies are interested in understanding the implications of the DRT simulations, and without a visual component, that would be extremely difficult to provide.
 
@@ -23,7 +23,7 @@ Furthermore, developers of the MATSim DRT extension found the visualizations par
 All code for MATSim and the visualization portal is open source and, while this specific study has a quite esoteric use case, the portal has an extensible design that could be modified for other purposes.
 
 %% ----- EXISTING TOOLS AND RESEARCH -----
-\section{Motivation: Existing Tools and Research}
+\section{Motivation: existing tools and research}
 \label{avov-motivation}
 
 Agent-based microsimulation is quite complex, producing reams of data and overwhelming details that are not appropriate for stakeholder meetings. PDF reports and PowerPoint slides are the norm in these situations, but building something truly interactive instead could be much more engaging and useful for decision-making.
@@ -34,12 +34,12 @@ The commercial product \textbf{Senozon Via} \cite{Rieser2015SenozonViaInBook} is
 
 General geographic information system tools, such as \textbf{ArcGis} and its open source corollary \textbf{QGis}, are again very analyst-focused. Unlike QGis, ArcGis can create high quality online dashboards and interactive maps, and the study team has used them in other settings. ArcGis does not have any MATSim-specific capabilities; the rich agent-based details would be entirely lost in the aggregations required to get DRT outputs onto an ArcGis map. ArcGis is also commercial software and was not considered due to the required financial outlay.
 
-Research by \citet{CharltonLaudan2020WebBasedVisualization} described in Chapter \ref{ch:mathub} shows that a web-based tool specific to MATSim is now possible, given the latest advances in graphic technology embedded in modern web browsers. That tool includes a ``front-end'' website which runs in the user's browser. Through this site the user organizes model outputs, and defines aggregate visualizations for a few typical use cases. The tool also requires a large, complex ``back-end'' server component which handles file storage, user authentication, output post-processing, and realtime visualization support. That work is an obvious starting point for this research, but for reasons that will be described below, much of it was ultimately discarded.
+Research by \citet{CharltonLaudan2020WebBasedVisualization} described in \autoref{ch:mathub} shows that a web-based tool specific to MATSim is now possible, given the latest advances in graphic technology embedded in modern web browsers. That tool includes a ``front-end'' website which runs in the user's browser. Through this site the user organizes model outputs, and defines aggregate visualizations for a few typical use cases. The tool also requires a large, complex ``back-end'' server component which handles file storage, user authentication, output post-processing, and realtime visualization support. That work is an obvious starting point for this research, but for reasons that will be described below, much of it was ultimately discarded.
 
 In summary, the existing tools are all either incapable of visualizing the disaggregate outputs of the DRT module of MATSim in an efficient manner, have no web-based online component, or are inappropriate for anyone except highly trained analysts. Thus the new platform described below is seen as a viable solution.
 
 %% ----- THE PLATFORM -----
-\section{The Visualization Platform}
+\section{The visualization platform}
 \label{avov-platform}
 
 Despite two years of development of the above-mentioned client/server solution for other studies, problems in the old system were persistent. The two largest: (1) The massive size of MATSim outputs always preclude loading them into a user's web browser; a single DRT run can be 800Mb or more. This forces post-processing and/or aggregation to happen, which can eliminate many of the benefits of a fully disaggregate analysis. (2) The back-end server design requires extensive effort whenever new visualization capabilities are desired. A strict database design and overwrought user/group management capabilities result in a rock-solid system that is unfortunately onerous to modify.
@@ -70,14 +70,14 @@ After much trial and error, the platform coalesced around a combination of many 
 The entire codebase is open source and is designed with an extensible architecture so that new visualizations can be developed quickly while relying on common infrastructure for common needs such as file access. To create a new visualization, the developer copies an existing template, modifies the Javascript code to take advantage of the Deck.gl or MapBox libraries as needed, and registers it with the main application. End users can then create visualizations by adding corresponding configuration files to a scenario's file server folder.
 
 %% ----- DRT VISUALIZATIONS -----
-\section{Dynamic-Response Taxi Visualizations}
+\section{Dynamic-response taxi visualizations}
 \label{avov-drtviz}
 
 Several unique visualizations depict details specific to the dynamic-response transit scenarios in this study. Standard MATSim outputs such as mode shares by time of day, simulation statistics, trip length summaries, and so on are also available in each scenario subfolder.
 
 For the best understanding of an interactive website, it is better to view the site in situ than to read a description. The project site remains online and is better demonstrated than described.\footnote{Site is viewable at \href{https://vsp.berlin/avoev/}{vsp.berlin/avoev}}
 
-\subsection{DRT Animation}
+\subsection{DRT animation}
 
 A 24-hour agent-based interactive animation of DRT vehicles traversing the roadway network includes the following features: (1) DRT vehicles traversing the roadway links in real-time, sped up, or in reverse time, for analysis; (2) Vehicles color-coded by occupancy, so users can see the relative amount of ride-sharing occurring at different times of day; (3) Passenger origin/destinations depicted as ``flyovers'' instead of on the street network, so actual supply and demand can be viewed separately from the roads on which that demand occurs.
 
@@ -87,7 +87,7 @@ Each of these components can be turned on or off to assist in reducing clutter i
 \centering
 \begin{minipage}[c]{0.45\textwidth}
    \includegraphics[width=\linewidth]{chapters/22-avov/images/fig-drt-vehicles.png}
-   \caption{DRT vehicles and routes}
+   \caption{DRT vehicles and routes, colored by occupancy}
    \label{fig:avov-drt-vehicles-routes}
 \end{minipage}
 \begin{minipage}[c]{0.45\textwidth}
@@ -99,12 +99,12 @@ Each of these components can be turned on or off to assist in reducing clutter i
 \end{figure}
 
 % ---------------------------------------------------
-\subsection{DRT Passenger and Vehicle volumes}
+\subsection{DRT passenger and vehicle volumes}
 \label{avov-volumes}
 
 Aggregate summaries of roadway volumes depict total DRT pasenger or vehicle volumes in the entire simulation, or for specific times of day. The user can click on a specific link to see the diurnal (time of day) distribution of trips for that link, or can modify the time window being displayed for all links from total to a specific range, such as 6 A.M. to 9 A.M. if morning commute trips are being studied.
 
-Difference plots compare the DRT scenarios to the ``base case'' depicting current conditions. Figure \ref{fig:avov-vehicles-daily} shows an example vehicle volume plot, with the width of the links commensurate with volumes on each link.
+Difference plots compare the DRT scenarios to the ``base case'' depicting current conditions. \autoref{fig:avov-vehicles-daily} shows an example vehicle volume plot, with the width of the links commensurate with volumes on each link.
 
 \begin{figure}[ht]
   \centering
@@ -122,10 +122,10 @@ Difference plots compare the DRT scenarios to the ``base case'' depicting curren
 \end{figure}
 
 % ---------------------------------------------------
-\subsection{Cross-Scenario Modal Shifts}
+\subsection{Cross-scenario modal shifts}
 \label{avov-mode-shifts}
 
-Users can also \emph{compare} the aggregate total mode shift from one scenario to another; in this study comparing DRT scenarios to the base case. These visualizations highlight the degree to which the new DRT mode is ``stealing'' trips from existing transit and bicycle modes versus from private vehicles. Figure \ref{fig:avov-modeshift} shows an example mode shift diagram.
+Users can also \emph{compare} the aggregate total mode shift from one scenario to another; in this study comparing DRT scenarios to the base case. These visualizations highlight the degree to which the new DRT mode is ``stealing'' trips from existing transit and bicycle modes versus from private vehicles. \autoref{fig:avov-modeshift} shows an example mode shift diagram.
 
 %% ----- RESULTS -----
 \section{Results}
@@ -171,7 +171,8 @@ The successful experience using the platform in a public outreach setting confir
 
 Further enhancements to the underlying platform and to the DRT visualization capabilities are ongoing; the plugin architecture enables other JavaScript developers to write plugins for their own agent-based models and their own use cases, if they so desire.
 
-The website remains online at \href{https://vsp.berlin/avoev/}{vsp.berlin/avoev/}. All code is available at \href{https://github.com/matsim-vsp/avoev}{github.com/matsim-vsp/avoev/} and is licensed under the GNU GPL Version 3 \cite{FSF2007GnuGPL}. As primary author of all of the code therein, I welcome feedback and code contributions.
+The website remains online at \href{https://vsp.berlin/avoev/}{vsp.berlin/avoev/}. All code is available at \href{https://github.com/matsim-vsp/avoev}{github.com/matsim-vsp/avoev/} and is licensed under the GNU GPL Version 3 (see \cite{FSF2007GnuGPL}).
 
 \section{Acknowledgements}
-This research benefited from many discussions with Professor Kai Nagel, and was funded in part by the German Federal Ministry of Transport and Digital Infrastructure (funding number 16AVF2160)
+
+This research benefited from many discussions with Professor Kai Nagel, and was funded in part by the German Federal Ministry of Transport and Digital Infrastructure (funding number 16AVF2160).
