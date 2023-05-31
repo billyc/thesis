@@ -34,6 +34,7 @@ $(TEX).pdf: $(BUILD_DEPS)
 > touch $@  # only creates .sentinel-final when the entire build process completes successfully
 
 final: .sentinel-final
+.PHONY: final
 
 serve:
 > fswatch -o -e "aux$$" -e "png$$" $(TEX).tex chapters bib | xargs -n1 -I{} gmake
