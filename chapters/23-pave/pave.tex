@@ -8,9 +8,9 @@ Building on the initial success of COVID-Sim and the subsequent AVOEV project we
 \section{Project Description}
 \label{pave-project-description}
 
-The \gls{PAVE} is studying the "Potential of Automated Transport Systems" in Berlin, Germany, and is sponsored by a consortium of multiple universities and private firms in Germany.\footnote{To learn more about the PAVE Project and PAVE Consortium, see the main PAVE website at \href{https://pave-your-way.de}{pave-your-way.de}}
+The \gls{PAVE} project is studying the ``Potential of Automated Transport Systems'' in Berlin, Germany, and is sponsored by a consortium of multiple universities and private firms in Germany.\footnote{To learn more about the PAVE Project and PAVE Consortium, see the main PAVE website at \href{https://pave-your-way.de}{pave-your-way.de}}
 
-The project is exploring several demand-responsive transport (\gls{DRT}) configurations including automated taxi service ("Robotaxi"), automated, pooled shuttle service ("Pooling"), combinations of these services, as well as a strict ban on non-DRT private vehicles inside the study area. Multiple study areas, cost structures, fleet sizes, and several other parameters are considered.
+The project is exploring several demand-responsive transport (\gls{DRT}) configurations including automated taxi service (``Robotaxi''), automated, pooled shuttle service (``Pooling''), combinations of these services, as well as a strict ban on non-DRT private vehicles inside the study area. Multiple study areas, cost structures, fleet sizes, and several other parameters are considered.
 
 \subsection{DRT scenarios being studied}
 \label{pave-scenarios}
@@ -23,7 +23,7 @@ These four main scenarios were studied:
 
 \textbf{Pooling.} In this scenario, multiple passengers can be transported by each DRT vehicle simultaneously. In this scenario the DRT provider also aims to minimize the needed subsidy need (or maximize profit),  while trying to keep 95 percent of wait times below 7 minutes. The simulation was used to approximate the fleet size needed and the resulting demand for various user prices. The base fare is paid per ride; the price per km is paid for the direct distance when booking the ride. When several passengers get pooled the actual travelled distance may differ.
 
-\textbf{Combined.} In this scenario, travelers can choose between both mobility-on-demand modes of operation. The "robotaxi" service is operated within the inner core of Berlin, while the pooling service area covers the entire city. The taxi operator is more expensive as it guarantees direct transportation. As in Scenarios 1 and 2, the simulation approximated the resulting demand and necessary fleet sizes, but in this case for both operators in competition with each other.
+\textbf{Combined.} In this scenario, travelers can choose between both mobility-on-demand modes of operation. The ``robotaxi'' service is operated within the inner core of Berlin, while the pooling service area covers the entire city. The taxi operator is more expensive as it guarantees direct transportation. As in Scenarios 1 and 2, the simulation approximated the resulting demand and necessary fleet sizes, but in this case for both operators in competition with each other.
 
 \textbf{Ban private vehicles.} In this scenario, private cars are banned from the inner core of Berlin. As a substitute, a DRT system is introduced. People can transfer from their private cars to the DRT system and vice-versa, which happens at the border of the car-free zone. No regulatory waiting time threshold is assumed in this scenario.
 
@@ -56,7 +56,7 @@ Figure \ref{fig:pave-scenario-chooser} shows a close-up of a typical scenario ou
 \subsection{Key performance indicator panel}
 \label{pave-kpi-panel}
 
-A new summary \gls{KPI} panel provided top-level summary statistics for the selected scenario. This panel went through many rounds of revision with the analyst team and project partners before settling on the final set of KPIs. The panel includes aggregate statistics including total demand, fleet size, fleet mileage, operator income and expenses, and also includes a "carousel" of mode share and mode shift diagrams which the user can scroll through.
+A new summary \gls{KPI} panel provided top-level summary statistics for the selected scenario. This panel went through many rounds of revision with the analyst team and project partners before settling on the final set of KPIs. The panel includes aggregate statistics including total demand, fleet size, fleet mileage, operator income and expenses, and also includes a ``carousel'' of mode share and mode shift diagrams which the user can scroll through.
 
 Also notable is that this KPI panel includes text entry fields for vehicle costs, both per-vehicle and per-km, where users can interactively explore the consequences of different cost parameters.
 
@@ -80,11 +80,11 @@ Note that for even larger datasets, crossfilter was no longer sufficient and mor
 \subsection{Aggregate DRT origin/destination patterns}
 \label{pave-od-hexagons}
 
-An aggregate summary of the origin and destination locations of DRT trips was also created to help show the "big picture" of how DRT was being used in the study area; individual vehicle animations described above are very visually pleasing but do not provide a comprehensive systemic depiction.
+An aggregate summary of the origin and destination locations of DRT trips was also created to help show the ``big picture'' of how DRT was being used in the study area; individual vehicle animations described above are very visually pleasing but do not provide a comprehensive systemic depiction.
 
-Often, this type of aggregate summary data is collected into districts or analysis "zones" that are predetermined by analysts. For this visualization, a fully interactive plot was implemented consisting of hexagonal areas equally distributed across the study area; and the size of the hexagons themselves is user-selectable with a simple slider.
+Often, this type of aggregate summary data is collected into districts or analysis ``zones'' that are predetermined by analysts. For this visualization, a fully interactive plot was implemented consisting of hexagonal areas equally distributed across the study area; and the size of the hexagons themselves is user-selectable with a simple slider.
 
-The hexagon plot aggregates either total DRT trips originating or destined for points inside each hexagon; the aggregation is then colored from pale to dark to emphasize areas with large numbers of DRT trips. A three-dimensional view is also possible, with the total aggregate value mapped to the height of hexagonal "cylinders" on the map.
+The hexagon plot aggregates either total DRT trips originating or destined for points inside each hexagon; the aggregation is then colored from pale to dark to emphasize areas with large numbers of DRT trips. A three-dimensional view is also possible, with the total aggregate value mapped to the height of hexagonal ``cylinders'' on the map.
 
 An example of this hexagon-area-based DRT trip aggregation is shown in Figure \ref{fig:pave-xy-origins}, showing an example of total DRT trip origins.
 

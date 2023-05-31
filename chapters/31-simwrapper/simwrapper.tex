@@ -421,7 +421,7 @@ Figure \ref{fig:simwrapper-xy-hexagons} shows a typical \texttt{output\_trips.cs
 
 Another X/Y data visualization type foregoes the aggregation of data rows into hexagons, and instead plots every point directly on the map, possibly by time of day. This plot is intended for point-based data such as emission measurements.
 
-This is the first plugin to experiment with \emph{streaming the data file} while it is being loaded, instead of loading the entire dataset into memory, processing it in its entirety, and then producing the visualization. Instead, blocks of data are read from the CSV input file, the point data extracted, and then the memory holding those blocks is freed as new blocks are read. In this manner, datasets of up to 50 million rows are successfully displayed. This approach requires some new Web functionality that was not available before 2022 in all major browsers (the ability to stream so-called "blob" contents), and hints at some exciting possibilities for future enhancements for other large data file types.
+This is the first plugin to experiment with \emph{streaming the data file} while it is being loaded, instead of loading the entire dataset into memory, processing it in its entirety, and then producing the visualization. Instead, blocks of data are read from the CSV input file, the point data extracted, and then the memory holding those blocks is freed as new blocks are read. In this manner, datasets of up to 50 million rows are successfully displayed. This approach requires some new Web functionality that was not available before 2022 in all major browsers (the ability to stream so-called ``blob'' contents), and hints at some exciting possibilities for future enhancements for other large data file types.
 
 Figure \ref{fig:simwrapper-xy-point-data} shows one example of point-based emission data that covers an area of Berlin. The points in this example are on a regular ten-meter grid and are so closely spaced that the individual points are difficult to discern. Smaller datasets with fewer points, or point data not on a grid, can also be visualized using this plugin.
 
@@ -497,7 +497,7 @@ The DSL devised for the SimWrapper table plugin has the following components. Se
 
 \textbf{Writing equations.} The NPM library \emph{nerdamer} provides a robust and well-tested equation parsing library. This library calculates the value of equations written in typical mathematical notation, e.g. \texttt{100 + 0.25*6000}. The plugin replaces variable names with actual numerical values, so that \emph{nerdamer} can actually perform the math.
 
-\textbf{Selecting data from the inputs.} Data input files are defined in the \emph{files} section, supporting both CSV and XML array objects. In the calculation section, columns of data are selected using a "file.column" notation, e.g. \texttt{emissions.co2} and so on.
+\textbf{Selecting data from the inputs.} Data input files are defined in the \emph{files} section, supporting both CSV and XML array objects. In the calculation section, columns of data are selected using a ``file.column'' notation, e.g. \texttt{emissions.co2} and so on.
 
 \textbf{Statistical transformations.} Standard statistical reduction functions can be specified: \emph{@sum, @count, @max, @min} are supported and are applied across an entire column of values.
 
