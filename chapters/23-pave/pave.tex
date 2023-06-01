@@ -10,14 +10,14 @@ Building on the initial success of COVID-Sim and the subsequent AVOEV project we
 
 The \gls{PAVE} project is studying the ``Potential of Automated Transport Systems'' in Berlin, Germany, and is sponsored by a consortium of multiple universities and private firms in Germany.\footnote{To learn more about the PAVE Project and PAVE Consortium, see the main PAVE website at \href{https://pave-your-way.de}{pave-your-way.de}}
 
-The project is exploring several demand-responsive transport (\gls{DRT}) configurations including automated taxi service (``Robotaxi''), automated, pooled shuttle service (``Pooling''), combinations of these services, as well as a strict ban on non-DRT private vehicles inside the study area. Multiple study areas, cost structures, fleet sizes, and several other parameters are considered.
+The project is exploring several demand-responsive transport (\gls{DRT}) configurations including automated taxi service (``Robotaxi''), automated, pooled shuttle service (``Pooling''), combinations of these services, as well as a strict ban on non-DRT private vehicles inside the study area. Multiple study areas, cost structures, fleet sizes, and several other parameters are studied.
 
 \subsection{DRT scenarios being studied}
 \label{pave-scenarios}
 
-While the study details themselves are not critical, a basic overview of the scenarios being tested testing is helpful to understand how the data visualizations for the project website were constructed.
+While the study details themselves are not critical, a basic overview of the scenarios being tested testing is helpful to understand how the data visualizations for the project website are constructed.
 
-These four main scenarios were studied:
+These four main scenarios are being considered:
 
 \textbf{Robotaxi.} In this scenario, one passenger at a time can be transported by each DRT vehicle. The DRT provider aims to minimize the needed subsidy (or maximize profit) while trying to hold 95 percent of wait times to 7 minutes or below; this can be seen as a regulatory constraint. The simulation was used to approximate the resulting demand and the necessary fleet size for several cost structure alternatives at a rough planning level.
 
@@ -31,17 +31,17 @@ These four main scenarios were studied:
 \section{Supporting decisingmaking with an interactive website}
 \label{pave-site-features}
 
-To support the public outreach meetings for the PAVE project, a third project-specific website was built using a similar technology stack as for the previously-described COVID-Sim and AVOEV projects. As the purpose was to build something that agency staff and the genuine public could use, a much larger effort was spent on honing the user interface and usability of the site; for example, paying more attention to creating a pleasing layout, a consistent color palette, and explanatory text where needed to avoid overly technical jargon.
+To support the public outreach meetings for the PAVE project, a third project-specific website was built using a similar technology stack as for the previously described COVID-Sim and AVOEV projects. As the purpose was to build something that agency staff and the genuine public could use, a much larger effort was spent on honing the user interface and usability of the site; for example, paying more attention to creating a pleasing layout and a consistent color palette, and also including explanatory text where needed to avoid overly technical jargon.
 
 Roadway volume plots, simulated DRT vehicle animations, and mode shift charts similar to those used in the AVOEV project were implemented for the PAVE website. These are described in sections \ref{avov-drtviz} and \ref{avov-volumes}.
 
-In addition, some new and updated components were built, described below.
+Some new and updated components were built, and these are described below.
 
 %% ----- -----------------------------------
 \subsection{Scenario chooser}
 \label{pave-scenario-chooser}
 
-Building on the COVID-Sim simulation result picker described in Section \ref{covid-single-page-application}, a new scenario chooser was built for PAVE. Based on iterative design with the analyst team, large graphical elements depicted the different service areas on a map, along with buttons for selecting differing fare structures. The user could essentially browse and select from the various scenarios shown on a left-side navigation panel, and the results for that scenario would immediately appear in the main window pane.
+Building on the multivariate COVID-Sim simulation result picker described in section \ref{covid-single-page-application}, a new scenario chooser was built for PAVE. An iterative design process, working closely with the analyst team, led to the final layout and behavior. Large graphical elements depicted the different service areas on a map, along with buttons for selecting differing fare structures. The user could essentially browse and select from the various scenarios shown on a left-side navigation panel, and the results for that scenario would immediately appear in the main window pane.
 
 Figure \ref{fig:pave-scenario-chooser} shows a close-up of a typical scenario output page, with the scenario selector on the left side and the various outputs to the right. These are explained in more detail below.
 
@@ -58,7 +58,7 @@ Figure \ref{fig:pave-scenario-chooser} shows a close-up of a typical scenario ou
 
 A new summary \gls{KPI} panel provided top-level summary statistics for the selected scenario. This panel went through many rounds of revision with the analyst team and project partners before settling on the final set of KPIs. The panel includes aggregate statistics including total demand, fleet size, fleet mileage, operator income and expenses, and also includes a ``carousel'' of mode share and mode shift diagrams which the user can scroll through.
 
-Also notable is that this KPI panel includes text entry fields for vehicle costs, both per-vehicle and per-km, where users can interactively explore the consequences of different cost parameters.
+This KPI panel also includes interactive text entry fields for vehicle costs, both per-vehicle and per-km, so that users can explore the consequences of different cost parameters if they desire. Default values are used initially, but any cost parameters can be tested in this manner
 
 Figure \ref{fig:pave-scenario-chooser} includes an example of the KPI panel.
 
@@ -66,15 +66,15 @@ Figure \ref{fig:pave-scenario-chooser} includes an example of the KPI panel.
 \subsection{Interactive DRT animation}
 \label{pave-drt-animation}
 
-The DRT animation plugin from the AVOEV project (see Section \ref{avov-drtviz}) was updated for the PAVE project. Much larger simulation support was added, as the PAVE project encompasses Berlin instead of less populated rural areas of Germany, as in AVOEV.
+The DRT animation plugin from the AVOEV project (see Section \ref{avov-drtviz}) was updated and improved for the PAVE project. Much larger simulation support was added, as the PAVE project encompasses the capital city of Berlin instead of less-populated rural areas of Germany, as in AVOEV.
 
-This took advantage of the JavaScript Crossfilter library.\footnote{Crossfilter is available online at \href{https://crossfilter.github.io/crossfilter/}{crossfilter.github.io/crossfilter/}} Crossfilter is a JavaScript library for exploring large multivariate datasets and supports extremely fast (measured in milliseconds) interaction with coordinated views, even with datasets containing millions of records. Crossfilter takes advantage of the fact that most user interactions only involve a single dimension, in our case the elapsed time of the simulation, which requires only small adjustments to filter values. Incremental filtering and reducing is significantly faster than starting from scratch. Crossfilter uses sorted indexes, dramatically increasing perfor­mance over other sorting and filtering techniques.
+This support was enabled by use of the JavaScript \emph{crossfilter} library.\footnote{Crossfilter is available online at \href{https://crossfilter.github.io/crossfilter/}{crossfilter.github.io/crossfilter/}} Crossfilter allows filtering and exploring of large multivariate datasets, and supports extremely fast (measured in milliseconds) interaction with coordinated views, even with datasets containing millions of records. Crossfilter takes advantage of the fact that most user interactions only modify a single dimension at a time (in this case the elapsed time of the simulation), which requires only small adjustments to filter values. Incremental filtering and reducing is significantly faster than starting from scratch. Crossfilter uses sorted numerical indexes, dramatically increasing perfor­mance over other sorting and filtering techniques.
 
 With this library, the vehicle position dataset can be filtered to include only the exact second of the simulation that is currently displayed, and then only those filtered vehicle trace segments are painted on the screen. Up to tens of thousands of vehicles can be simultaneously animated in the browser using this technique.
 
 For example screenshots of the DRT animation, refer to Figure \ref{fig:avov-drt-vehicles-routes}.
 
-Note that for even larger datasets, crossfilter was no longer sufficient and more direct graphical methods were required. Those techniques are addressed in Chapter \ref{ch:simwrapper}.
+Note that for even larger datasets, crossfilter was no longer sufficient and more direct graphical methods using \gls{GPU} accelerated techniques were required. Those techniques are addressed in Chapter \ref{ch:simwrapper}.
 
 %% ----- -----------------------------------
 \subsection{Aggregate DRT origin/destination patterns}
@@ -107,9 +107,9 @@ Feedback from staff was generally positive: one team member stated, ``I think pe
 \section{Discussion and Outlook}
 \label{pave-discussion}
 
-As the platform grows in capability, its usefulness to analysts grows as well. However, the level of effort to produce a bespoke website for one small project was notably high: the site was built over the course of three months and many hours were spent making small modifications on an iterative basis. Some of the components that were built have obvious potential to be used in future projects, if only the components can be made in a modular fashion that is not tied to specific project outputs.
+As the visualization platform for these project websites grows in capability, its usefulness to analysts grows as well. However, the level of effort to produce a website portal for this one small project was notably high: the site was built over the course of three months and many hours were spent making small modifications on an iterative basis. Some new components that were developed have potential to be used in future projects, but that would require that the components be made in a more modular fashion that is not tied to specific project outputs.
 
-The built site was well-received in the public outreach sessions and was well-liked by analyst staff. To truly inform the public and the decisionmaking process requires more than pleasing maps or a nice website, but it did appear to have a positive impact on discussions, however small.
+Overall, the built site was well-received in the public outreach sessions and was well-liked by analyst staff. To truly inform the public and the decisionmaking process requires more than pleasing maps or a nice website, but it did appear to have a positive impact on discussions, however small.
 
 The PAVE project was the third project site built on a common foundation of web-based visualization technologies and HTTP-accessible file storage for site configuration and simulation outputs. Several novel components were built for the project, including visual navigation for scenario selection, a consistent key performance indicator output panel, three-dimensional interactive display of trip origin and destination patterns, and a carousel for collating related charts in order to reduce visual clutter.
 
