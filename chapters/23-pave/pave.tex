@@ -2,20 +2,20 @@
 \section{Introduction}
 \label{pave-intro}
 
-Building on the initial success of COVID-Sim and the subsequent AVOEV project website described in Chapter \ref{ch:avov}, this chapter describes a third and final project-specific website built using the same combination of curated runs stored on a file server, with a custom front-end website. This project website was intended to be outward-facing, for public outreach meetings with government agencies and the wider public audience, rather than an internal-facing analyst tool.
+Building on the initial success of COVID-Sim and the subsequent AVOEV project website described in Chapter \ref{ch:avov}, this chapter describes a third and final project-specific portal built using the same combination of curated runs stored on a file server and a custom front-end website. This project website was intended to be outward-facing, for public outreach meetings with government agencies and the wider public audience, rather than an internal-facing analyst tool.
 
 %% ----- PROJECT DESCRIPTION -----
 \section{Project Description}
 \label{pave-project-description}
 
-The \gls{PAVE} project is studying the ``Potential of Automated Transport Systems'' in Berlin, Germany, and is sponsored by a consortium of multiple universities and private firms in Germany.\footnote{To learn more about the PAVE Project and PAVE Consortium, see the main PAVE website at \href{https://pave-your-way.de}{pave-your-way.de}}
+The \gls{PAVE} project studied the ``Potential of Automated Transport Systems'' in Berlin, Germany, and concluded its research in 2022. The project team was comprised of a consortium of multiple universities and private firms in Germany.\footnote{To learn more about the PAVE Project and PAVE Consortium, see the main PAVE website at \href{https://pave-your-way.de}{pave-your-way.de}}
 
-The project is exploring several demand-responsive transport (\gls{DRT}) configurations including automated taxi service (``Robotaxi''), automated, pooled shuttle service (``Pooling''), combinations of these services, as well as a strict ban on non-DRT private vehicles inside the study area. Multiple study areas, cost structures, fleet sizes, and several other parameters are studied.
+The project explores several demand-responsive transport (\gls{DRT}) configurations including automated taxi service (``Robotaxi''), automated, pooled shuttle service (``Pooling''), combinations of these services, as well as a strict ban on non-DRT private vehicles inside Berlin. Multiple service areas, cost structures, fleet sizes, and several other parameters are studied.
 
 \subsection{DRT scenarios being studied}
 \label{pave-scenarios}
 
-While the study details themselves are not critical, a basic overview of the scenarios being tested testing is helpful to understand how the data visualizations for the project website are constructed.
+While the study details themselves are not critical, a basic overview of the scenarios being tested is helpful to understand how the data visualizations for the project website are constructed.
 
 These four main scenarios are being considered:
 
@@ -23,15 +23,15 @@ These four main scenarios are being considered:
 
 \textbf{Pooling.} In this scenario, multiple passengers can be transported by each DRT vehicle simultaneously. In this scenario the DRT provider also aims to minimize the needed subsidy need (or maximize profit),  while trying to keep 95 percent of wait times below 7 minutes. The simulation was used to approximate the fleet size needed and the resulting demand for various user prices. The base fare is paid per ride; the price per km is paid for the direct distance when booking the ride. When several passengers get pooled the actual travelled distance may differ.
 
-\textbf{Combined.} In this scenario, travelers can choose between both mobility-on-demand modes of operation. The ``robotaxi'' service is operated within the inner core of Berlin, while the pooling service area covers the entire city. The taxi operator is more expensive as it guarantees direct transportation. As in Scenarios 1 and 2, the simulation approximated the resulting demand and necessary fleet sizes, but in this case for both operators in competition with each other.
+\textbf{Combined.} In this scenario, travelers can choose between both mobility-on-demand modes of operation. The ``robotaxi'' service is operated within the inner core of Berlin, while the pooling service area covers the entire city. The taxi operator is more expensive as it guarantees direct transportation. As in the robotaxi and pooling scenarious above, the simulation approximated the resulting demand and necessary fleet sizes, but in this case for both operators in competition with each other.
 
 \textbf{Ban private vehicles.} In this scenario, private cars are banned from the inner core of Berlin. As a substitute, a DRT system is introduced. People can transfer from their private cars to the DRT system and vice-versa, which happens at the border of the car-free zone. No regulatory waiting time threshold is assumed in this scenario.
 
 %% ----- UNIQUE SITE FEATURES -------------------------------
-\section{Supporting decisingmaking with an interactive website}
+\section{Supporting decisionmaking with an interactive website}
 \label{pave-site-features}
 
-To support the public outreach meetings for the PAVE project, a third project-specific website was built using a similar technology stack as for the previously described COVID-Sim and AVOEV projects. As the purpose was to build something that agency staff and the genuine public could use, a much larger effort was spent on honing the user interface and usability of the site; for example, paying more attention to creating a pleasing layout and a consistent color palette, and also including explanatory text where needed to avoid overly technical jargon.
+To support the public outreach meetings for the PAVE project, a third project-specific website was built using a similar technology stack as for the previously described COVID-Sim and AVOEV projects. This site is available online at \url{https://vsp.berlin/pave}. The goal was to build something that agency staff and the genuine public could use, therefore a much larger effort was spent on honing the user interface and usability of the site; for example, paying more attention to creating a pleasing layout and a consistent color palette, and also including explanatory text where needed to avoid overly technical jargon.
 
 Roadway volume plots, simulated DRT vehicle animations, and mode shift charts similar to those used in the AVOEV project were implemented for the PAVE website. These are described in sections \ref{avov-drtviz} and \ref{avov-volumes}.
 
@@ -41,7 +41,7 @@ Some new and updated components were built, and these are described below.
 \subsection{Scenario chooser}
 \label{pave-scenario-chooser}
 
-Building on the multivariate COVID-Sim simulation result picker described in section \ref{covid-single-page-application}, a new scenario chooser was built for PAVE. An iterative design process, working closely with the analyst team, led to the final layout and behavior. Large graphical elements depicted the different service areas on a map, along with buttons for selecting differing fare structures. The user could essentially browse and select from the various scenarios shown on a left-side navigation panel, and the results for that scenario would immediately appear in the main window pane.
+Building on the multivariate COVID-Sim simulation result picker described in section \ref{covid-single-page-application}, a new scenario chooser was built for PAVE. An iterative procedure for improving the design and features, working closely with the analyst team, led to the final layout and behavior. Large graphical elements depicted the different service areas on a map, along with buttons for selecting differing fare structures. The user could essentially browse and select from the various scenarios shown on a left-side navigation panel, and the results for that scenario would immediately appear in the main window pane.
 
 Figure \ref{fig:pave-scenario-chooser} shows a close-up of a typical scenario output page, with the scenario selector on the left side and the various outputs to the right. These are explained in more detail below.
 
@@ -113,4 +113,4 @@ Overall, the built site was well-received in the public outreach sessions and wa
 
 The PAVE project was the third project site built on a common foundation of web-based visualization technologies and HTTP-accessible file storage for site configuration and simulation outputs. Several novel components were built for the project, including visual navigation for scenario selection, a consistent key performance indicator output panel, three-dimensional interactive display of trip origin and destination patterns, and a carousel for collating related charts in order to reduce visual clutter.
 
-Feedback from users was positive. Internal staff considered the website well-conceived, but the level of effort to produce this bespoke site was higher than desired. This led to questions and suggestions that the features might be better integrated in a more general platform instead of creating additional project-specific websites. The development of a generic data visualization platform in this vein is the subject of the following chapters, in Part III.
+Feedback from users and internal staff was positive. In fact, the team at VSP felt that the overall concept had been more than adequately proven, and wanted to include the development of browser-based interactive visualizations in future proposals for publicly-funded projects. Despite this enthusiasm, the level of effort to produce this project site was much higher than desired. There were suggestions that the core features might be better integrated in a \emph{general visualiztion platform} instead of creating additional project-specific websites. The development of a generic data visualization platform in this vein is the subject of the following chapters, in Part III.
