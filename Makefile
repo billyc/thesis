@@ -22,7 +22,7 @@ BUILD_DEPS += $(shell find $(SRC)/bib/*)
 BUILD_DEPS += $(shell find $(SRC) -name "*.png")
 
 $(TEX).pdf: $(BUILD_DEPS)
-> rm -f *.log
+> -rm -f *.log
 > pdflatex -synctex=1 -interaction nonstopmode $(TEX).tex
 
 .sentinel-final: $(TEX).pdf
