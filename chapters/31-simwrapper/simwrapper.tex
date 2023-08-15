@@ -82,7 +82,7 @@ What happens next is up to the plugin: the shapefile or network is read, the con
 
 Figure \ref{fig:simwrapper-flowchart-2} lists some typical file types that might be found in SimWrapper storage locations. Simulation outputs are often saved in one folder per simulation, named in such a way that analysts can easily find their outputs in a hierarchical file system.
 
-One special folder name is reserved: if a folder named \texttt{.simwrapper} is present, the configuration files within that folder will be applied to all sibling and child folders adjacent to it: in this manner, project-wide configurations, dashboards, and settings can be defined in one location and applied to many simulation output folders automatically.
+One special folder name is reserved: if a folder named \texttt{.simwrapper} is present, the configuration files within that folder will be applied to all child folders and sibling folders adjacent to it: in this manner, project-wide configurations, dashboards, and settings can be defined in one location and applied to many simulation outputs automatically.
 
 \begin{figure}[ht]
   \centering
@@ -584,20 +584,31 @@ SimWrapper has been live since mid-2022 and over time has acquired data visualiz
 
 User feedback internally at VSP has been positive, acknowledging that the platform is a work in progress and there are continuous updates, bugfixes, and changes happening in real time.
 
-Staff at VSP are now building a standard MATSim results dashboard based on SimWrapper. This dashboard is expected to traverse several navigation tabs which collate the summaries into topical areas, such as Overview, Trips, Emissions, Stuck Agents, and so on.
+Staff at VSP are now building a standard MATSim results dashboard based on SimWrapper. This dashboard is expected to traverse several navigation tabs which collate the summaries into topical areas, such as Overview, Trips, Public Transport, Emissions, Stuck Agents, and so on.
 
 Outside of VSP, SimWrapper has also now been picked up by a small handful of public agencies across the globe.
 
 The file-based nature of SimWrapper is a strength, in that it matches the file-based reality of the simulation models that it is most often paired with. But this is also a challenge, because large file sizes are a constant source of problems. Significant time has been invested in hyper-optimizing memory usage, something that might not be necessary in a server/database based system in which only portions of data are ingested at a time. But as a counterpoint, SimWrapper requires no database server so is very easy for end users to just start using without worrying too much about initial setup and configuration.
 
-Finally, the featureset is useful enough for practitioners and unique enough compared to other tools, that the user base continues to grow as of this writing.
+\hypertarget{simwrapper-tool-comparison}{%
+\subsection{Comparison to other tools and approaches}\label{simwrapper-tool-comparison}}
+
+\textbf{R/Shiny dashboards.} The R statistical analysis platform offers an open-source dashboard tool called ``Shiny'' that is popular and comprehensive\footnote{Shiny is available at \url{https://www.rstudio.com/products/shiny/}}. Shiny requires an R server running either locally or from a cloud service. The interactivity and consistent look and feel of Shiny dashboards is compelling. Shiny does not know anything about MATSim so simulation outputs require extensive postprocessing to be included in a dashboard. Advanced Deck.gl visualizations can be embedded in Shiny, but the typically large MATSim datasets are quite slow to load and render. SimWrapper is extensively optimized to load and display MATSim datasets quickly. Nonetheless Shiny provides a nice alternative for teams that already have experience with R and wish to extend that platform instead of learning and adapting to SimWrapper's unique approach.
+
+\textbf{Python/Dash dashboards.} There are numerous dashboarding tools available in the Python language ecosystem, such as the popular "Dash" tool \footnote{Python Dash is available at \url{https://dash.plotly.com/}}. Like R/Shiny above, these tools are all nice alternatives to SimWrapper for teams which have already invested in Python, and like Shiny, these tools require a Python server running either locally or in a cloud service. The plethora of options in the Python ecosystem make it a bit difficult to know which dashboard tool is the best fit, Dash seems to be popular and comprehensive.
+
+\textbf{Jupyter notebooks.} Online "notebooks" such as Jupyter\footnote{Jupyter is availabe at \url{https://jupyter.org/}} provide a web-based interactive development for analysts. An advantage of notebooks is that they allow researchers to combine code, data, and exposition in one top-down lab-style document. In general the very technical content of these lab-style notebooks is not appropriate for non-scientific audiences. These notebooks are, however, very useful for internal teams for tasks such as scenario comparison and model debugging. Again, all notebook systems require a server running either locally or from a cloud provider.
+
+\textbf{Commercial offerings: PTV and Simunto.} There are many commercial offerings for online dashboard tools. Just limiting the comparison to a few well-known transport simulation offerings, both PTV and Simunto offer cloud dashboard products for a monthly fee (at the time of writing the Simunto product is still in beta). For teams that are already invested in PTV products this can be a very easy and frictionless way to publish summaries online. The feature set of ``PTV Visum Publisher'' is in general smaller that what SimWrapper provides, but the user interface and product polish are quite high in comparison. The PTV product allows multi-layer map visualizations, something that SimWrapper currently does not allow (but is under consideration for future development).
+
+In summary, the featureset of SimWrapper is useful enough for practitioners and unique enough compared to other tools, that the user base continues to grow as of this writing.
 
 % ------------------------------------------------------------------------------------
 
 \hypertarget{simwrapper-summary}{%
 \section{Summary}\label{simwrapper-summary}}
 
-This chapter describes SimWrapper, a general data visualization platform that is custom-designed to meet the needs of transport simulation experts. The platform is live on the web and now has a small set of users from many cities worldwide. The success of the platform so far is \delete[kn]{measured but} encouraging: there does seem to be a desire for the ability to rapidly produce web-based data visualizations and dashboards for debugging, sharing, and publicizing microsimulation results.
+This chapter describes SimWrapper, a general data visualization platform that is custom-designed to meet the needs of transport simulation experts. The platform is live on the web and now has a small set of users from many cities worldwide. The success of the platform so far is encouraging: there does seem to be a desire for the ability to rapidly produce web-based data visualizations and dashboards for debugging, sharing, and publicizing microsimulation results.
 
 Many different data visualization types are available in SimWrapper, including most of the types of charts and maps that a transport planner would be interested in: link data, point data, aggregate data maps, thematic maps, and myriad statistical charts and plots can all be displayed alone or in custom-curated dashboards. It is possible to view local data and also to publish these dashboards online or on internal shared servers.
 
