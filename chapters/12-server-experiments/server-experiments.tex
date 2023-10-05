@@ -134,7 +134,7 @@ This configuration information is read when the site is initially loaded. All of
 
 Feedback from internal users was initially positive, as they were able to upload new runs to the server as part of their normal workflow, and updating the website only required the editing of one configuration file.
 
-However, this approach requires manual updates from the web development team every time new data was available. For larger teams or more rapid analysis, a more streamlined and automated approach would be beneficial.
+However, this approach has some notable drawbacks. Updating the website was easy, but updating the GeoServer dataset was not. GeoServer expected data types to have hard attribute lists, whereas MATSim allows fairly loose attributes for links, point data, etc. Any time the data changed, it would force a database scheme modification on GeoServer, which then had cascading effects required transformation or re-upload of all datasets. For larger teams or more rapid analysis, a more streamlined and automated approach would be beneficial. Furthermore, database security is not a core competency of the VSP transport planning team and there were concerns about database security and integrity.
 
 The accessibility website was not developed further after this initial experiment. Indeed, the GeoServer implementation at VSP was not used for any other purposes after this accessibility research concluded. Interviews revealed that department staff were unsure of the benefits of uploading their datasets to the GeoServer when they could instead make non-interactive maps in traditional GIS desktop software, suitable for inclusion in publishable research papers.
 
