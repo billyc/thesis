@@ -228,10 +228,10 @@ Key configuration notes:
   working directory in which it is started, including any subfolders. No
   other folders on the user's machine are exposed.
 \item
-  The computer's operating machine has default firewall and router rules
+  The computer's operating system has default firewall and router rules
   that will generally prohibit any outside access from other computers
-  on the LAN or the Internet. An end user can change this firewall setting
-  in their operating system if desired.
+  on the local network or the Internet. The end user can change this firewall
+  setting in their operating system if desired.
 \item
   Some configuration details for the server that are important for our
   use case: we must enable access from websites at different URLs using
@@ -343,7 +343,7 @@ Figure \ref{fig:simwrapper-chrome} shows a typical security prompt from Google C
 \subsection{Accessing files from external websites: CORS}
 \label{simwrapper-cors}}
 
-Cross-origin resource sharing \gls{CORS} is a web technology which determines whether one website can retrive content and assets from another website. Generally this is disallowed without explicit configuration and permission.
+Cross-origin resource sharing \gls{CORS} is a web technology which determines whether one website can retrieve content and assets from another website. Generally this is disallowed without explicit configuration and permission.
 
 SimWrapper depends on the ability to retrieve files from external storage servers, so those servers must be configured to allow SimWrapper to access them.
 
@@ -381,12 +381,12 @@ The link viewer was originally scoped to display link volumes only, such as a ty
 
 Two major updates for SimWrapper are (1) the removal of the assumption that the data inputs will always have time period data in the columns followed by a ``grand total'' column; and (2) link colors and link bandwidths are now separately configurable.
 
-An example is seen in Figure \ref{fig:simwrapper-network-links}. User testing shows that a great deal more could still be done to meet user expectations. Data filters and configurable hovers are two highly-requested enhancements, as well as a first-class ``difference mode''.  \kai{There could be a bit more text saying something along the lines that in 7.4 width corresponds to capacity (or flow), and color to co2 difference.  Or whatever it is.}
+An example is seen in Figure \ref{fig:simwrapper-network-links}. As is typical for road volume plots produced for transport planning, thicker lines indicate larger differences between scenarios, and red/blue colors are used for more and less traffic, respectively. User testing shows that a great deal more could still be done on these plots to meet user expectations. Data filters, automatic legends and configurable hovers are highly-requested enhancements, as well as a first-class ``difference mode''.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.7\linewidth]{chapters/31-simwrapper/images/network-links.png}
-  \caption{Example network difference plot with user-configured colors and bandwidths for a Hamburg, Germany simulation comparison. }
+  \caption{Example network difference plot with user-configured colors and bandwidths for a Hamburg, Germany simulation comparison. Wider links represent larger differences; blue and red links depict positive and negative differences comparing two runs. }
   \label{fig:simwrapper-network-links}
 \end{figure}
 
@@ -595,9 +595,9 @@ The file-based nature of SimWrapper is a strength, in that it matches the file-b
 
 \textbf{R/Shiny dashboards.} The R statistical analysis platform offers an open-source dashboard tool called ``Shiny'' that is popular and comprehensive\footnote{Shiny is available at \url{https://www.rstudio.com/products/shiny/}}. Shiny requires an R server running either locally or from a cloud service. The interactivity and consistent look and feel of Shiny dashboards is compelling. Shiny does not know anything about MATSim so simulation outputs require extensive postprocessing to be included in a dashboard. Advanced Deck.gl visualizations can be embedded in Shiny, but the typically large MATSim datasets are quite slow to load and render. SimWrapper is extensively optimized to load and display MATSim datasets quickly. Nonetheless Shiny provides a nice alternative for teams that already have experience with R and wish to extend that platform instead of learning and adapting to SimWrapper's unique approach.
 
-\textbf{Python/Dash dashboards.} There are numerous dashboarding tools available in the Python language ecosystem, such as the popular "Dash" tool \footnote{Python Dash is available at \url{https://dash.plotly.com/}}. Like R/Shiny above, these tools are all nice alternatives to SimWrapper for teams which have already invested in Python, and like Shiny, these tools require a Python server running either locally or in a cloud service. The plethora of options in the Python ecosystem make it a bit difficult to know which dashboard tool is the best fit, Dash seems to be popular and comprehensive.
+\textbf{Python/Dash dashboards.} There are numerous dashboarding tools available in the Python language ecosystem, such as the popular "Dash" tool \footnote{Python Dash is available at \url{https://dash.plotly.com/}}. Like R/Shiny above, these tools are all nice alternatives to SimWrapper for teams which have already invested in Python, and similar to Shiny, these tools require a Python server running either locally or in a cloud service. The plethora of options in the Python ecosystem make it a bit difficult to know which dashboard tool is the best fit, Dash seems to be popular and comprehensive.
 
-\textbf{Jupyter notebooks.} Online "notebooks" such as Jupyter\footnote{Jupyter is availabe at \url{https://jupyter.org/}} provide a web-based interactive development for analysts. An advantage of notebooks is that they allow researchers to combine code, data, and exposition in one top-down lab-style document. In general the very technical content of these lab-style notebooks is not appropriate for non-scientific audiences. These notebooks are, however, very useful for internal teams for tasks such as scenario comparison and model debugging. Again, all notebook systems require a server running either locally or from a cloud provider.
+\textbf{Jupyter notebooks.} Online "notebooks" such as Jupyter\footnote{Jupyter is availabe at \url{https://jupyter.org/}} provide a web-based interactive development option for analysts. An advantage of notebooks is that they allow researchers to combine code, data, and exposition in one top-down lab-style document. In general the very technical content of these lab-style notebooks is not appropriate for non-scientific audiences. These notebooks are, however, very useful for internal teams for tasks such as scenario comparison and model debugging. Again, all notebook systems require a server running either locally or from a cloud provider.
 
 \textbf{Commercial offerings: PTV and Simunto.} There are many commercial offerings for online dashboard tools. Just limiting the comparison to a few well-known transport simulation offerings, both PTV and Simunto offer cloud dashboard products for a monthly fee (at the time of writing the Simunto product is still in beta). For teams that are already invested in PTV products this can be a very easy and frictionless way to publish summaries online. The feature set of ``PTV Visum Publisher'' is in general smaller that what SimWrapper provides, but the user interface and product polish are quite high in comparison. The PTV product allows multi-layer map visualizations, something that SimWrapper currently does not allow (but is under consideration for future development).
 

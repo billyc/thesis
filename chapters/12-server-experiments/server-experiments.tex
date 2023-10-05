@@ -165,17 +165,17 @@ A problem arises when the map is zoomed out. The MapBox GL mapping library slows
 
 Thus, a way to trim or reduce the amount of data being displayed is necessary. Limiting the ``level of detail'' by selecting a subset of grid cells as the map is zoomed out successfully results in the map being viewable again. As soon as the map is zoomed, this triggers a background task that filters the dataset to the visible subset of coordinates and the values thereof.
 
-For each of these elements, a Voronai cell is calculated which surrounds the area around the selected points. Voronai is ``one of the most fundamental data structures in computational geometry'' as described decades ago in \cite{aurenhammer1991voronoi} and is well-suited to this visualization type. The Voronai diagram replaces the hard, square grid of cells with variably-sized convex polygons surrounding each selected data point, so that every point on the map is inside the cell along with the closest selected point.
+For each of these elements, a Voronoi cell is calculated which surrounds the area around the selected points. Voronoi is ``one of the most fundamental data structures in computational geometry'' as described decades ago in \cite{aurenhammer1991voronoi} and is well-suited to this visualization type. The Voronoi diagram replaces the hard, square grid of cells with variably-sized convex polygons surrounding each selected data point, so that every point on the map is inside the cell along with the closest selected point.
 
-This approach makes for some interesting looking plots, an example of which is shown in \autoref{fig:emissions-lod}, but it also clearly warps the values being displayed. Jagged edges around the Voronai cells are especially pronounced in areas where the emissions are dropping off rapidly, such as the areas immediately adjacent to high-emission freeway segments.
+This approach makes for some interesting looking plots, an example of which is shown in \autoref{fig:emissions-lod}, but it also clearly warps the values being displayed. Jagged edges around the Voronoi cells are especially pronounced in areas where the emissions are dropping off rapidly, such as the areas immediately adjacent to high-emission freeway segments.
 
 \begin{figure}[!ht]
   \includegraphics[width=\textwidth]{chapters/12-server-experiments/images/emissions-lod.png}
-  \caption[Example Voronai areas depicting emission values for a Berlin scenario]{Example Voronai areas depicting emission values for the same Berlin scenario. This zoom level required using a level-of-detail optimization to reduce and simplify the large number of data points being drawn at the same time.}
+  \caption[Example Voronoi areas depicting emission values for a Berlin scenario]{Example Voronoi areas depicting emission values for the same Berlin scenario. This zoom level required using a level-of-detail optimization to reduce and simplify the large number of data points being drawn at the same time.}
   \label{fig:emissions-lod}
 \end{figure}
 
-The background task of calculating Voronai cells at a specified zoom level is visibly sluggish, and the results have display artifacts that may not be helpful to analysts. Between the slowness of loading the data, the sluggishness of the resulting visualization, and the compromises involved in viewing a limited level of detail at some zoom levels, this visualization experiment was not very useful for analysts at VSP.
+The background task of calculating Voronoi cells at a specified zoom level is visibly sluggish, and the results have display artifacts that may not be helpful to analysts. Between the slowness of loading the data, the sluggishness of the resulting visualization, and the compromises involved in viewing a limited level of detail at some zoom levels, this visualization experiment was not very useful for analysts at VSP.
 
 The research on roadway emissions is published in \cite{kaddoura2022exhaust}, without reference to these visualization experiments.
 
