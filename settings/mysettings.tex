@@ -15,7 +15,7 @@
 \usepackage[english]{babel} % prepare for german AND english, last language loaded is default
 \usepackage[autostyle=true, babel, english=american]{csquotes} % babel needs csquotes
 %\usepackage{nag} % warn user on outdated packages
-\usepackage[linktocpage,pagebackref=true]{hyperref}	% links in pdf, thumbnails
+\usepackage[linktocpage,pdfa,pagebackref=true]{hyperref}	% links in pdf, thumbnails
 \usepackage{xspace}
 \usepackage{diagbox}
 \usepackage{soul} % emphasizing text, underlining
@@ -285,20 +285,32 @@
 % \markright{}, um den \rohead freizulassen
 
 \hypersetup{
-			pdftitle={\Title},
+			pdftitle={Web-Based Data Visualization in Support of Agent-Based Microsimulation Models},
 			pdfsubject={Dissertation, TU Berlin},
 			pdfauthor={William Charlton},
 			pdfkeywords={data visualization; transport; agent-based transport simulation},
 			pdfdisplaydoctitle = {true},
 			pdffitwindow = {true},
 			pdfpagelayout = {TwoPageRight},
-			pdflang={en},
+			pdflang={en-US},
 			colorlinks=true,
 			citecolor=matsimblue,
 			linkcolor=matsimblue,
 			urlcolor=matsimblue,
 			bookmarksnumbered=true,
 bookmarksdepth=4}
+
+% PDF/A-2a requirements
+\begin{filecontents*}[overwrite]{\jobname.xmpdata}
+	\Title{Web-Based Data Visualization in Support of Agent-Based Microsimulation Models}
+  \Author{William Charlton}
+	\Language{en-US}
+	\Subject{Dissertation, TU Berlin}
+	\Keywords{data visualization; transport planning; agent-based transport simulation; MATSim}
+\end{filecontents*}
+
+\usepackage{colorprofiles}
+\usepackage[a-2b,mathxmp]{pdfx}[2018/12/22]
 
 \makeatother
 

@@ -23,6 +23,7 @@ sudo tlmgr install environ
 sudo tlmgr install latexindent
 sudo tlmgr install mhchem
 sudo tlmgr install paralist
+sudo tlmgr install pdfx
 sudo tlmgr install pict2e
 sudo tlmgr install rsfs
 sudo tlmgr install soul
@@ -37,6 +38,7 @@ sudo tlmgr install units
 sudo tlmgr install wasy
 sudo tlmgr install wasysym
 sudo tlmgr install wrapfig
+sudo tlmgr install xmpincl
 sudo tlmgr install xstring
 
 # packages from Joschka
