@@ -29,7 +29,7 @@ The MatHub experience highlighted some disillusionment with the state of client/
 
 But if the back-end server database and configuration was slowing development down, would it be possible to just... \emph{eliminate that entire class of problems by eliminating the back-end servers?}
 
-As early as 2003, pioneers in web development including luminary Douglas Crockford, who invented the ``JSON'' data transfer format, were discovering that JavaScript-based websites could actually be far more interactive than the current state of affairs (at the time), without needing any plugins such as Flash or Java virtual machines\footnote{A useful interview with Mr. Crockford about that era is available at the podcast \url{https://corecursive.com/json-vs-xml-douglas-crockford}}. When Google released Gmail in 2004, the floodgates opened for a new class of web-based product called a \gls{SPA}. These types of sites are now everywhere. An SPA site runs JavaScript locally in the browser to transform the page contents that arrive from the web server. This often makes a page feel more interactive and more like a native desktop app. Some of the most popular websites in existence, such as Gmail, Twitter and Facebook, employ this architecture. And by 2015, entire books on the technique were common (see \cite{Scott2015spa}).
+As early as 2003, pioneers in web development including luminary Douglas Crockford, who invented the ``JSON'' data transfer format, were discovering that JavaScript-based websites could actually be far more interactive than the current state of affairs (at the time), without needing any plugins such as Flash or Java virtual machines\footnote{A useful interview with Mr. Crockford about that era is available at the podcast \url{https://corecursive.com/json-vs-xml-douglas-crockford}}. When Google released Gmail in 2004, the floodgates opened for a new class of web-based product called a Single Page Application \gls{SPA}. These types of sites are now everywhere. An SPA site runs JavaScript locally in the browser to transform the page contents that arrive from the web server. This often makes a page feel more interactive and more like a native desktop app. Some of the most popular websites in existence, such as Gmail, Twitter and Facebook, employ this architecture. And by 2015, entire books on the technique were common (see \cite{Scott2015spa}).
 
 Contrast this with the more traditional client/server architecture that older web frameworks such as PHP or Ruby on Rails employ: a network request from a browser client results in code running on the server which then builds and returns an HTML page to the client. Crucially, the SPA approach allows for user interactions to modify the content of a page without requiring a round-trip data request to a support server. Once the page is loaded, the SPA is ready. Further API calls are allowed, of course, which means data can be queried from external sources as needed. But the essential JavaScript code which drives the website functionality is delivered to the browser first and runs there.
 
@@ -85,11 +85,11 @@ The EpiSim parameters themselves are usually numeric or categorical; each variab
 
 Capturing all of this information in a definable, repeatable format for use in the user interface required something more structured than the simple lookup table above.
 
-For this, a well-known and common configuration file format known as \gls{YAML} is used.\footnote{The YAML standard is defined at \url{https://yaml.org/}}. YAML excels at describing sets of \emph{key:value} relationships and allows lists and grouping of keys underneath other keys. It is human-readable and computer-parseable; these traits lead to YAML being a popular format for specifying configuration information in myriad software systems.
+For this, the well-known and common configuration file format known as \gls{YAML} seems ideal.\footnote{The YAML standard is defined at \url{https://yaml.org/}}. YAML excels at describing sets of \emph{key:value} relationships and allows lists and grouping of keys underneath other keys. It is human-readable and computer-parseable; these traits lead to YAML being a popular format for specifying configuration information in myriad software systems.
 
 For a batch of EpiSim runs, the operator of EpiSim produces the lookup table with the specific model parameters and a YAML file containing the metadata that describes in human terms how the variables will be presented to the user in the dashboard.
 
-An example YAML file is listed in \autoref{fig:covid-yaml}: this is abbreviated for clarity. More complex model runs have more sections and more variables defined.
+An example YAML file is listed in \autoref{fig:covid-yaml}, abbreviated for clarity. More complex model runs have more sections and more variables defined.
 
 \begin{figure}
   \centering
@@ -222,7 +222,7 @@ The R-value calculator in particular was found to be very useful in public polic
 
 A similar calculator is shown in \autoref{fig:covid-personal-risk-calculator}, in this case for the simulated risk of various personal activities such as a sick housemate or attending a dinner party.
 
-The R-value calculator is online at \url{https://covid-sim.info/r-calcs-v2/2021-01-24b}.
+The R-value calculator and several other calculators are available online at \url{https://covid-sim.info/r-calcs-v2/2021-01-24b}.
 
 \begin{figure}
   \centering

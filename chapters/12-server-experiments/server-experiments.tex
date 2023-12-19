@@ -106,11 +106,11 @@ VSP has a departmental GeoServer installation, and the outputs of the accessibil
 
 GeoServer uses a long ``string-id'' to identify datasets. This identification or ID is constructed from the scenario details. For example, the ID for the Kibera, Kenya OpenStreetMap Live scenario, examining drinking water accessibility within 50 meters, with a specific color scale for relative differences of 0.5-3.5 units compared to the base case, has a string ID of
 
-\emph{accessibilities:ke\_kibera\_osm\_live\_50\_drinking\_water\_walk\_0.5\_3.5}.
+\small\emph{accessibilities:ke\_kibera\_osm\_live\_50\_drinking\_water\_walk\_0.5\_3.5}.\normalsize
 
 This is quite unreadable and is too technical for outward-facing website text, so the client website reads a YAML-based configuration file (see below) which maps the many run configurations to the appropriate GeoServer IDs. The various options are then exposed in the website user interface as drop-down selections, buttons, and so forth.
 
-YAML itself is a simple text format which uses indentation and punctuation to define and group pairs of \emph{key:value} configuration data. For example, \autoref{fig:geoserver-yaml} shows a snippet of a YAML configuration for drinking water in Kibera, Kenya.
+YAML itself is a simple text format which uses indentation and punctuation to define and group pairs of \emph{key:value} configuration data. For example, \autoref{fig:geoserver-yaml} shows a snippet of a YAML configuration for drinking water data in Kibera, Kenya.
 
 \begin{figure}[!ht]
   \includegraphics[width=\textwidth]{chapters/12-server-experiments/images/geoserver-yaml.png}
@@ -136,7 +136,7 @@ Feedback from internal users was initially positive, as they were able to upload
 
 However, this approach has some notable drawbacks. Updating the website was easy, but updating the GeoServer dataset was not. GeoServer expected data types to have hard attribute lists, whereas MATSim allows fairly loose attributes for links, point data, etc. Any time the data changed, it would force a database scheme modification on GeoServer, which then had cascading effects required transformation or re-upload of all datasets. For larger teams or more rapid analysis, a more streamlined and automated approach would be beneficial. Furthermore, database security is not a core competency of the VSP transport planning team and there were concerns about database security and integrity.
 
-The accessibility website was not developed further after this initial experiment. Indeed, the GeoServer implementation at VSP was not used for any other purposes after this accessibility research concluded. Interviews revealed that department staff were unsure of the benefits of uploading their datasets to the GeoServer when they could instead make non-interactive maps in traditional GIS desktop software, suitable for inclusion in publishable research papers.
+The accessibility website was not developed further after this initial experiment. Indeed, the GeoServer implementation at VSP was not used for any other purposes after this accessibility research concluded. Interviews revealed that department staff were unsure of the benefits of uploading their datasets to the GeoServer when they could instead make non-interactive maps in traditional GIS desktop software, suitable for inclusion in publishable research papers. Furthermore, the database backend of the GeoServer technology required resetting and reloading data whenever the database schema (column definitions) changed. This proved too onerous and time-consuming for daily use.
 
 %% ----- EMISSIONS  -----
 \hypertarget{server-experiments-emissions}{%
@@ -147,7 +147,7 @@ MATSim emissions outputs can be derived from simulations using standard MATSim m
 
 As an experiment in how to ingest a large dataset by the web client and the MapBox GL visualization library, a new interactive website is built for displaying MATSim emissions, with the intention to load this data in its entirety. Similar to the earlier experiments, the user can either store their simulation outputs on the departmental file server or access them via a local HTTP server running on localhost.
 
-The size of the emission output files depends on the size of the grid cells, the number of time bins, and the geographic extent of the overall area being modeled. For the Berlin experiment, one-hour time bins and 100 meter cells resulted in individual pollutant files of approximately 150 megabytes each. Being text files, they compress by around 60-75\% -- but even so, these are rather large files to try to load into a local web browser.
+The size of the emission output files depends on the size of the grid cells, the number of time bins, and the geographic extent of the overall area being modeled. For the Berlin experiment, the use of one-hour time bins and 100 meter cells resulted in pollutant data files of approximately 150 megabytes per pollutant. Being text files, they compress by around 60-75\% -- but even so, these are rather large files to try to load into a local web browser.
 
 It does work: after loading the data, which can take about a minute on a fast, recent laptop, the map is viewable. See \autoref{fig:emissions-grid} for an example view of emissions at the grid cell level in an area near a major freeway in Berlin.
 
@@ -175,7 +175,7 @@ This approach makes for some interesting looking plots, an example of which is s
   \label{fig:emissions-lod}
 \end{figure}
 
-The background task of calculating Voronoi cells at a specified zoom level is visibly sluggish, and the results have display artifacts that may not be helpful to analysts. Between the slowness of loading the data, the sluggishness of the resulting visualization, and the compromises involved in viewing a limited level of detail at some zoom levels, this visualization experiment was not very useful for analysts at VSP.
+The background task of calculating Voronoi cells at a specified zoom level is slow, taking many seconds or tens of seconds to update when the map zoom level changes. Worse, the resulting depiction has ``jagged'' display artifacts that are not representative of the underlying data and are not expected by analysts. Between the slowness of loading the data, the poor performance of the resulting visualization, and the compromises involved in viewing a limited level of detail at some zoom levels, this visualization experiment was not very useful for analysts at VSP.
 
 The research on roadway emissions is published in \cite{kaddoura2022exhaust}, without reference to these visualization experiments.
 
